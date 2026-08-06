@@ -1,0 +1,42 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { products, sortedProducts, iconUrl } from "../data/products.js";
+
+const withReleases = sortedProducts().filter((p) => p.changelog && p.changelog.length);
+---
+
+<Base active="/releases" title="Release Notes" description="Release notes and changelogs across the Hero Studios ecosystem.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Releases</span>
+    </nav>
+    <p class="eyebrow">Release notes</p>
+    <h1>What's new in the ecosystem.</h1>
+    <p class="lead">Changelogs for every product that has shipped. Each entry links to its download page.</p>
+  </section>
+
+  <section class="container sec-tight">
+    {withReleases.map((p) => (
+      <div id={p.slug} style="margin-bottom:32px;" class="reveal">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          {iconUrl(p) ? <img src={iconUrl(p)} alt="" width="28" height="28" style="border-radius:7px;" /> : <Icon name={p.icon} size={24} />}
+          <h2 style="font-size:20px;">{p.name}</h2>
+          <span class="chip">{p.version === "—" ? "planned" : p.version}</span>
+          <a class="chip" href={`/downloads/${p.slug}`} style="margin-left:auto;">Download →</a>
+        </div>
+        {p.changelog.map((v) => (
+          <div class="card" style="padding:20px 22px;">
+            <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:10px;">
+              <span class="mono" style="color:var(--purple-text);font-weight:600;">{v.version}</span>
+            </div>
+            <ul style="margin:0 0 0 18px;color:var(--text-secondary);font-size:14px;">
+              {v.notes.map((n) => <li style="margin-bottom:6px;">{n}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    ))}
+    {withReleases.length === 0 && <p style="color:var(--text-muted);">No release notes yet.</p>}
+  </section>
+</Base>

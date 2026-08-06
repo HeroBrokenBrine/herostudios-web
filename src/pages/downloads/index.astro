@@ -1,0 +1,69 @@
+---
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import LifecycleBadge from "../../components/LifecycleBadge.astro";
+import { sortedProducts } from "../../data/products.js";
+import { downloads } from "../../data/downloads.js";
+---
+
+<Base active="/downloads" title="Downloads" description="Download every Hero Studios product — latest builds, version matrices, and checksums.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Downloads</span>
+    </nav>
+    <p class="eyebrow">Download centre</p>
+    <h1>Every product. Every version.</h1>
+    <p class="lead">
+      The single download centre for the ecosystem — every build, with SHA-256 checksums. Only shipped
+      products offer binaries; roadmap products never show a download button.
+    </p>
+  </section>
+
+  <section class="container sec">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Status</th>
+            <th>Latest</th>
+            <th>Loader</th>
+            <th>Minecraft</th>
+            <th>Files</th>
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedProducts().map((p) => {
+            const fs = downloads[p.slug]?.files || [];
+            const latest = fs[fs.length - 1]?.label || "—";
+            return (
+            <tr>
+              <td><a href={`/products/${p.slug}`} style="font-weight:500;color:var(--text-primary);">{p.name}</a></td>
+              <td><LifecycleBadge lifecycle={p.lifecycle} /></td>
+              <td class="mono">{p.version === "—" ? "—" : p.version}</td>
+              <td>{p.loader}</td>
+              <td style="font-size:13px;">{p.mcVersions.slice(0, 3).join(", ")}{p.mcVersions.length > 3 ? ` +${p.mcVersions.length - 3} more` : ""}</td>
+              <td class="mono">{fs.length ? `${fs.length} builds` : "—"}</td>
+              <td>
+                {p.downloads.available && fs.length ? (
+                  <a class="btn btn--sm btn--secondary" href={`/downloads/${p.slug}`}><Icon name="download" /> Get</a>
+                ) : (
+                  <span style="color:var(--text-disabled);font-size:13px;">—</span>
+                )}
+              </td>
+            </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="container sec-tight">
+    <div class="alert alert--info">
+      <Icon name="info" />
+      <div>All downloads are distributed as-is under the HBBML license. Roadmap products (Hero Renderer, Hero Launcher) do not ship binaries yet — follow the <a href="/roadmap">roadmap</a> for progress.</div>
+    </div>
+  </section>
+</Base>

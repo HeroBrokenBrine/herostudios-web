@@ -1,0 +1,146 @@
+---
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import { products, iconUrl } from "../../data/products.js";
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+
+const { product } = Astro.props;
+const g = product.glyph;
+
+const ordered = [...products].sort((a, b) => a.name.localeCompare(b.name));
+const idx = ordered.findIndex((p) => p.slug === product.slug);
+const prev = idx > 0 ? ordered[idx - 1] : null;
+const next = idx < ordered.length - 1 ? ordered[idx + 1] : null;
+
+const wordCount = [product.docs.overview, product.why, ...(product.docs.quickstart || []), ...(product.docs.faq || []).map((f) => `${f.q} ${f.a}`)].join(" ").split(/\s+/).length;
+const readMin = Math.max(1, Math.round(wordCount / 200));
+
+const sections = [
+  { id: "overview", title: "Overview" },
+  { id: "quickstart", title: "Quick start" },
+  ...(product.docs.faq && product.docs.faq.length ? [{ id: "faq", title: "FAQ" }] : []),
+  { id: "compatibility", title: "Compatibility" },
+];
+---
+
+<Base
+  title={`${product.name} — Documentation`}
+  description={`Documentation for ${product.name}: ${product.tagline}`}
+  active="/docs"
+>
+  <section class="pagehead container" style={`--hero-glow:${g.glow};padding-bottom:24px;`}>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span>
+      <a href="/docs">Docs</a> <span class="sep">/</span>
+      <span aria-current="page">{product.name}</span>
+    </nav>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div class="product-card__glyph" style={`--glyph:${g.color};--glyph-glow:${g.glow};`}>
+        {iconUrl(product) ? <img src={iconUrl(product)} alt="" loading="eager" /> : <Icon name={product.icon} />}
+      </div>
+      <div>
+        <h1 style="font-size:clamp(24px,4vw,36px);">{product.name} Docs</h1>
+        <div class="docs-meta" style="margin-bottom:0;">
+          <span class="chip"><Icon name="clock" size={14} /> ~{readMin} min read</span>
+          <span class="chip">v{product.version === "—" ? "planned" : product.version}</span>
+          {product.loader !== "Web platform" && <span class="chip">{product.loader}</span>}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container sec-sm">
+    <div class="docs-grid">
+      <nav class="docs-nav" aria-label="Documentation">
+        <span class="docs-nav-label">Documentation</span>
+        <a href="#overview" aria-current="page">Overview</a>
+        <a href="#quickstart">Quick start</a>
+        {product.docs.faq && product.docs.faq.length > 0 && <a href="#faq">FAQ</a>}
+        <a href="#compatibility">Compatibility</a>
+        <span class="docs-nav-label" style="margin-top:12px;">Related</span>
+        <a href={`/products/${product.slug}`}>Product page</a>
+        <a href={`/downloads/${product.slug}`}>Downloads</a>
+        <a href={`/roadmap#prod-${product.slug}`}>Roadmap</a>
+      </nav>
+
+      <article class="docs-content">
+        <h2 id="overview">Overview <a class="anchor" href="#overview" aria-label="Link to Overview">#</a></h2>
+        <p>{product.docs.overview}</p>
+        <p>{product.why}</p>
+
+        <h2 id="quickstart">Quick start <a class="anchor" href="#quickstart" aria-label="Link to Quick start">#</a></h2>
+        <ol>
+          {product.docs.quickstart.map((s) => <li>{s}</li>)}
+        </ol>
+
+        {product.docs.faq && product.docs.faq.length > 0 && (
+          <>
+            <h2 id="faq">Frequently asked questions <a class="anchor" href="#faq" aria-label="Link to FAQ">#</a></h2>
+            <div class="accordion">
+              {product.docs.faq.map((f) => (
+                <details>
+                  <summary>{f.q}</summary>
+                  <div class="acc-body"><div class="acc-inner" style="padding:0 20px 18px;">{f.a}</div></div>
+                </details>
+              ))}
+            </div>
+          </>
+        )}
+
+        <h2 id="compatibility">Compatibility <a class="anchor" href="#compatibility" aria-label="Link to Compatibility">#</a></h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Property</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Loader / platform</td><td>{product.loader}</td></tr>
+              <tr><td>Minecraft versions</td><td>{product.mcVersions.join(", ")}</td></tr>
+              <tr><td>Latest version</td><td>{product.version === "—" ? "Not released" : product.version}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:13.5px;color:var(--text-muted);margin-top:12px;">{product.compatibility.note}</p>
+
+        <div class="docs-pager">
+          {prev ? (
+            <a href={`/docs/${prev.slug}`} style="text-decoration:none;">
+              <span class="dir">← Previous</span>
+              <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-top:4px;">{prev.name}</div>
+            </a>
+          ) : <span></span>}
+          {next ? (
+            <a href={`/docs/${next.slug}`} style="text-decoration:none;text-align:right;">
+              <span class="dir">Next →</span>
+              <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-top:4px;">{next.name}</div>
+            </a>
+          ) : <span></span>}
+        </div>
+      </article>
+
+      <nav class="docs-toc" aria-label="On this page">
+        <span class="docs-toc-label">On this page</span>
+        {sections.map((s) => <a href={`#${s.id}`} data-toc={s.id}>{s.title}</a>)}
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<script>
+  function initToc() {
+    const links = Array.from(document.querySelectorAll(".docs-toc a[data-toc]"));
+    const headings = links.map((l) => document.getElementById(l.dataset.toc)).filter(Boolean);
+    const onScroll = () => {
+      let current = "";
+      for (const h of headings) {
+        if (h.getBoundingClientRect().top <= 90) current = h.id;
+      }
+      links.forEach((l) => l.setAttribute("aria-current", String(l.dataset.toc === current)));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+  initToc();
+  document.addEventListener("astro:page-load", initToc);
+</script>

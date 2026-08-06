@@ -1,0 +1,322 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<div class="search-backdrop" id="search-backdrop" role="dialog" aria-modal="true" aria-label="Search" aria-describedby="search-hint-text">
+  <div class="search-panel" id="search-panel">
+    <div class="search-input-row">
+      <Icon name="search" />
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search products, docs, commands…"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search"
+        aria-controls="search-results"
+        aria-activedescendant=""
+        role="combobox"
+        aria-expanded="true"
+      />
+      <button class="search-clear" id="search-clear" type="button" aria-label="Clear search" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <span class="search-hint">ESC</span>
+    </div>
+    <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
+    <div class="search-footer" id="search-footer" aria-hidden="true">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>⌘↵</kbd> new tab</span>
+      <span><kbd>⌥↵</kbd> copy link</span>
+    </div>
+    <div class="search-hint-text" id="search-hint-text" hidden>Search across products, documentation, roadmap items, and commands.</div>
+  </div>
+</div>
+
+<script>
+  const KEY = "hero-recent-searches";
+  const ICONS = {
+    Product: `<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>`,
+    Docs: `<path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M9 8h6M9 11h6"/>`,
+    Page: `<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>`,
+    Roadmap: `<path d="M5 21V4"/><path d="M5 4h13l-2.5 3.5L18 11H5"/>`,
+    Release: `<path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/>`,
+    Action: `<path d="M4 12h16m0 0-6-6m6 6-6 6"/>`,
+  };
+
+  let index = [];
+  let recent = [];
+  let activeIdx = -1;
+  let activeType = "";
+
+  const backdrop = document.getElementById("search-backdrop");
+  const input = document.getElementById("search-input");
+  const results = document.getElementById("search-results");
+  const clearBtn = document.getElementById("search-clear");
+  const openBtn = document.getElementById("search-open");
+
+  function loadRecent() {
+    try { recent = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { recent = []; }
+  }
+  function saveRecent() {
+    try { localStorage.setItem(KEY, JSON.stringify(recent.slice(0, 6))); } catch {}
+  }
+  function pushRecent(title) {
+    loadRecent();
+    recent = [title, ...recent.filter((r) => r !== title)].slice(0, 6);
+    saveRecent();
+  }
+
+  function esc(s) {
+    return (s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  function highlight(text, terms) {
+    let t = esc(text);
+    for (const term of terms) {
+      if (!term) continue;
+      const re = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
+      t = t.replace(re, "<mark>$1</mark>");
+    }
+    return t;
+  }
+
+  function score(item, terms) {
+    const hay = `${item.title} ${item.desc} ${item.keywords || ""}`.toLowerCase();
+    let s = 0;
+    const title = item.title.toLowerCase();
+    for (const t of terms) {
+      if (!hay.includes(t)) return 0;
+      s += 1;
+      if (title.startsWith(t)) s += 3;
+      else if (title.includes(t)) s += 2;
+      if (t === hay.trim()) s += 2;
+    }
+    if (terms.length > 1 && terms.every((t) => hay.includes(t))) s += 1;
+    return s;
+  }
+
+  function search(q) {
+    const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!terms.length) return [];
+    return index
+      .map((item) => ({ item, s: score(item, terms) }))
+      .filter((x) => x.s > 0)
+      .sort((a, b) => b.s - a.s)
+      .slice(0, 14)
+      .map((x) => x.item);
+  }
+
+  function render(items, q) {
+    const terms = (q || "").toLowerCase().split(/\s+/).filter(Boolean);
+    if (!items.length) {
+      results.innerHTML = `<div class="search-empty">${terms.length ? "No results for “" + esc(q) + "”." : "Type to search the ecosystem."}<br><span class="muted">Try a product name like HeroSync or Pack Merger.</span></div>`;
+      return;
+    }
+    const groups = new Map();
+    for (const it of items) {
+      if (!groups.has(it.type)) groups.set(it.type, []);
+      groups.get(it.type).push(it);
+    }
+    let html = "";
+    let i = 0;
+    for (const [type, list] of groups) {
+      html += `<div class="search-group-label">${type} · ${list.length}</div>`;
+      for (const it of list) {
+        const icon = ICONS[type] || ICONS.Action;
+        html += `<a class="search-result" id="sr-${i}" href="${esc(it.url)}" data-active="false" role="option">
+          <span class="search-result-row">
+            <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${icon}</svg></span>
+            <span><span class="t">${highlight(it.title, terms)}</span>
+            <span class="d">${highlight(it.desc, terms)}</span></span>
+          </span>
+        </a>`;
+        i++;
+      }
+    }
+    results.innerHTML = html;
+    const links = Array.from(results.querySelectorAll(".search-result"));
+    links.forEach((l, k) => l.addEventListener("mouseenter", () => setActive(k)));
+    setActive(-1);
+  }
+
+  function setActive(i) {
+    const links = Array.from(results.querySelectorAll(".search-result"));
+    links.forEach((l) => l.setAttribute("data-active", "false"));
+    if (i >= 0 && i < links.length) {
+      links[i].setAttribute("data-active", "true");
+      input.setAttribute("aria-activedescendant", links[i].id);
+      links[i].scrollIntoView({ block: "nearest" });
+    } else {
+      input.removeAttribute("aria-activedescendant");
+    }
+    activeIdx = i;
+  }
+
+  function initialView() {
+    const actions = index.filter((i) => i.type === "Action");
+    const recents = recent.map((r) => ({ type: "Recent", title: r, desc: "Search again", query: r }));
+    const popular = index.filter((i) => i.type === "Product" && ["hero-client", "herosync", "pack-merger", "creeper-eater"].includes(i.slug));
+    let html = "";
+    if (recents.length) {
+      html += `<div class="search-group-label">Recent · ${recents.length}</div>`;
+      for (const r of recents) {
+        html += `<button type="button" class="search-result" data-query="${esc(r.query)}" role="option" data-active="false">
+          <span class="search-result-row"><span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <span><span class="t">${esc(r.title)}</span><span class="d">${esc(r.desc)}</span></span></span>
+        </button>`;
+      }
+    }
+    const linkItems = [...actions, ...popular];
+    const groups = new Map();
+    for (const it of linkItems) {
+      if (!groups.has(it.type)) groups.set(it.type, []);
+      groups.get(it.type).push(it);
+    }
+    let linkIdx = 0;
+    for (const [type, list] of groups) {
+      html += `<div class="search-group-label">${type} · ${list.length}</div>`;
+      for (const it of list) {
+        html += `<a class="search-result" id="sr-${linkIdx++}" href="${esc(it.url)}" role="option" data-active="false">
+          <span class="search-result-row"><span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ICONS[type] || ICONS.Action}</svg></span>
+          <span><span class="t">${esc(it.title)}</span><span class="d">${esc(it.desc)}</span></span></span>
+        </a>`;
+      }
+    }
+    results.innerHTML = html;
+    const els = Array.from(results.querySelectorAll(".search-result"));
+    els.forEach((l, k) => {
+      l.addEventListener("mouseenter", () => setActive(k));
+      l.addEventListener("click", () => {
+        if (l.hasAttribute("data-query")) applyQuery(l.getAttribute("data-query"));
+      });
+    });
+    setActive(-1);
+  }
+
+  function applyQuery(q) {
+    input.value = q;
+    clearBtn.style.display = "block";
+    render(search(q), q);
+  }
+
+  function open() {
+    backdrop.classList.add("open");
+    document.body.style.overflow = "hidden";
+    input.value = "";
+    activeIdx = -1;
+    clearBtn.style.display = "none";
+    loadRecent();
+    if (!index.length) {
+      results.innerHTML = `<div class="search-empty">Loading…</div>`;
+      fetch("/search-index.json")
+        .then((r) => r.json())
+        .then((d) => {
+          index = d;
+          initialView();
+        })
+        .catch(() => {
+          results.innerHTML = `<div class="search-empty">Couldn't load the search index.</div>`;
+        });
+    } else {
+      initialView();
+    }
+    setTimeout(() => input.focus(), 30);
+  }
+
+  function close(restore) {
+    backdrop.classList.remove("open");
+    document.body.style.overflow = "";
+    if (restore && openBtn) openBtn.focus();
+  }
+
+  function copyLink(url) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(showToast, () => fallbackCopy(url));
+    } else fallbackCopy(url);
+  }
+  function fallbackCopy(url) {
+    const ta = document.createElement("textarea");
+    ta.value = url;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); showToast(); } catch { window.prompt("Copy this link:", url); }
+    ta.remove();
+  }
+  function showToast() {
+    let t = document.getElementById("global-toast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "global-toast";
+      t.className = "toast";
+      document.body.appendChild(t);
+    }
+    t.textContent = "Link copied to clipboard";
+    t.classList.add("show");
+    clearTimeout(t._h);
+    t._h = setTimeout(() => t.classList.remove("show"), 2000);
+  }
+
+  input.addEventListener("input", () => {
+    const q = input.value.trim();
+    clearBtn.style.display = q ? "block" : "none";
+    if (!q) return initialView();
+    render(search(q), q);
+  });
+
+  input.addEventListener("keydown", (e) => {
+    const links = Array.from(results.querySelectorAll(".search-result"));
+    const k = e.key;
+    if (k === "ArrowDown") { e.preventDefault(); setActive(Math.min(activeIdx + 1, links.length - 1)); }
+    else if (k === "ArrowUp") { e.preventDefault(); setActive(Math.max(activeIdx - 1, 0)); }
+    else if (k === "Home") { e.preventDefault(); setActive(0); }
+    else if (k === "End") { e.preventDefault(); setActive(links.length - 1); }
+    else if (k === "Enter") {
+      const target = links[activeIdx] || links[0];
+      if (!target) return;
+      e.preventDefault();
+      if (target.hasAttribute("data-query")) {
+        applyQuery(target.getAttribute("data-query"));
+        return;
+      }
+      const url = target.getAttribute("href");
+      const t = target.querySelector(".t")?.textContent || "";
+      if (t) pushRecent(t);
+      if (e.metaKey || e.ctrlKey) window.open(url, "_blank");
+      else if (e.altKey) copyLink(url);
+      else { window.location.href = url; close(false); }
+    }
+    else if (k === "Escape") { close(true); }
+    else if (k === "Tab") {
+      const focusables = [clearBtn, input, ...links];
+      const idx = focusables.indexOf(document.activeElement);
+      const next = e.shiftKey ? (idx - 1 + focusables.length) % focusables.length : (idx + 1) % focusables.length;
+      e.preventDefault();
+      focusables[next].focus();
+    }
+  });
+
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
+    clearBtn.style.display = "none";
+    input.focus();
+    initialView();
+  });
+
+  openBtn && openBtn.addEventListener("click", open);
+  backdrop.addEventListener("click", (e) => { if (e.target === backdrop) close(true); });
+
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); open(); }
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "/" && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) { e.preventDefault(); open(); }
+  });
+</script>
+
+<style>
+  .search-footer { display: flex; flex-wrap: wrap; gap: 14px; padding: 12px 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 11.5px; }
+  .search-footer span { display: inline-flex; align-items: center; gap: 4px; }
+  .search-footer kbd { font-size: 10px; }
+</style>

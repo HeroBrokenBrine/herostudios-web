@@ -1,0 +1,84 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site.js";
+
+const palette = [
+  { name: "Neon Purple", hex: "#8B5CF6", use: "Primary identity · buttons · links" },
+  { name: "Sea Green", hex: "#14B8A6", use: "Technology · progress · secondary actions" },
+  { name: "Sky Blue", hex: "#38BDF8", use: "Intelligence · focus · information" },
+  { name: "Background", hex: "#050816", use: "Canvas — deep oceanic near-black" },
+  { name: "Surface", hex: "#111827", use: "Cards and elevated surfaces" },
+  { name: "Text", hex: "#F8FAFC", use: "Primary text" },
+];
+
+const rules = [
+  "Use the official icon assets exactly as provided — never recolour, redraw, or reinterpret them.",
+  "Preserve the logo's geometry and proportions. Maintain clear space around the mark.",
+  "The purple–sky brand gradient is reserved for the primary identity, not decorative flourishes.",
+  "Dark mode is the official identity. Do not ship a light variant without approval.",
+  "Every future product inherits this identity — never fork it.",
+];
+---
+
+<Base active="/brand" title="Brand & Press" description="Official Hero Studios brand assets, palette, and press kit.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Brand</span>
+    </nav>
+    <p class="eyebrow">Brand & press</p>
+    <h1>The Hero Studios identity.</h1>
+    <p class="lead">Official assets, palette, and usage rules for press, partners, and community. Everything you need to represent the ecosystem correctly.</p>
+  </section>
+
+  <section class="container sec-tight">
+    <p class="eyebrow">Logo</p>
+    <h2 style="font-size:22px;margin-bottom:20px;">Official icon</h2>
+    <div class="grid grid--2">
+      <div class="card" style="display:grid;place-items:center;padding:48px;background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(17,24,39,.9));">
+        <img src="/brand/icon.png" alt="Hero Studios official icon" style="width:160px;height:160px;border-radius:24px;box-shadow:0 0 60px var(--purple-glow);" />
+        <p style="margin-top:20px;font-size:13.5px;color:var(--text-muted);">Official icon — PNG · <span class="mono">/brand/icon.png</span></p>
+      </div>
+      <div class="card" style="display:grid;gap:14px;align-content:start;">
+        <div class="feature"><div class="feature__icon"><Icon name="download" /></div><div><h4 style="font-size:14.5px;">Assets</h4><p style="font-size:13px;color:var(--text-muted);">Icon (PNG, JPG) and favicon are served from the site's <span class="mono">/brand/</span> folder. The official source assets live in the <span class="mono">HeroStudios icons</span> repository folder.</p></div></div>
+        <div class="feature"><div class="feature__icon"><Icon name="shield" /></div><div><h4 style="font-size:14.5px;">Usage rules</h4><ul style="margin:4px 0 0 18px;color:var(--text-secondary);font-size:13px;">{rules.map((r) => <li style="margin-bottom:6px;">{r}</li>)}</ul></div></div>
+        <div class="feature"><div class="feature__icon"><Icon name="mail" /></div><div><h4 style="font-size:14.5px;">Press contact</h4><p style="font-size:13px;color:var(--text-muted);"><a href={`mailto:${site.email}`}>{site.email}</a></p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container sec-tight">
+    <p class="eyebrow">Colour</p>
+    <h2 style="font-size:22px;margin-bottom:20px;">Official palette</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));">
+      {palette.map((c) => (
+        <div class="card" style="padding:18px;">
+          <div style="height:64px;border-radius:var(--r-md);background:{c.hex};border:1px solid rgba(148,163,184,.2);margin-bottom:14px;"></div>
+          <strong style="font-size:14.5px;color:var(--text-primary);">{c.name}</strong>
+          <div class="mono" style="font-size:12px;color:var(--text-muted);">{c.hex}</div>
+          <p style="font-size:12.5px;color:var(--text-muted);margin-top:6px;">{c.use}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container sec-tight">
+    <p class="eyebrow">Identity</p>
+    <h2 style="font-size:22px;margin-bottom:14px;">Design language</h2>
+    <p class="sec-lead" style="margin-bottom:24px;">Deep ocean · future technology · intelligence. Sora for display, Inter for body, JetBrains Mono for code. Glass surfaces, soft glows, and a premium dark theme — the same language every product inherits.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      {["Sora (display)", "Inter (body)", "JetBrains Mono (code)", "Dark mode only", "Glassmorphism", "Soft glows", "4px spacing scale"].map((t) => <span class="chip">{t}</span>)}
+    </div>
+  </section>
+
+  <section class="container sec-tight">
+    <div class="cta-banner reveal">
+      <h2>Building with Hero Studios?</h2>
+      <p>For press kits, interviews, or partnership assets, reach the team directly.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href={`mailto:${site.email}`}><Icon name="mail" /> Contact press</a>
+        <a class="btn btn--ghost" href="/about">About the studio</a>
+      </div>
+    </div>
+  </section>
+</Base>

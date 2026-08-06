@@ -1,0 +1,223 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { products } from "../data/products.js";
+import { site } from "../data/site.js";
+
+const values = [
+  { icon: "spark", title: "Performance first", desc: "Every tool is engineered around speed and frame budget." },
+  { icon: "shield", title: "Stability before features", desc: "Stable means CI-built and tested — never the other way around." },
+  { icon: "compass", title: "Quality over quantity", desc: "Fewer, deeper, better products." },
+  { icon: "layers", title: "One ecosystem", desc: "Every product is designed to integrate with the others." },
+  { icon: "clock", title: "Long-term maintainability", desc: "Decisions today serve the next decade." },
+  { icon: "heart", title: "Vanilla-friendly", desc: "Tools that respect the game they extend." },
+];
+
+const philosophy = [
+  { title: "Engineering philosophy", desc: "Production-grade code, documented public APIs, modular architecture, and backwards compatibility whenever practical. We minimise technical debt and explain architectural decisions before major implementations." },
+  { title: "Development process", desc: "Design first, implement second. Every feature passes a quality bar — tests, cross-version builds, and a truthful status. If it isn't tested, it isn't marked stable." },
+  { title: "Architecture philosophy", desc: "One ecosystem, not a collection. Shared standards, shared build tooling, and a single design language mean a new product inherits the whole system — never a redesign." },
+];
+
+const timeline = [
+  { t: "2018", d: "Hero Studios begins with a conviction: Minecraft software could be engineered to a higher standard." },
+  { t: "2021", d: "The first performance mods ship — latency compensation, vein mining, and pack tooling." },
+  { t: "2024", d: "Redstone Debugger and CraftPilot redefine what Minecraft developer tools can be." },
+  { t: "2026", d: "Fourteen products, one ecosystem. Hero Client, HeroSync, and a unified docs platform arrive." },
+  { t: "Future", d: "Hero Launcher, Hero Renderer, and a shared AI layer — each slotting into the same ecosystem." },
+];
+
+const stack = [
+  "Java 21", "Fabric", "Kotlin", "Python", "FastAPI", "TypeScript", "React", "Node.js", "Astro", "Rust (planned)", "SQLite", "PostgreSQL", "Gradle", "pnpm", "Vite", "GitHub Actions",
+];
+
+const milestones = [
+  { num: products.length, lbl: "Products launched" },
+  { num: products.filter((p) => p.lifecycle !== "roadmap").length, lbl: "Shipped or in development" },
+  { num: new Set(products.flatMap((p) => p.mcVersions || [])).size, lbl: "Minecraft versions supported" },
+  { num: 40, lbl: "K+ lines of code (mods)" },
+  { num: 3, lbl: "Core languages" },
+  { num: 1, lbl: "Ecosystem" },
+];
+---
+
+<Base active="/about" title="About" description="The story, mission, and values behind Hero Studios.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">About</span>
+    </nav>
+    <p class="eyebrow">About Hero Studios</p>
+    <h1>A premium software company that happens to make Minecraft software.</h1>
+    <p class="lead">Everything Minecraft. Engineered. One ecosystem, fourteen products, and a decade-long outlook.</p>
+  </section>
+
+  <!-- Vision / Mission -->
+  <section class="container sec-tight">
+    <div class="grid grid--2">
+      <div class="card reveal">
+        <p class="eyebrow">Mission</p>
+        <h2 style="font-size:22px;margin-bottom:10px;">Build the world's most advanced Minecraft software ecosystem.</h2>
+        <p style="font-size:15px;">Performance-first tools engineered to work together — never a collection of mods. Every product should set a new standard for what Minecraft software can be.</p>
+      </div>
+      <div class="card reveal">
+        <p class="eyebrow">Vision</p>
+        <h2 style="font-size:22px;margin-bottom:10px;">Become the new standard for Minecraft software.</h2>
+        <p style="font-size:15px;">An ecosystem where every Hero Studios tool is stable before it's featureful, professionally designed, and engineered to integrate — for the next decade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section class="container sec-tight">
+    <div style="max-width:640px;margin-bottom:32px;" class="reveal">
+      <p class="eyebrow">Core principles</p>
+      <h2 class="sec-title">What we believe</h2>
+    </div>
+    <div class="grid grid--3 reveal">
+      {values.map((v) => (
+        <div class="card card--hover">
+          <div class="feature__icon" style="margin-bottom:16px;"><Icon name={v.icon} /></div>
+          <h3 style="font-size:17px;margin-bottom:8px;">{v.title}</h3>
+          <p style="font-size:14px;color:var(--text-muted);">{v.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="container sec-tight">
+    <div class="grid grid--3">
+      {philosophy.map((p, i) => (
+        <div class="card reveal">
+          <p class="eyebrow">0{i + 1}</p>
+          <h3 style="font-size:17px;margin-bottom:10px;">{p.title}</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.7;">{p.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="container sec-tight">
+    <div style="max-width:640px;margin-bottom:32px;" class="reveal">
+      <p class="eyebrow">The story</p>
+      <h2 class="sec-title">Why Hero Studios exists</h2>
+    </div>
+    <div class="timeline reveal">
+      {timeline.map((s, i) => (
+        <div class={`tl-item ${i >= timeline.length - 1 ? "tl--planned" : "tl--done"}`}>
+          <div class="tl-item__head"><h3 style="font-size:17px;font-family:var(--font-mono);">{s.t}</h3></div>
+          <p>{s.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="container sec-tight">
+    <div class="stat-row reveal" style="max-width:900px;margin-inline:auto;">
+      {milestones.map((m) => (
+        <div class="stat">
+          <div class="num count" data-count={m.num}>{m.num}</div>
+          <div class="lbl">{m.lbl}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Tech stack -->
+  <section class="container sec-tight">
+    <div style="max-width:640px;margin-bottom:28px;" class="reveal">
+      <p class="eyebrow">Technology</p>
+      <h2 class="sec-title">Built on a real stack</h2>
+      <p class="sec-lead">Production tools, chosen for longevity. The website is Astro — static-first, privacy-first, and fast.</p>
+    </div>
+    <div class="reveal" style="display:flex;flex-wrap:wrap;gap:10px;">
+      {stack.map((s) => <span class="chip">{s}</span>)}
+    </div>
+  </section>
+
+  <!-- Contact + community -->
+  <section class="container sec-tight" id="contact">
+    <p class="eyebrow">Contact & community</p>
+    <h2 style="font-size:22px;margin-bottom:20px;">Get in touch</h2>
+    <div class="grid grid--3">
+      <a class="card card--hover" href={`mailto:${site.email}`} style="text-decoration:none;display:block;">
+        <div class="feature__icon" style="margin-bottom:14px;"><Icon name="mail" /></div>
+        <h3 style="font-size:16px;margin-bottom:6px;">Email</h3>
+        <p style="font-size:13.5px;color:var(--text-muted);">{site.email}</p>
+      </a>
+      <a class="card card--hover" href={site.discordUrl} target="_blank" rel="noopener" style="text-decoration:none;display:block;">
+        <div class="feature__icon" style="margin-bottom:14px;"><Icon name="discord" /></div>
+        <h3 style="font-size:16px;margin-bottom:6px;">Discord</h3>
+        <p style="font-size:13.5px;color:var(--text-muted);">@{site.discordHandle}</p>
+      </a>
+      <a class="card card--hover" href={site.issuesUrl} target="_blank" rel="noopener" style="text-decoration:none;display:block;">
+        <div class="feature__icon" style="margin-bottom:14px;"><Icon name="flag" /></div>
+        <h3 style="font-size:16px;margin-bottom:6px;">Issue tracker</h3>
+        <p style="font-size:13.5px;color:var(--text-muted);">Report bugs and requests</p>
+      </a>
+    </div>
+
+    <div class="cta-banner reveal" style="margin-top:48px;">
+      <h2>Love what we build?</h2>
+      <p>Hero Studios is an independent studio. A donation funds updates, new products, and the tools that keep the ecosystem growing.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href={site.donateUrl} target="_blank" rel="noopener"><Icon name="heart" /> Support the studio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legal -->
+  <section class="container sec-tight" id="license">
+    <p class="eyebrow">Legal</p>
+    <h2 style="font-size:22px;margin-bottom:20px;">License & privacy</h2>
+    <div class="grid grid--2">
+      <div class="card">
+        <h3 style="font-size:17px;margin-bottom:10px;">HBBML license</h3>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:14px;">
+          Hero Studios projects are distributed under the HBBML license. The license text is published at
+          <a href={site.licenseUrl} target="_blank" rel="noopener"> hbbml.tiiny.site</a>.
+        </p>
+        <p style="font-size:13.5px;color:var(--text-muted);">Every project applies the same license so the ecosystem stays consistent.</p>
+      </div>
+      <div class="card" id="privacy">
+        <h3 style="font-size:17px;margin-bottom:10px;">Privacy</h3>
+        <p style="font-size:14px;color:var(--text-muted);">
+          This site is static and privacy-first: no cross-site tracking, no cookies for analytics.
+          Download events are counted in aggregate only. Any future account system will be opt-in.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  function animateCount(el) {
+    const target = Number(el.dataset.count || 0);
+    if (!("IntersectionObserver" in window)) { el.textContent = target; return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        const dur = 900;
+        const t0 = performance.now();
+        function tick(t) {
+          const p = Math.min((t - t0) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased);
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    io.observe(el);
+  }
+  function initCounters() {
+    document.querySelectorAll(".count").forEach((el) => {
+      if (!el.dataset.done) { el.dataset.done = "1"; animateCount(el); }
+    });
+  }
+  initCounters();
+  document.addEventListener("astro:page-load", initCounters);
+</script>

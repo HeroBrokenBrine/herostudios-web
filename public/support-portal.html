@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Report a bug or get support for Hero Studios products — mods, clients, and the Hero Studios ecosystem.">
+<title>Hero Studios — Support Portal</title>
+<link rel="icon" type="image/png" href="/brand/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-canvas: #050816;
+    --bg-secondary: #0f172a;
+    --surface: #111827;
+    --card: #1e293b;
+    --card-raised: #263244;
+    --border: #334155;
+    --border-strong: #475569;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --purple: #8b5cf6;
+    --purple-text: #a78bfa;
+    --sea: #14b8a6;
+    --sea-soft: #2dd4bf;
+    --sky: #38bdf8;
+    --grad-brand: linear-gradient(135deg, #8b5cf6 0%, #6d5cf6 45%, #38bdf8 100%);
+    --grad-text: linear-gradient(100deg, #c4b5fd 0%, #8b5cf6 50%, #38bdf8 100%);
+    --glass-border: rgba(148, 163, 184, 0.16);
+    --purple-glow: rgba(139, 92, 246, 0.35);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--text-primary);
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(56, 189, 248, 0.08), transparent 60%),
+      radial-gradient(800px 600px at -10% 10%, rgba(139, 92, 246, 0.10), transparent 55%),
+      radial-gradient(700px 500px at 50% 110%, rgba(20, 184, 166, 0.05), transparent 60%),
+      var(--bg-canvas);
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Sora", system-ui, sans-serif; letter-spacing: -0.02em; }
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.85), rgba(17, 24, 39, 0.92));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: clamp(24px, 5vw, 44px);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03) inset, 0 24px 64px rgba(5, 8, 22, 0.55), 0 0 60px rgba(139, 92, 246, 0.08);
+    backdrop-filter: blur(16px);
+  }
+  .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+  .brand img { width: 44px; height: 44px; border-radius: 11px; box-shadow: 0 0 24px var(--purple-glow); }
+  .brand .name { font-family: "Sora"; font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
+  .brand .name span { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
+  h1 { font-size: clamp(24px, 4vw, 30px); margin: 0 0 6px; }
+  .eyebrow { font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--purple-text); margin-bottom: 8px; }
+  label { display: block; margin: 16px 0 6px; font-size: 13.5px; font-weight: 600; color: var(--text-secondary); }
+  label .req { color: var(--sky); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font: 500 15px "Inter", system-ui, sans-serif;
+    color: var(--text-primary);
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  input::placeholder, textarea::placeholder { color: #64748b; }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--sky);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22);
+  }
+  select { cursor: pointer; }
+  .hidden { display: none; }
+  .info {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: rgba(56, 189, 248, 0.07);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-left: 4px solid var(--sky);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+  .info b { color: var(--text-primary); }
+  .info ul { margin: 8px 0 0 18px; }
+  .info li { margin-bottom: 4px; }
+  .discord {
+    margin-top: 18px;
+    padding: 16px;
+    text-align: center;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .discord b { color: var(--text-primary); }
+  a { color: var(--purple-text); text-decoration: none; }
+  a:hover { color: var(--sky); text-decoration: underline; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    background: var(--grad-brand);
+    color: #fff;
+    font: 700 16px "Inter", system-ui, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 6px 24px var(--purple-glow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 32px var(--purple-glow); }
+  .btn:active { transform: translateY(0) scale(0.99); }
+  .btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--sky); outline-offset: 2px;
+  }
+  .note { margin-top: 12px; text-align: center; color: var(--text-muted); font-size: 12.5px; }
+  .meta-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 18px; font-size: 13px; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.9em; color: var(--purple-text); background: rgba(139, 92, 246, 0.12); padding: 1px 6px; border-radius: 5px; }
+  .status { margin-top: 14px; text-align: center; font-size: 14px; min-height: 22px; color: var(--sea-soft); }
+  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <img src="/brand/icon.jpg" alt="" width="44" height="44">
+    <div class="name">Hero <span>Studios</span></div>
+  </div>
+  <div class="subtitle">Official support portal</div>
+
+  <p class="eyebrow">Report an issue</p>
+  <h1>Support Portal</h1>
+
+  <form id="supportForm" novalidate>
+    <label for="name">Name <span style="color:var(--text-muted)">(optional)</span></label>
+    <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name or Discord handle">
+
+    <div class="grid">
+      <div>
+        <label for="project">Project <span class="req">*</span></label>
+        <select id="project" name="project" required>
+          <option value="">Select…</option>
+          <option>Creepers Eat You</option>
+          <option>Creepers Eat You Ultra Hard</option>
+          <option>HeroSync</option>
+          <option>Bucket o' Everything</option>
+          <option>Pack Merger</option>
+          <option>J2B MC</option>
+          <option>Hero Client</option>
+          <option>README.md</option>
+          <option>Redstone Debugger</option>
+          <option>DPT</option>
+          <option>Shorts Veinminer</option>
+          <option>CraftPilot</option>
+          <option>Hero Agent</option>
+          <option>Hero Renderer</option>
+          <option>Hero Launcher</option>
+          <option>Record-able 1.16.1 Fork</option>
+          <option>Other</option>
+        </select>
+        <div class="hidden" id="otherProjectBox">
+          <label for="otherProject">Other Project <span class="req">*</span></label>
+          <input id="otherProject" name="otherProject" type="text" placeholder="Enter project name">
+        </div>
+      </div>
+      <div>
+        <label for="type">Issue Type <span class="req">*</span></label>
+        <select id="type" name="type" required>
+          <option value="">Select…</option>
+          <option>Bug</option>
+          <option>Crash</option>
+          <option>Performance Issue</option>
+          <option>Feature Request</option>
+          <option>UI / UX Issue</option>
+          <option>Installation Issue</option>
+          <option>Compatibility Issue</option>
+          <option>Multiplayer Issue</option>
+          <option>World Corruption</option>
+          <option>Resource Pack Issue</option>
+          <option>Gameplay Issue</option>
+          <option>Documentation Issue</option>
+          <option>Question</option>
+          <option>Security Issue</option>
+          <option>Other</option>
+        </select>
+        <div class="hidden" id="otherBox">
+          <label for="otherType">Other Issue Type <span class="req">*</span></label>
+          <input id="otherType" name="otherType" type="text" placeholder="Describe the issue type">
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label for="mc">Minecraft Version <span class="req">*</span></label>
+        <input id="mc" name="mc" type="text" required pattern="\d+\.\d+(\.\d+)?" placeholder="e.g. 1.21.1 or 26.1.1">
+      </div>
+      <div>
+        <label for="mod">Mod Version <span class="req">*</span></label>
+        <input id="mod" name="mod" type="text" required pattern="v?\d+(\.\d+)+" placeholder="e.g. v1.4.0">
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label for="priority">Priority <span class="req">*</span></label>
+        <select id="priority" name="priority" required>
+          <option>Low</option>
+          <option>Medium</option>
+          <option>High</option>
+          <option>Critical</option>
+        </select>
+      </div>
+      <div>
+        <label for="loader">Mod Loader</label>
+        <select id="loader" name="loader">
+          <option>Fabric</option>
+          <option>Forge</option>
+          <option>NeoForge</option>
+          <option>Quilt</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="desc">Description <span class="req">*</span></label>
+    <textarea id="desc" name="desc" rows="8" required placeholder="What happened? Steps to reproduce? Expected vs actual behavior?"></textarea>
+
+    <div class="info">
+      <b>Before sending:</b>
+      <ul>
+        <li>Describe the issue clearly and include reproduction steps.</li>
+        <li>Explain expected and actual behavior.</li>
+        <li>Attach screenshots if available.</li>
+        <li><b>Please attach <code>latest.log</code> or a crash report if applicable.</b></li>
+        <li>Security issue? Prefer the Discord <b>#security</b> channel or email — don't post exploit details publicly.</li>
+      </ul>
+    </div>
+
+    <button class="btn" type="submit" id="submitBtn">Open Gmail &amp; Send Report</button>
+    <div class="note">Opens a pre-filled email to ahyaanthepro@gmail.com in Gmail.</div>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <div class="discord">
+      <b>Prefer Discord or the tracker?</b><br>
+      <span class="meta-links">
+        <a href="https://discord.gg/5N4pAKRrkk" target="_blank" rel="noopener">Discord — discord.gg/5N4pAKRrkk</a>
+        <a href="https://herobrokenbrine.github.io/issues/" target="_blank" rel="noopener">Issue Tracker</a>
+        <a href="mailto:ahyaanthepro@gmail.com">Email</a>
+        <a href="https://www.donationalerts.com/r/xhbb_" target="_blank" rel="noopener">Donate</a>
+      </span>
+    </div>
+  </form>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById("supportForm");
+  var status = document.getElementById("status");
+  var projectBox = document.getElementById("otherProjectBox");
+  var otherProject = document.getElementById("otherProject");
+  var otherBox = document.getElementById("otherBox");
+  var otherType = document.getElementById("otherType");
+
+  function syncRequired(select, box, input) {
+    var show = select.value === "Other";
+    box.classList.toggle("hidden", !show);
+    input.required = show;
+    if (!show) input.value = "";
+  }
+
+  form.addEventListener("change", function (e) {
+    if (e.target.id === "project") syncRequired(e.target, projectBox, otherProject);
+    if (e.target.id === "type") syncRequired(e.target, otherBox, otherType);
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var projectEl = document.getElementById("project");
+    var typeEl = document.getElementById("type");
+    var nameEl = document.getElementById("name");
+    var mcEl = document.getElementById("mc");
+    var modEl = document.getElementById("mod");
+    var priorityEl = document.getElementById("priority");
+    var loaderEl = document.getElementById("loader");
+    var descEl = document.getElementById("desc");
+
+    var projectName = projectEl.value === "Other" ? otherProject.value.trim() : projectEl.value;
+    var issue = typeEl.value === "Other" ? otherType.value.trim() : typeEl.value;
+
+    // Simple manual validation (gives better messages than native bubbles).
+    if (!projectName || !issue || !mcEl.value.trim() || !modEl.value.trim() || !priorityEl.value || !descEl.value.trim()) {
+      status.textContent = "Please fill in all required fields.";
+      status.style.color = "#f87171";
+      return;
+    }
+    if (!/^\d+\.\d+(\.\d+)?$/.test(mcEl.value.trim())) {
+      status.textContent = "Minecraft version should look like 1.21.1 or 26.1.1.";
+      status.style.color = "#f87171";
+      return;
+    }
+    if (!/^v?\d+(\.\d+)+$/.test(modEl.value.trim())) {
+      status.textContent = "Mod version should look like 1.4.0 or v1.4.0.";
+      status.style.color = "#f87171";
+      return;
+    }
+
+    var body = "Name: " + (nameEl.value.trim() || "(not provided)") +
+      "\nProject: " + projectName +
+      "\nIssue Type: " + issue +
+      "\nMinecraft Version: " + mcEl.value.trim() +
+      "\nMod Version: " + modEl.value.trim() +
+      "\nPriority: " + priorityEl.value +
+      "\nMod Loader: " + loaderEl.value +
+      "\n\nDescription:\n" + descEl.value.trim();
+
+    var subject = "[" + projectName + "] " + issue;
+    var gmail = "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+      encodeURIComponent("ahyaanthepro@gmail.com") +
+      "&su=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+
+    var win = window.open(gmail, "_blank");
+    if (!win) {
+      // Popup blocked → offer a mailto fallback.
+      var mailto = "mailto:ahyaanthepro@gmail.com?subject=" +
+        encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      window.location.href = mailto;
+      status.textContent = "Popup blocked — opened your email app instead.";
+    } else {
+      status.textContent = "Opening Gmail with your report ready to send. Thanks for the detail!";
+    }
+    status.style.color = "#2dd4bf";
+  });
+})();
+</script>
+</body>
+</html>

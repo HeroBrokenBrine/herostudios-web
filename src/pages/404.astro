@@ -1,0 +1,44 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { products, sortedProducts, iconUrl } from "../data/products.js";
+
+const top = sortedProducts().filter((p) => p.lifecycle !== "roadmap").slice(0, 6);
+---
+
+<Base title="Page not found" description="That page could not be found.">
+  <section class="pagehead container" style="text-align:center;padding-block:clamp(56px,10vw,120px);">
+    <p class="eyebrow" style="font-size:13px;">Error 404</p>
+    <h1 style="font-size:clamp(30px,5vw,52px);">This block doesn't exist.</h1>
+    <p class="lead" style="margin-inline:auto;">The page you're looking for was moved, renamed, or never placed in the world.</p>
+
+    <form class="glass" style="display:flex;align-items:center;gap:10px;border-radius:var(--r-md);padding:8px 14px;max-width:480px;margin:28px auto 0;" action="/search" method="get" role="search">
+      <Icon name="search" />
+      <input class="input" name="q" type="search" placeholder="Search the ecosystem…" aria-label="Search" style="border:none;background:transparent;box-shadow:none;" autofocus />
+      <button class="btn btn--sm btn--primary" type="submit" style="min-height:38px;">Search</button>
+    </form>
+
+    <div class="hero__cta" style="margin-top:20px;">
+      <a class="btn btn--ghost" href="/">Back to home</a>
+      <a class="btn btn--ghost" href="/products">Explore products</a>
+    </div>
+  </section>
+
+  <section class="container sec-tight" style="max-width:980px;">
+    <p class="eyebrow">Popular destinations</p>
+    <h2 style="font-size:22px;margin-bottom:24px;">Try one of these</h2>
+    <div class="grid grid--products">
+      {top.map((p) => (
+        <a class="card card--hover" href={`/products/${p.slug}`} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};display:flex;align-items:center;gap:12px;text-decoration:none;padding:18px 20px;`}>
+          <span class="product-card__glyph" style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};width:40px;height:40px;`}>
+            {iconUrl(p) ? <img src={iconUrl(p)} alt="" loading="lazy" /> : <Icon name={p.icon} />}
+          </span>
+          <span>
+            <span style="display:block;font-weight:600;color:var(--text-primary);">{p.name}</span>
+            <span style="font-size:13px;color:var(--text-muted);">{p.tagline}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

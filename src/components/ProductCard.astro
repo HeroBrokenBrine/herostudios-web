@@ -1,0 +1,24 @@
+---
+import Icon from "./Icon.astro";
+import LifecycleBadge from "./LifecycleBadge.astro";
+import { iconUrl } from "../data/products.js";
+
+const { product } = Astro.props;
+const g = product.glyph;
+const img = iconUrl(product);
+---
+
+<a href={`/products/${product.slug}`} class="card card--hover product-card" style={`--glyph:${g.color};--glyph-glow:${g.glow};--glow:${g.glow};`}>
+  <div class="product-card__head">
+    <div class="product-card__glyph" aria-hidden="true">
+      {img ? <img src={img} alt="" loading="lazy" /> : <Icon name={product.icon} />}
+    </div>
+    <LifecycleBadge lifecycle={product.lifecycle} />
+  </div>
+  <h3 class="product-card__title">{product.name}</h3>
+  <p class="product-card__tagline">{product.tagline}</p>
+  <div class="product-card__meta">
+    {product.version !== "—" && <span class="chip">v{product.version}</span>}
+    <span class="chip">{product.loader}</span>
+  </div>
+</a>

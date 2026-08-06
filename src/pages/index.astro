@@ -1,0 +1,200 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import ProductCard from "../components/ProductCard.astro";
+import { products, categories, sortedProducts, iconUrl } from "../data/products.js";
+import { roadmap, principles } from "../data/roadmap.js";
+
+const spotlight = products.find((p) => p.slug === "redstone-debugger");
+const nowItems = roadmap.now;
+const stableCount = products.filter((p) => ["stable", "released"].includes(p.lifecycle)).length;
+const activeCount = products.filter((p) => p.lifecycle !== "roadmap").length;
+---
+
+<Base active="/" title="The Minecraft Software Ecosystem">
+  <section class="hero">
+    <span class="hero-orb hero-orb--purple" aria-hidden="true"></span>
+    <span class="hero-orb hero-orb--sea" aria-hidden="true"></span>
+    <span class="hero-orb hero-orb--sky" aria-hidden="true"></span>
+    <p class="eyebrow" style="justify-content:center;display:flex;">Hero Studios</p>
+    <h1>
+      Everything Minecraft. <span class="grad-text">Engineered.</span>
+    </h1>
+    <p class="lead">
+      Performance-first software engineered to work together. Every product becomes part of one
+      ecosystem — never a collection of mods.
+    </p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="/downloads">
+        <Icon name="download" /> Download Hero Client
+      </a>
+      <a class="btn btn--ghost" href="/products">Explore the ecosystem</a>
+    </div>
+    <div class="hero__meta">
+      <span class="chip">{products.length} products</span>
+      <span class="chip">{stableCount} stable</span>
+      <span class="chip">{activeCount} in active development</span>
+      <span class="chip">One ecosystem</span>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="section--tight container">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
+      {categories.map((c) => {
+        const count = products.filter((p) => p.category === c.id).length;
+        return (
+          <a class="card card--hover" href="/products" style="padding:22px;display:block;text-decoration:none;">
+            <h3 style="font-size:16px;margin-bottom:6px;">{c.name}</h3>
+            <p style="font-size:13.5px;color:var(--text-muted);">{c.blurb}</p>
+            <p style="margin-top:10px;font-family:var(--font-mono);font-size:12px;color:var(--purple-text);">{count} product{count !== 1 ? "s" : ""}</p>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Products grid -->
+  <section class="section container">
+    <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:32px;">
+      <div>
+        <p class="eyebrow">The ecosystem</p>
+        <h2 class="sec-title" style="margin-bottom:8px;">One ecosystem. Every tool.</h2>
+        <p class="sec-lead">Fourteen products and growing — each with an honest lifecycle status. Stable means CI-built and tested. Roadmap means vision.</p>
+      </div>
+      <a class="link-arrow" href="/products">All products <Icon name="arrow" /></a>
+    </div>
+    <div class="grid grid--products reveal">
+      {sortedProducts().map((p) => <ProductCard product={p} />)}
+    </div>
+  </section>
+
+  <!-- How it works together -->
+  <section class="section container">
+    <div class="reveal" style="max-width:680px;margin-bottom:40px;">
+      <p class="eyebrow">Why it works</p>
+      <h2 class="sec-title">Built to work together</h2>
+      <p class="sec-lead">One design language, one performance bar, one shared intelligence layer in the making. The site, the client, the docs, and the roadmap all speak the same language.</p>
+    </div>
+    <div class="grid grid--3 reveal">
+      {principles.map((p) => (
+        <div class="card card--hover">
+          <div style="width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);color:var(--purple-text);margin-bottom:16px;">
+            <Icon name="spark" />
+          </div>
+          <h3 style="font-size:16px;margin-bottom:8px;">{p.title}</h3>
+          <p style="font-size:14px;color:var(--text-muted);">{p.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Spotlight -->
+  <section class="section container">
+    <div class="card reveal" style="padding:clamp(28px,5vw,56px);background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(17,24,39,.9) 45%);">
+      <div class="grid grid--2" style="align-items:center;">
+        <div>
+          <p class="eyebrow">Featured</p>
+          <h2 class="sec-title" style="margin-bottom:12px;">{spotlight.name}</h2>
+          <p style="margin-bottom:20px;font-size:16.5px;">{spotlight.tagline}</p>
+          <p style="color:var(--text-secondary);margin-bottom:24px;">{spotlight.why}</p>
+          <div class="hero__cta" style="justify-content:flex-start;">
+            <a class="btn btn--primary" href={`/products/${spotlight.slug}`}>Learn more</a>
+            <a class="btn btn--ghost" href={`/docs/${spotlight.slug}`}>Documentation</a>
+          </div>
+        </div>
+        <div class="glass" style="border-radius:var(--r-lg);padding:28px;display:grid;gap:14px;">
+          {spotlight.capabilities.map((c) => (
+            <div class="feature">
+              <div class="feature__icon">
+                {iconUrl(spotlight) ? <img src={iconUrl(spotlight)} alt="" loading="lazy" /> : <Icon name={spotlight.icon} />}
+              </div>
+              <div>
+                <h3 style="font-size:15px;">{c.title}</h3>
+                <p style="font-size:13.5px;color:var(--text-muted);">{c.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Downloads + Docs teaser -->
+  <section class="section container">
+    <div class="grid grid--2 reveal">
+      <a class="card card--hover" href="/downloads" style="display:block;text-decoration:none;">
+        <div style="width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(20,184,166,.12);border:1px solid rgba(20,184,166,.3);color:var(--sea-soft);margin-bottom:18px;"><Icon name="download" /></div>
+        <h3 style="font-size:20px;margin-bottom:8px;">Downloads</h3>
+        <p style="font-size:14.5px;color:var(--text-muted);margin-bottom:16px;">Every product, every version, one download centre. Latest builds first, with checksums.</p>
+        <span class="link-arrow" style="color:var(--purple-text);">Open download centre <Icon name="arrow" /></span>
+      </a>
+      <a class="card card--hover" href="/docs" style="display:block;text-decoration:none;">
+        <div style="width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);color:var(--sky);margin-bottom:18px;"><Icon name="book" /></div>
+        <h3 style="font-size:20px;margin-bottom:8px;">Documentation</h3>
+        <p style="font-size:14.5px;color:var(--text-muted);margin-bottom:16px;">One unified docs platform. Every product, one search, one navigation, one design language.</p>
+        <span class="link-arrow" style="color:var(--purple-text);">Browse docs <Icon name="arrow" /></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Latest releases -->
+  <section class="section container">
+    <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:28px;">
+      <div>
+        <p class="eyebrow">Release notes</p>
+        <h2 class="sec-title" style="margin-bottom:8px;">Latest releases</h2>
+      </div>
+      <a class="link-arrow" href="/releases">All releases <Icon name="arrow" /></a>
+    </div>
+    <div class="release-strip reveal">
+      {sortedProducts().filter((p) => p.version !== "—" && p.downloads.available).slice(0, 6).map((p) => (
+        <a class="card card--hover" href={`/releases#${p.slug}`} style="display:flex;align-items:center;gap:12px;text-decoration:none;padding:18px 20px;">
+          <span class="ic">{iconUrl(p) ? <img src={iconUrl(p)} alt="" loading="lazy" /> : <Icon name={p.icon} />}</span>
+          <span style="min-width:0;">
+            <span style="display:block;font-weight:600;color:var(--text-primary);font-size:15px;">{p.name}</span>
+            <span class="mono" style="color:var(--text-muted);font-size:12px;">v{p.version}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Roadmap highlight -->
+  <section class="section container">
+    <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:32px;">
+      <div>
+        <p class="eyebrow">Roadmap</p>
+        <h2 class="sec-title" style="margin-bottom:8px;">What we're building now</h2>
+      </div>
+      <a class="link-arrow" href="/roadmap">Full roadmap <Icon name="arrow" /></a>
+    </div>
+    <div class="timeline reveal">
+      {nowItems.map((it) => (
+        <div class="tl-item tl--now">
+          <div class="tl-item__head">
+            <h3>{it.title}</h3>
+            <span class="chip">Now</span>
+          </div>
+          <p>{it.desc}{it.product ? ` — ${products.find((p) => p.slug === it.product)?.name}.` : ""}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section container">
+    <div class="cta-banner reveal">
+      <h2>Built to work together.</h2>
+      <p>Join the ecosystem. Download your first Hero Studios product, read the docs, and watch one ecosystem become many tools.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="/downloads"><Icon name="download" /> Get started</a>
+        <a class="btn btn--ghost" href="/about">About Hero Studios</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero__meta .chip { background: rgba(17,24,39,.7); }
+</style>

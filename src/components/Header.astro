@@ -1,0 +1,67 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+
+const { active = "" } = Astro.props;
+
+const links = [
+  { href: "/products", label: "Products" },
+  { href: "/downloads", label: "Downloads" },
+  { href: "/docs", label: "Docs" },
+  { href: "/roadmap", label: "Roadmap" },
+  { href: "/developers", label: "Developers" },
+  { href: "/about", label: "About" },
+  { href: "/support", label: "Support" },
+];
+---
+
+<header class="nav">
+  <div class="nav__inner">
+    <Logo />
+    <nav class="nav__links" id="nav-links" aria-label="Primary">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class:list={["nav__link", { "nav__link--active": active === l.href }]}
+            aria-current={active === l.href ? "page" : undefined}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+    <button class="nav__search-btn" id="search-open" type="button">
+      <Icon name="search" size={16} />
+      <span class="txt">Search</span>
+      <kbd>Ctrl K</kbd>
+    </button>
+    <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <Icon name="menu" />
+    </button>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const linksEl = document.getElementById("nav-links");
+  if (toggle && linksEl) {
+    const closeMenu = () => {
+      linksEl.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    };
+    toggle.addEventListener("click", () => {
+      const open = linksEl.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+    });
+    linksEl.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") closeMenu();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && linksEl.classList.contains("open")) {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+  }
+</script>

@@ -1,0 +1,12 @@
+---
+import { lifecycleMeta } from "../data/categories.js";
+
+const { lifecycle } = Astro.props;
+const meta = lifecycleMeta[lifecycle] || lifecycleMeta.roadmap;
+const cls = `badge--${lifecycle}`;
+---
+
+<span class={`badge ${cls}`} title={`Lifecycle: ${meta.label}`}>
+  <span class="dot" aria-hidden="true"></span>
+  {meta.label}
+</span>

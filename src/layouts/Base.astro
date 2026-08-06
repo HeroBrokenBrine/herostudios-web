@@ -1,0 +1,114 @@
+---
+import "../styles/fonts.css";
+import "../styles/global.css";
+import { ViewTransitions } from "astro:transitions";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SearchOverlay from "../components/SearchOverlay.astro";
+
+const { title, description, active = "", ogType = "website" } = Astro.props;
+const siteTitle = "Hero Studios — Everything Minecraft. Engineered.";
+const pageTitle = title ? `${title} | Hero Studios` : siteTitle;
+const pageDesc = description || "Everything Minecraft. Engineered. Hero Studios builds performance-first Minecraft software — mods, clients, AI, and platforms that work as one ecosystem.";
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/png" href="/brand/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    <link rel="canonical" href={`https://herostudios.org${currentPath}`} />
+    <link rel="preload" href="/fonts/Inter-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Sora-500.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/JetBrainsMono-400.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:url" content={`https://herostudios.org${currentPath}`} />
+    <meta property="og:site_name" content="Hero Studios" />
+    <meta property="og:image" content="https://herostudios.org/brand/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#050816" />
+
+    <meta name="robots" content="index, follow" />
+    <meta name="color-scheme" content="dark" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Hero Studios",
+      url: "https://herostudios.org",
+      description: "Developer of the world's most advanced Minecraft software ecosystem.",
+      sameAs: ["https://discord.gg/5N4pAKRrkk", "https://herobrokenbrine.github.io/issues/"],
+    })}></script>
+    <ViewTransitions />
+  </head>
+  <body>
+    <div class="read-progress" id="read-progress" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header active={active} />
+    <main id="main" transition:persist>
+      <slot />
+    </main>
+    <Footer />
+    <SearchOverlay />
+    <button class="btt" id="btt" type="button" aria-label="Back to top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg>
+    </button>
+
+    <script>
+      // JS flag gates reveal-on-scroll so content is never hidden without JS.
+      document.documentElement.classList.add("js");
+
+      function initReveal() {
+        const els = document.querySelectorAll(".reveal:not(.in)");
+        if (!("IntersectionObserver" in window)) {
+          els.forEach((el) => el.classList.add("in"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+      initReveal();
+
+      // Header shadow on scroll + back-to-top visibility + reading progress.
+      const nav = document.querySelector(".nav");
+      const btt = document.getElementById("btt");
+      const rp = document.getElementById("read-progress");
+      function onScroll() {
+        const y = window.scrollY;
+        nav && nav.classList.toggle("scrolled", y > 8);
+        btt && btt.classList.toggle("show", y > 600);
+        if (rp) {
+          const h = document.documentElement.scrollHeight - window.innerHeight;
+          rp.style.width = h > 0 ? (y / h) * 100 + "%" : "0%";
+        }
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+      btt && btt.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+      // Re-run reveal + scroll state after client-side page transitions.
+      document.addEventListener("astro:page-load", () => {
+        initReveal();
+        onScroll();
+      });
+    </script>
+  </body>
+</html>

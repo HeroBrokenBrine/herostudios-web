@@ -1,0 +1,43 @@
+---
+import Base from "../../layouts/Base.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import { productsByCategory, sortedProducts } from "../../data/products.js";
+
+const groups = productsByCategory();
+---
+
+<Base active="/products" title="Products" description="Every product in the Hero Studios ecosystem, with honest lifecycle status.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Products</span>
+    </nav>
+    <p class="eyebrow">The ecosystem</p>
+    <h1>One ecosystem. Every tool.</h1>
+    <p class="lead">
+      Performance mods to AI platforms to the Hero Client itself — every product shows its real lifecycle
+      status. Stable means CI-built and tested. Roadmap means vision.
+    </p>
+  </section>
+
+  {groups.map((g) => (
+    <section class="container sec-sm">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:20px;margin-bottom:4px;">{g.name}</h2>
+        <p style="font-size:14px;color:var(--text-muted);">{g.blurb}</p>
+      </div>
+      <div class="grid grid--products reveal">
+        {g.items.map((p) => <ProductCard product={p} />)}
+      </div>
+    </section>
+  ))}
+
+  <section class="container sec-tight">
+    <div class="cta-banner">
+      <h2>Ready to download?</h2>
+      <p>Pick a product and grab the build for your Minecraft version.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="/downloads">Open download centre</a>
+      </div>
+    </div>
+  </section>
+</Base>

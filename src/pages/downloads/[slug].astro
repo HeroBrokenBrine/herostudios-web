@@ -1,0 +1,118 @@
+---
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import { products, iconUrl } from "../../data/products.js";
+import { downloads } from "../../data/downloads.js";
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+
+const { product } = Astro.props;
+const g = product.glyph;
+const img = iconUrl(product);
+const files = (downloads[product.slug]?.files || []).map((f) => ({
+  ...f,
+  mb: (f.size / 1048576).toFixed(2),
+  url: `/downloads/${product.slug}/${f.file}`,
+}));
+const available = product.downloads.available && files.length > 0;
+---
+
+<Base
+  title={`Download ${product.name}`}
+  description={`Download ${product.name} — ${product.tagline}`}
+  active="/downloads"
+>
+  <section class="pagehead container" style={`--hero-glow:${g.glow};`}>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span>
+      <a href="/downloads">Downloads</a> <span class="sep">/</span>
+      <span aria-current="page">{product.name}</span>
+    </nav>
+    <p class="eyebrow">Download</p>
+    <h1>{product.name}</h1>
+    <p class="lead">{product.tagline}</p>
+  </section>
+
+  <section class="container sec-sm">
+    {available ? (
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;">
+          <div class="product-card__glyph" style={`--glyph:${g.color};--glyph-glow:${g.glow};`}>
+            {img ? <img src={img} alt="" loading="eager" /> : <Icon name={product.icon} />}
+          </div>
+          <div>
+            <h2 style="font-size:18px;">{product.name} {product.version !== "—" ? product.version : ""}</h2>
+            <p style="font-size:13.5px;color:var(--text-muted);">{product.compatibility.note}</p>
+          </div>
+          <a class="btn btn--primary" style="margin-left:auto;" href={files[0].url} download>
+            <Icon name="download" /> Download latest
+          </a>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Build</th><th>File</th><th>Size</th><th>SHA-256</th><th>Get</th></tr></thead>
+            <tbody>
+              {files.map((f) => (
+                <tr>
+                  <td>{f.label}</td>
+                  <td class="mono" style="font-size:12.5px;">{f.file}</td>
+                  <td class="mono">{f.mb} MB</td>
+                  <td class="mono" style="font-size:11.5px;">
+                    <span class="sha" data-sha={f.sha256}>{f.sha256.slice(0, 12)}…</span>
+                  </td>
+                  <td>
+                    <a class="btn btn--sm btn--secondary" href={f.url} download>
+                      <Icon name="download" /> JAR
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:14px;">
+          Click a SHA-256 hash to copy it, then verify your download matches.
+        </p>
+      </div>
+    ) : (
+      <div class="card" style="max-width:640px;text-align:center;padding:48px 32px;">
+        <div class="product-card__glyph" style={`--glyph:${g.color};--glyph-glow:${g.glow};margin-inline:auto;margin-bottom:20px;`}>
+          {img ? <img src={img} alt="" loading="eager" /> : <Icon name={product.icon} />}
+        </div>
+        <h2 style="font-size:20px;margin-bottom:10px;">Not yet available</h2>
+        <p style="color:var(--text-muted);margin-bottom:20px;">{product.downloads.note}</p>
+        <a class="btn btn--ghost" href="/roadmap"><Icon name="flag" /> Follow the roadmap</a>
+      </div>
+    )}
+  </section>
+
+  <section class="container sec-tight">
+    <div class="alert alert--info">
+      <Icon name="shield" />
+      <div>
+        Downloads are provided under the HBBML license. Install instructions are in the <a href={`/docs/${product.slug}`}>documentation</a>.
+        Always verify the SHA-256 checksum of downloaded files.
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll(".sha").forEach((el) => {
+      el.addEventListener("click", async () => {
+        const sha = el.dataset.sha;
+        try {
+          await navigator.clipboard.writeText(sha);
+          el.textContent = "Copied ✓";
+          setTimeout(() => (el.textContent = sha.slice(0, 12) + "…"), 1600);
+        } catch {
+          const toast = document.getElementById("toast");
+          toast?.classList.add("show");
+          setTimeout(() => toast?.classList.remove("show"), 2000);
+        }
+      });
+    });
+  </script>
+  <div class="toast" id="toast" role="status">Could not copy — select the hash manually.</div>
+</Base>

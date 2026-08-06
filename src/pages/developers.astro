@@ -1,0 +1,116 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+
+const devSections = [
+  {
+    icon: "code",
+    title: "Integration guides",
+    desc: "How products connect — HeroSync in Hero Client, DPT theming, Pack Merger output, and more.",
+    items: [
+      "HeroSync → Hero Client module",
+      "DPT → ecosystem visual identity",
+      "Pack Merger → creator workflows",
+    ],
+    status: "Documented as integrations land.",
+  },
+  {
+    icon: "layers",
+    title: "APIs & SDKs",
+    desc: "Public interfaces where they exist today, clearly marked where they don't.",
+    items: [
+      "Redstone Debugger SDK (in progress)",
+      "Hero Agent model router (BYOK)",
+    ],
+    status: "Documented only — nothing here is assumed live.",
+  },
+  {
+    icon: "gear",
+    title: "Ecosystem standards",
+    desc: "The conventions every Hero Studios project follows.",
+    items: [
+      "HBBML license",
+      "Lifecycle & status model",
+      "Multi-version build conventions",
+      "Quality and testing bar",
+    ],
+    status: "Standards drive every product page on this site.",
+  },
+  {
+    icon: "users",
+    title: "Contributing",
+    desc: "The ecosystem grows through shared standards and clear processes.",
+    items: [
+      "Code of conduct",
+      "Contribution guidelines",
+      "Release process",
+      `Issue tracker — ${"herobrokenbrine.github.io/issues"}`,
+    ],
+    status: "Formal contribution channels open as repositories go public.",
+  },
+];
+
+const integrationMap = [
+  { from: "HeroSync", to: "Hero Client", label: "Latency compensation inside the client", icon: "sync" },
+  { from: "DPT", to: "All products", label: "One visual identity", icon: "palette" },
+  { from: "Pack Merger", to: "Creators", label: "Merged packs export-ready", icon: "merge" },
+  { from: "Hero Agent", to: "Hero Client", label: "Shared AI layer (in development)", icon: "agent" },
+];
+---
+
+<Base active="/developers" title="Developers" description="The Hero Studios developer portal — integrations, APIs, standards, and contributing.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Developers</span>
+    </nav>
+    <p class="eyebrow">Developer portal</p>
+    <h1>Build on the ecosystem.</h1>
+    <p class="lead">
+      Integration guides, API references, and the standards that keep every Hero Studios product coherent.
+      Transparency first: what isn't live yet is clearly marked.
+    </p>
+  </section>
+
+  <section class="container sec-tight">
+    <div class="grid grid--2">
+      {devSections.map((s) => (
+        <div class="card card--hover">
+          <div class="feature__icon" style="margin-bottom:16px;"><Icon name={s.icon} /></div>
+          <h3 style="font-size:18px;margin-bottom:8px;">{s.title}</h3>
+          <p style="font-size:14px;color:var(--text-muted);margin-bottom:14px;">{s.desc}</p>
+          <ul style="margin:0 0 14px 20px;color:var(--text-secondary);font-size:14px;">
+            {s.items.map((i) => <li style="margin-bottom:6px;">{i}</li>)}
+          </ul>
+          <p style="font-size:13px;color:var(--sea-soft);">{s.status}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container sec-tight">
+    <p class="eyebrow">Integration map</p>
+    <h2 style="font-size:22px;margin-bottom:24px;">How the ecosystem fits together</h2>
+    <div class="glass" style="border-radius:var(--r-lg);padding:24px;display:grid;gap:12px;">
+      {integrationMap.map((m) => (
+        <div class="feature">
+          <div class="feature__icon"><Icon name={m.icon} /></div>
+          <div>
+            <h4 style="font-size:14.5px;">{m.from} <span style="color:var(--text-muted);">→</span> {m.to}</h4>
+            <p style="font-size:13.5px;color:var(--text-muted);">{m.label}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container sec-tight">
+    <div class="cta-banner">
+      <h2>Want to build with us?</h2>
+      <p>Contact the team about collaborations, integrations, or joining the ecosystem.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="/contact"><Icon name="mail" /> Contact us</a>
+        <a class="btn btn--ghost" href="/about">About Hero Studios</a>
+      </div>
+    </div>
+  </section>
+</Base>

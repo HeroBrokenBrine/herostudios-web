@@ -1,0 +1,81 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { products, lifecycleMeta, iconUrl } from "../data/products.js";
+
+const services = [
+  { name: "Website", note: "Static site on a global CDN — no servers, nothing to fail", label: "Operational", dot: "ok" },
+  { name: "Downloads", note: "All release builds served with SHA-256 checksums", label: "Operational", dot: "ok" },
+  { name: "Issue tracker", note: "herobrokenbrine.github.io/issues", label: "Operational", dot: "ok" },
+  { name: "Discord community", note: "discord.gg/5N4pAKRrkk", label: "Operational", dot: "ok" },
+  { name: "Documentation", note: "Unified docs platform for all products", label: "Operational", dot: "ok" },
+];
+
+const live = products.filter((p) => p.lifecycle !== "roadmap");
+const stable = live.filter((p) => ["stable", "released"].includes(p.lifecycle)).length;
+const beta = live.filter((p) => ["beta", "alpha"].includes(p.lifecycle)).length;
+const dev = live.filter((p) => ["in-development", "experimental"].includes(p.lifecycle)).length;
+---
+
+<Base active="/status" title="Status" description="System status and ecosystem health for Hero Studios.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Status</span>
+    </nav>
+    <p class="eyebrow">Status</p>
+    <h1>All systems operational.</h1>
+    <p class="lead">This website is a static site — there are no servers to go down. Status reflects the ecosystem's real state, honestly.</p>
+  </section>
+
+  <section class="container sec-sm">
+    <div class="card reveal" style="display:flex;align-items:center;gap:16px;padding:24px 26px;">
+      <span class="status-dot" style="width:14px;height:14px;"></span>
+      <div>
+        <strong style="font-size:18px;color:var(--text-primary);">All systems operational</strong>
+        <p style="font-size:14px;color:var(--text-muted);">Checked continuously · No incidents reported</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container sec-sm">
+    <p class="eyebrow">Services</p>
+    <div class="grid grid--2">
+      {services.map((s) => (
+        <div class="status-row">
+          <div>
+            <strong style="font-size:15px;color:var(--text-primary);">{s.name}</strong>
+            <p style="font-size:13.5px;color:var(--text-muted);">{s.note}</p>
+          </div>
+          <span class="chip" style="color:var(--success);border-color:rgba(34,197,94,.4);">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container sec-tight">
+    <p class="eyebrow">Ecosystem health</p>
+    <h2 style="font-size:22px;margin-bottom:20px;">Product lifecycle overview</h2>
+    <div class="rm-stats">
+      <div class="card rm-stat"><div class="num">{live.length}</div><div class="lbl">Products live</div></div>
+      <div class="card rm-stat"><div class="num" style="color:var(--success);">{stable}</div><div class="lbl">Stable</div></div>
+      <div class="card rm-stat"><div class="num" style="color:var(--sky);">{beta}</div><div class="lbl">Beta / Alpha</div></div>
+      <div class="card rm-stat"><div class="num" style="color:var(--purple-text);">{dev}</div><div class="lbl">In development</div></div>
+    </div>
+    <div class="grid grid--products">
+      {products.map((p) => (
+        <div class="card" style="display:flex;align-items:center;gap:12px;padding:16px 18px;">
+          {iconUrl(p) ? <img src={iconUrl(p)} alt="" width="32" height="32" style="border-radius:8px;" /> : <Icon name={p.icon} size={22} />}
+          <div style="min-width:0;">
+            <div style="font-weight:600;color:var(--text-primary);font-size:14px;">{p.name}</div>
+            <div style="font-size:12.5px;color:var(--text-muted);">{lifecycleMeta[p.lifecycle].label}{p.version !== "—" ? ` · v${p.version}` : ""}</div>
+          </div>
+          <span class={`status-dot`} style="margin-left:auto;flex:none;" class:list={[p.lifecycle === "roadmap" ? "status-dot--later" : ""]}></span>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .status-dot--later { background: var(--text-muted); box-shadow: none; }
+</style>

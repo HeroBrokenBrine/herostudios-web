@@ -1,0 +1,51 @@
+---
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import { products, sortedProducts, iconUrl } from "../../data/products.js";
+
+const docsProducts = products.filter((p) => p.docs && p.docs.overview);
+---
+
+<Base active="/docs" title="Documentation" description="The unified Hero Studios documentation platform — every product, one search, one navigation.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Docs</span>
+    </nav>
+    <p class="eyebrow">Documentation</p>
+    <h1>One ecosystem of docs.</h1>
+    <p class="lead">
+      Every Hero Studios product keeps independent documentation, but shares one search engine, one
+      navigation system, one design language, and one documentation experience.
+    </p>
+  </section>
+
+  <section class="container sec-sm">
+    <button class="btn btn--ghost" id="docs-search-btn" type="button" style="width:100%;max-width:520px;justify-content:flex-start;color:var(--text-muted);">
+      <Icon name="search" /> Search all documentation…
+      <kbd style="margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);border:1px solid var(--border);border-radius:4px;padding:1px 6px;">Ctrl K</kbd>
+    </button>
+  </section>
+
+  <section class="container sec-tight">
+    <div class="grid grid--products reveal">
+      {docsProducts.map((p) => (
+        <a class="card card--hover" href={`/docs/${p.slug}`} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};display:block;text-decoration:none;`}>
+          <div class="product-card__head" style="margin-bottom:14px;">
+            <div class="product-card__glyph" style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};`}>
+              {iconUrl(p) ? <img src={iconUrl(p)} alt="" loading="lazy" /> : <Icon name={p.icon} />}
+            </div>
+          </div>
+          <h3 style="font-size:17px;margin-bottom:6px;">{p.name}</h3>
+          <p style="font-size:14px;color:var(--text-muted);">{p.docs.overview}</p>
+          <p style="margin-top:14px;display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--purple-text);">Read docs <Icon name="arrow" /></p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <script>
+    document.getElementById("docs-search-btn")?.addEventListener("click", () => {
+      document.getElementById("search-open")?.click();
+    });
+  </script>
+</Base>

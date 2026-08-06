@@ -1,0 +1,296 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { roadmap } from "../data/roadmap.js";
+import { products, getProduct, iconUrl } from "../data/products.js";
+
+const lanes = [
+  { key: "now", title: "Now", desc: "In active development", cls: "tl--now", color: "var(--sea)" },
+  { key: "next", title: "Next", desc: "Upcoming", cls: "tl--planned", color: "var(--sky)" },
+  { key: "later", title: "Later", desc: "Long-term vision", cls: "tl--later", color: "var(--purple-text)" },
+];
+
+const statusRank = { done: 100, now: 60, next: 30, later: 5 };
+function productProgress(p) {
+  const items = p.roadmap || [];
+  if (!items.length) return 0;
+  return Math.round(items.reduce((a, r) => a + (statusRank[r.status] ?? 10), 0) / items.length);
+}
+
+const productProgressList = products.map((p) => ({ p, pct: productProgress(p) })).sort((a, b) => b.pct - a.pct);
+const totalItems = lanes.reduce((n, l) => n + roadmap[l.key].length, 0);
+const stats = [
+  { num: totalItems, lbl: "Active items" },
+  { num: roadmap.now.length, lbl: "In progress" },
+  { num: roadmap.next.length, lbl: "Up next" },
+  { num: roadmap.later.length, lbl: "Long-term" },
+  { num: products.length, lbl: "Products tracked" },
+];
+
+function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
+---
+
+<Base active="/roadmap" title="Roadmap" description="The Hero Studios ecosystem roadmap — what's shipped, in progress, and planned.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Roadmap</span>
+    </nav>
+    <p class="eyebrow">Roadmap</p>
+    <h1>The path ahead.</h1>
+    <p class="lead">Roadmaps communicate intent, not promises. Shipped means shipped; planned means planned. We never list untested work as done.</p>
+  </section>
+
+  <!-- Stats -->
+  <section class="container sec-sm">
+    <div class="rm-stats reveal">
+      {stats.map((s) => (
+        <div class="card rm-stat">
+          <div class="num count" data-count={s.num}>{s.num}</div>
+          <div class="lbl">{s.lbl}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Toolbar -->
+  <section class="container">
+    <div class="rm-toolbar reveal" role="toolbar" aria-label="Roadmap filters">
+      <input class="input" id="rm-search" type="search" placeholder="Filter roadmap…" aria-label="Filter roadmap" />
+      <div class="rm-view-toggle" role="group" aria-label="View">
+        <button type="button" id="view-timeline" class="is-active" data-view="timeline">Timeline</button>
+        <button type="button" id="view-board" data-view="board">Board</button>
+      </div>
+      <select class="input" id="rm-status" aria-label="Filter by status" style="width:auto;">
+        <option value="all">All statuses</option>
+        <option value="now">Now</option>
+        <option value="next">Next</option>
+        <option value="later">Later</option>
+      </select>
+      <select class="input" id="rm-product" aria-label="Filter by product" style="width:auto;">
+        <option value="all">All products</option>
+        {products.map((p) => <option value={p.slug}>{p.name}</option>)}
+      </select>
+      <button class="btn btn--sm btn--ghost" id="rm-expand" type="button">Expand all</button>
+      <button class="btn btn--sm btn--ghost" id="rm-collapse" type="button">Collapse all</button>
+    </div>
+  </section>
+
+  <!-- Timeline view -->
+  <div class="container rm-view" id="rm-timeline">
+    {lanes.map((lane) => (
+      <section class="container sec-sm rm-lane-section" data-status={lane.key} style="padding-inline:0;">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:20px;">
+          <h2 style="font-size:20px;">{lane.title}</h2>
+          <span style="font-size:14px;color:var(--text-muted);">{lane.desc}</span>
+          <span class="chip" data-count-for={lane.key}>{roadmap[lane.key].length}</span>
+        </div>
+        <div class="timeline" data-lane={lane.key}>
+          {roadmap[lane.key].map((it) => {
+            const prod = it.product ? getProduct(it.product) : null;
+            const id = slugify(it.title);
+            return (
+              <div class={`tl-item ${lane.cls}`} data-item={id} data-product={it.product || ""} data-text={`${it.title} ${it.desc} ${prod?.name || ""}`.toLowerCase()}>
+                <div class="tl-item__head">
+                  <h3>{it.title}</h3>
+                  {prod && <span class="chip" style="display:inline-flex;align-items:center;gap:6px;">{iconUrl(prod) ? <img src={iconUrl(prod)} alt="" width="14" height="14" style="border-radius:3px;" /> : null}{prod.name}</span>}
+                  <span class="chip">{lane.title}</span>
+                  <button class="rm-copy" type="button" data-copy={id} aria-label={`Copy link to ${it.title}`} title="Copy link">Copy link</button>
+                </div>
+                <p>{it.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+
+    <!-- Per-product roadmaps -->
+    <section class="container sec-sm" style="padding-inline:0;">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:20px;">
+        <h2 style="font-size:20px;">Product roadmaps</h2>
+        <span style="font-size:14px;color:var(--text-muted);">Milestones per product</span>
+      </div>
+      <div class="accordion">
+        {productProgressList.map(({ p, pct }) => (
+          <details id={`prod-${p.slug}`}>
+            <summary>
+              <span style="display:flex;align-items:center;gap:10px;">
+                {iconUrl(p) ? <img src={iconUrl(p)} alt="" width="20" height="20" style="border-radius:5px;" /> : <Icon name={p.icon} size={18} />}
+                {p.name}
+              </span>
+              <span class="progress" style="width:120px;flex:none;"><span style={{ width: `${pct}%` }}></span></span>
+              <span class="mono" style="color:var(--text-muted);">{pct}%</span>
+            </summary>
+            <div class="acc-body"><div class="acc-inner">
+              <div style="padding:16px 20px 20px;display:grid;gap:12px;">
+                {(p.roadmap || []).map((r) => (
+                  <div class="feature">
+                    <div style="width:28px;height:28px;flex:none;border-radius:8px;display:grid;place-items:center;font-size:12px;" class:list={["rm-dot", `rm-dot--${r.status}`]}>
+                      {r.status === "done" ? "✓" : "•"}
+                    </div>
+                    <div>
+                      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        <strong style="font-size:14px;color:var(--text-primary);">{r.title}</strong>
+                        <span class="chip">{r.status}</span>
+                      </div>
+                      <p style="font-size:13.5px;color:var(--text-muted);">{r.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div></div>
+          </details>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- Board (Kanban) view -->
+  <div class="container rm-view" id="rm-board" hidden>
+    <div class="rm-board">
+      {lanes.map((lane) => (
+        <div class="rm-lane" data-status={lane.key}>
+          <div class="rm-lane__head">
+            <span class="dot" style="width:8px;height:8px;border-radius:50%;background:{lane.color};"></span>
+            <h3>{lane.title}</h3>
+            <span class="rm-lane__count" data-count-for={lane.key}>{roadmap[lane.key].length}</span>
+          </div>
+          <div class="rm-lane__body" data-lane={lane.key}>
+            {roadmap[lane.key].map((it) => {
+              const prod = it.product ? getProduct(it.product) : null;
+              const id = slugify(it.title);
+              return (
+                <div class={`rm-card ${lane.cls}`} data-item={id} data-product={it.product || ""} data-text={`${it.title} ${it.desc} ${prod?.name || ""}`.toLowerCase()}>
+                  <h4>{it.title}</h4>
+                  <p>{it.desc}</p>
+                  <div class="rm-card__meta">
+                    {prod && <span class="chip">{prod.name}</span>}
+                    <span class="chip">{lane.title}</span>
+                    <div class="rm-card__actions">
+                      <button type="button" data-copy={id} aria-label={`Copy link to ${it.title}`}>Copy</button>
+                      <a href={`/products/${prod?.slug || ""}`} aria-label={`Open ${prod?.name || ""}`} style="font-size:11px;border:1px solid var(--border);border-radius:6px;padding:4px 7px;color:var(--text-muted);">Open</a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <section class="container sec-tight">
+    <div class="cta-banner reveal">
+      <h2>Want to shape what's next?</h2>
+      <p>Roadmap priorities are informed by community feedback. Join the Discord to vote and share ideas.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="https://discord.gg/5N4pAKRrkk" target="_blank" rel="noopener"><Icon name="discord" /> Join the Discord</a>
+        <a class="btn btn--ghost" href="/products">Explore products</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .rm-dot { color: var(--text-muted); background: rgba(148, 163, 184, 0.1); }
+  .rm-dot--done { color: var(--success); background: rgba(34, 197, 94, 0.14); }
+  .rm-dot--now { color: var(--sea-soft); background: rgba(20, 184, 166, 0.14); }
+  .rm-dot--next { color: var(--sky); background: rgba(56, 189, 248, 0.14); }
+  .rm-copy { background: none; border: 1px solid var(--border); color: var(--text-muted); border-radius: 6px; padding: 3px 8px; font-size: 11px; cursor: pointer; }
+  .rm-copy:hover { color: var(--text-primary); border-color: var(--border-strong); }
+  .tl-item[data-match="false"], .rm-lane-section[data-match="false"], .rm-lane[data-match="false"] { display: none; }
+</style>
+
+<script>
+  const q = (s) => document.querySelector(s);
+  const qa = (s) => Array.from(document.querySelectorAll(s));
+
+  const search = q("#rm-search");
+  const statusSel = q("#rm-status");
+  const productSel = q("#rm-product");
+  const board = q("#rm-board");
+  const timeline = q("#rm-timeline");
+  const btnTimeline = q("#view-timeline");
+  const btnBoard = q("#view-board");
+
+  function applyFilters() {
+    const term = (search?.value || "").toLowerCase().trim();
+    const status = statusSel?.value || "all";
+    const product = productSel?.value || "all";
+    qa("[data-item]").forEach((el) => {
+      const lane = el.closest("[data-lane]")?.getAttribute("data-lane") || "";
+      const p = el.getAttribute("data-product") || "";
+      const text = el.getAttribute("data-text") || "";
+      const ok = (!term || text.includes(term)) && (status === "all" || lane === status) && (product === "all" || p === product || p === "");
+      el.setAttribute("data-match", String(ok));
+    });
+    // hide empty lanes/sections
+    qa("[data-lane]").forEach((laneEl) => {
+      const visible = qa(`[data-lane="${laneEl.getAttribute("data-lane")}"] [data-item]`).some((el) => el.getAttribute("data-match") !== "false");
+      const host = laneEl.closest(".rm-lane-section, .rm-lane");
+      if (host) host.setAttribute("data-match", String(visible));
+      const counter = qa(`[data-count-for="${laneEl.getAttribute("data-lane")}"]`)[0];
+      if (counter) counter.textContent = qa(`[data-lane="${laneEl.getAttribute("data-lane")}"] [data-item]`).filter((el) => el.getAttribute("data-match") !== "false").length;
+    });
+  }
+
+  search && search.addEventListener("input", applyFilters);
+  statusSel && statusSel.addEventListener("change", applyFilters);
+  productSel && productSel.addEventListener("change", applyFilters);
+
+  function setView(view) {
+    const boardMode = view === "board";
+    board.hidden = !boardMode;
+    timeline.hidden = boardMode;
+    btnTimeline.classList.toggle("is-active", !boardMode);
+    btnBoard.classList.toggle("is-active", boardMode);
+  }
+  btnTimeline.addEventListener("click", () => setView("timeline"));
+  btnBoard.addEventListener("click", () => setView("board"));
+
+  // Expand / collapse all product roadmaps (persisted)
+  const storeKey = "hero-rm-expanded";
+  function persist() {
+    try { localStorage.setItem(storeKey, JSON.stringify(qa("details[id^=prod-]").map((d) => d.id).filter((id) => document.getElementById(id)?.open))); } catch {}
+  }
+  function applyPersisted() {
+    try {
+      const open = JSON.parse(localStorage.getItem(storeKey) || "[]");
+      open.forEach((id) => { const d = document.getElementById(id); if (d) d.open = true; });
+    } catch {}
+  }
+  qa("details[id^=prod-]").forEach((d) => d.addEventListener("toggle", persist));
+  q("#rm-expand").addEventListener("click", () => { qa("details[id^=prod-]").forEach((d) => (d.open = true)); persist(); });
+  q("#rm-collapse").addEventListener("click", () => { qa("details[id^=prod-]").forEach((d) => (d.open = false)); persist(); });
+
+  // Copy link
+  function copyText(t) {
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => {});
+  }
+  qa(".rm-copy, [data-copy]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-copy");
+      copyText(location.origin + "/roadmap#" + id);
+    });
+  });
+
+  // Deep link
+  function handleHash() {
+    if (!location.hash) return;
+    const el = document.getElementById(location.hash.slice(1)) || q(`[data-item="${location.hash.slice(1)}"]`);
+    if (el) {
+      setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 120);
+      el.style.outline = "2px solid var(--sky)";
+      el.style.outlineOffset = "4px";
+      setTimeout(() => { el.style.outline = ""; }, 2200);
+    }
+  }
+  handleHash();
+  document.addEventListener("astro:page-load", () => {
+    applyFilters();
+    applyPersisted();
+    handleHash();
+  });
+  applyPersisted();
+</script>

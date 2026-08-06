@@ -1,0 +1,99 @@
+---
+import Logo from "./Logo.astro";
+import { site } from "../data/site.js";
+import { products } from "../data/products.js";
+
+const productLinks = [
+  { href: "/products", label: "All products" },
+  { href: "/downloads", label: "Downloads" },
+  { href: "/docs", label: "Documentation" },
+  { href: "/roadmap", label: "Roadmap" },
+];
+const platformLinks = [
+  { href: "/developers", label: "Developer portal" },
+  { href: "/releases", label: "Release notes" },
+  { href: "/status", label: "System status" },
+  { href: "/brand", label: "Brand & press" },
+];
+const companyLinks = [
+  { href: "/about", label: "About Hero Studios" },
+  { href: "/about#license", label: "License (HBBML)" },
+  { href: site.issuesUrl, label: "Issue tracker", external: true },
+  { href: site.donateUrl, label: "Support the studio", external: true },
+];
+const latest = products.filter((p) => p.version !== "—" && p.downloads.available).slice(0, 6);
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">
+          <img src="/brand/icon.jpg" alt="" width="40" height="40" />
+          <span>Hero Studios</span>
+        </div>
+        <p class="footer__about">
+          Everything Minecraft. Engineered. The world's most advanced Minecraft software ecosystem — performance-first tools built to work together.
+        </p>
+        <div class="footer__status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <a href="/status" style="color:var(--text-muted);">All systems operational</a>
+        </div>
+        <p style="font-size:12.5px;color:var(--text-disabled);margin-top:10px;">
+          Press <kbd>/</kbd> anywhere to search · <kbd>⌘K</kbd> to open the command palette
+        </p>
+      </div>
+      <div>
+        <h4>Ecosystem</h4>
+        <ul>
+          {productLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+        <h4 style="margin-top:20px;">Latest releases</h4>
+        <div class="footer__toplinks">
+          {latest.map((p) => (
+            <span class="chip"><a href={`/releases#${p.slug}`}>{p.name} {p.version}</a></span>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h4>Platform</h4>
+        <ul>
+          {platformLinks.map((l) => (
+            <li><a href={l.href} target={l.external ? "_blank" : undefined} rel={l.external ? "noopener" : undefined}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          {companyLinks.map((l) => (
+            <li><a href={l.href} target={l.external ? "_blank" : undefined} rel={l.external ? "noopener" : undefined}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h4>Community</h4>
+        <ul>
+          <li>
+            <a href={site.discordUrl} target="_blank" rel="noopener" style="display:inline-flex;gap:8px;align-items:center;">
+              <img src="/brand/discord.jpg" alt="" width="20" height="20" style="border-radius:5px;" /> Discord
+            </a>
+          </li>
+          <li><a href="/support">Get help</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/brand">Brand assets</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© {new Date().getFullYear()} Hero Studios. All rights reserved. Licensed under <a href={site.licenseUrl} target="_blank" rel="noopener">HBBML</a>.</span>
+      <span style="display:inline-flex;align-items:center;gap:16px;">
+        <a href="/about#privacy">Privacy</a>
+        <a href="/sitemap.xml">Sitemap</a>
+        <a href={site.email}>Email</a>
+        <a href="#top">Back to top ↑</a>
+      </span>
+    </div>
+  </div>
+</footer>
