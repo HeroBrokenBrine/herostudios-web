@@ -1,4 +1,4 @@
----
+﻿---
 import "../styles/fonts.css";
 import "../styles/global.css";
 import { ViewTransitions } from "astro:transitions";
@@ -7,9 +7,9 @@ import Footer from "../components/Footer.astro";
 import SearchOverlay from "../components/SearchOverlay.astro";
 
 const { title, description, active = "", ogType = "website" } = Astro.props;
-const siteTitle = "Hero Studios — Everything Minecraft. Engineered.";
+const siteTitle = "Hero Studios â€” Everything Minecraft. Engineered.";
 const pageTitle = title ? `${title} | Hero Studios` : siteTitle;
-const pageDesc = description || "Everything Minecraft. Engineered. Hero Studios builds performance-first Minecraft software — mods, clients, AI, and platforms that work as one ecosystem.";
+const pageDesc = description || "Everything Minecraft. Engineered. Hero Studios builds performance-first Minecraft software â€” mods, clients, AI, and platforms that work as one ecosystem.";
 const currentPath = Astro.url.pathname;
 ---
 
@@ -23,7 +23,7 @@ const currentPath = Astro.url.pathname;
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/png" href="/brand/favicon-32.png" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-    <link rel="canonical" href={`https://herostudios.org${currentPath}`} />
+    <link rel="canonical" href={`https://herostudios.dev${currentPath}`} />
     <link rel="preload" href="/fonts/Inter-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/Sora-500.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/JetBrainsMono-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -31,9 +31,9 @@ const currentPath = Astro.url.pathname;
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDesc} />
-    <meta property="og:url" content={`https://herostudios.org${currentPath}`} />
+    <meta property="og:url" content={`https://herostudios.dev${currentPath}`} />
     <meta property="og:site_name" content="Hero Studios" />
-    <meta property="og:image" content="https://herostudios.org/brand/og-image.png" />
+    <meta property="og:image" content="https://herostudios.dev/brand/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#050816" />
 
@@ -43,7 +43,7 @@ const currentPath = Astro.url.pathname;
       "@context": "https://schema.org",
       "@type": "Organization",
       name: "Hero Studios",
-      url: "https://herostudios.org",
+      url: "https://herostudios.dev",
       description: "Developer of the world's most advanced Minecraft software ecosystem.",
       sameAs: ["https://discord.gg/5N4pAKRrkk", "https://herobrokenbrine.github.io/issues/"],
     })}></script>

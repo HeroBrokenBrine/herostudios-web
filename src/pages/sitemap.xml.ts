@@ -1,6 +1,6 @@
-import { products } from "../data/products.js";
+﻿import { products } from "../data/products.js";
 
-const base = "https://herostudios.org";
+const base = "https://herostudios.dev";
 
 const staticPages = ["/", "/products", "/downloads", "/docs", "/roadmap", "/developers", "/about", "/support", "/contact", "/search", "/releases", "/status", "/brand", "/support-portal.html"];
 

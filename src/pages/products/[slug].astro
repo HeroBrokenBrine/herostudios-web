@@ -1,4 +1,4 @@
----
+﻿---
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
 import LifecycleBadge from "../../components/LifecycleBadge.astro";
@@ -30,8 +30,8 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
     description: product.tagline,
     applicationCategory: "GameApplication",
     operatingSystem: product.loader,
-    url: `https://herostudios.org/products/${product.slug}`,
-    softwareVersion: product.version === "—" ? undefined : product.version,
+    url: `https://herostudios.dev/products/${product.slug}`,
+    softwareVersion: product.version === "â€”" ? undefined : product.version,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   })}></script>
   <section class="prod-hero container" style={`--glyph:${g.color};--glyph-glow:${g.glow};--hero-glow:${g.glow};`}>
@@ -46,7 +46,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
     <div class="prod-hero__badges">
       <LifecycleBadge lifecycle={product.lifecycle} />
       <span class="chip">{catName}</span>
-      {product.version !== "—" && <span class="chip">v{product.version}</span>}
+      {product.version !== "â€”" && <span class="chip">v{product.version}</span>}
     </div>
     <h1>{product.name}</h1>
     <p class="lead">{product.tagline}</p>
@@ -65,7 +65,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
     <div class={`alert alert--${statusTone}`}>
       <Icon name={statusTone === "warn" ? "warn" : "info"} />
       <div>
-        <strong>{lifecycleMeta[product.lifecycle].label} · </strong>
+        <strong>{lifecycleMeta[product.lifecycle].label} Â· </strong>
         {product.statusNote}
       </div>
     </div>
@@ -107,7 +107,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
             <thead><tr><th>Property</th><th>Value</th></tr></thead>
             <tbody>
               <tr><td>Loader / platform</td><td>{product.loader}</td></tr>
-              <tr><td>Latest version</td><td>{product.version === "—" ? "Not released" : product.version}</td></tr>
+              <tr><td>Latest version</td><td>{product.version === "â€”" ? "Not released" : product.version}</td></tr>
               <tr><td>Minecraft versions</td><td>{product.mcVersions.join(", ")}</td></tr>
             </tbody>
           </table>
@@ -130,7 +130,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
             ))}
           </div>
         ) : (
-          <p style="color:var(--text-muted);">No releases yet — this product is on the roadmap.</p>
+          <p style="color:var(--text-muted);">No releases yet â€” this product is on the roadmap.</p>
         )}
       </div>
     </div>
@@ -185,7 +185,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
     </div>
     {product.downloads.available ? (
       <div class="hero__cta" style="justify-content:flex-start;margin-top:20px;">
-        <a class="btn btn--primary" href={`/downloads/${product.slug}`}><Icon name="download" /> {product.downloads.sources.join(" · ")}</a>
+        <a class="btn btn--primary" href={`/downloads/${product.slug}`}><Icon name="download" /> {product.downloads.sources.join(" Â· ")}</a>
       </div>
     ) : null}
   </section>

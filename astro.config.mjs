@@ -1,7 +1,7 @@
-import { defineConfig } from "astro/config";
+﻿import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://herostudios.org",
+  site: "https://herostudios.dev",
   output: "static",
   compressHTML: true,
   prefetch: {
