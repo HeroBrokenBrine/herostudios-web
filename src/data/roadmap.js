@@ -1,4 +1,4 @@
-﻿// HERO STUDIOS â€” ecosystem roadmap
+// HERO STUDIOS — ecosystem roadmap
 // Shipped vs In Progress vs Planned vs Considered, at ecosystem level.
 export const roadmap = {
   now: [
@@ -21,7 +21,7 @@ export const roadmap = {
 
 export const principles = [
   { title: "Performance first", desc: "Every tool is engineered around speed and frame budget." },
-  { title: "Stability before features", desc: "Stable means CI-built and tested â€” never the other way around." },
+  { title: "Stability before features", desc: "Stable means CI-built and tested — never the other way around." },
   { title: "Quality over quantity", desc: "Fewer, deeper, better products." },
   { title: "One ecosystem", desc: "Every product is designed to integrate with the others." },
   { title: "Long-term maintainability", desc: "Decisions today serve the next decade." },

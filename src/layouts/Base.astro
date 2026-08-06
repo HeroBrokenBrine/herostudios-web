@@ -7,9 +7,9 @@ import Footer from "../components/Footer.astro";
 import SearchOverlay from "../components/SearchOverlay.astro";
 
 const { title, description, active = "", ogType = "website" } = Astro.props;
-const siteTitle = "Hero Studios â€” Everything Minecraft. Engineered.";
+const siteTitle = "Hero Studios — Software & Technology Studio";
 const pageTitle = title ? `${title} | Hero Studios` : siteTitle;
-const pageDesc = description || "Everything Minecraft. Engineered. Hero Studios builds performance-first Minecraft software â€” mods, clients, AI, and platforms that work as one ecosystem.";
+const pageDesc = description || "Hero Studios is an independent software and technology studio — AI, developer tools, Minecraft software, open-source projects, and game development. Everything Minecraft. Engineered.";
 const currentPath = Astro.url.pathname;
 ---
 
@@ -39,12 +39,26 @@ const currentPath = Astro.url.pathname;
 
     <meta name="robots" content="index, follow" />
     <meta name="color-scheme" content="dark" />
+    <meta name="keywords" content="Hero Studios, software company, technology studio, AI, developer tools, Minecraft mods, Minecraft development, open source, desktop applications, mobile applications, game development, research" />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
       name: "Hero Studios",
       url: "https://herostudios.dev",
-      description: "Developer of the world's most advanced Minecraft software ecosystem.",
+      logo: "https://herostudios.dev/brand/icon.png",
+      description: "An independent software and technology studio building AI, developer tools, Minecraft software, open-source projects, and games. Not affiliated with any other company using a similar name.",
+      industry: "Software Development",
+      slogan: "Everything Minecraft. Engineered.",
+      additionalType: "https://en.wikipedia.org/wiki/Software_company",
+      knowsAbout: [
+        "Artificial Intelligence",
+        "Software Engineering",
+        "Developer Tools",
+        "Minecraft Modding",
+        "Game Development",
+        "Open Source Software",
+      ],
+      keywords: ["AI", "Software Engineering", "Developer Tools", "Open Source", "Minecraft Development"],
       sameAs: ["https://discord.gg/5N4pAKRrkk", "https://herobrokenbrine.github.io/issues/"],
     })}></script>
     <ViewTransitions />

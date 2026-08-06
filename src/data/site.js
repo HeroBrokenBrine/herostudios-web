@@ -7,4 +7,10 @@ export const site = {
   email: "ahyaanthepro@gmail.com",
   issuesUrl: "https://herobrokenbrine.github.io/issues/",
   donateUrl: "https://www.donationalerts.com/r/xhbb_",
+  tagline: "Independent Software & Technology Studio",
+  industry: "Software Development",
+  keywords: "Hero Studios, software company, technology studio, AI, developer tools, Minecraft mods, Minecraft development, open source, desktop applications, mobile applications, game development, research",
+  // Required non-affiliation statement (shown on About, legal, and footer).
+  nonAffiliation:
+    "Hero Studios is an independent software and technology studio specializing in AI, developer tools, Minecraft software, desktop and mobile applications, open-source projects, and game development. It is not affiliated with, endorsed by, sponsored by, or connected to any other company using a similar name.",
 };
