@@ -4,6 +4,7 @@ import Icon from "../components/Icon.astro";
 import ProductCard from "../components/ProductCard.astro";
 import { products, categories, sortedProducts, iconUrl, lifecycleMeta } from "../data/products.js";
 import { roadmap, principles } from "../data/roadmap.js";
+import { spotlight as partnerSpotlight } from "../data/spotlight.js";
 
 const spotlight = products.find((p) => p.slug === "redstone-debugger");
 const nowItems = roadmap.now;
@@ -149,6 +150,41 @@ const serverShuffled = shuffle([...products]);
           <p style="font-size:14px;color:var(--text-muted);">{p.desc}</p>
         </div>
       ))}
+    </div>
+  </section>
+
+  <!-- Community spotlight -->
+  <section class="section container">
+    <div class="card reveal" style="padding:clamp(28px,5vw,56px);background:linear-gradient(135deg,rgba(56,189,248,.08),rgba(17,24,39,.9) 45%);">
+      <div class="grid grid--2" style="align-items:center;gap:40px;">
+        <div>
+          <p class="eyebrow">{partnerSpotlight.badge}</p>
+          <h2 class="sec-title" style="margin-bottom:12px;">{partnerSpotlight.name}</h2>
+          <p style="margin-bottom:14px;font-size:16.5px;">{partnerSpotlight.tagline}</p>
+          <p style="color:var(--text-secondary);margin-bottom:20px;">{partnerSpotlight.description}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+            {partnerSpotlight.features.map((f) => <span class="chip">{f}</span>)}
+          </div>
+          <div class="hero__cta" style="justify-content:flex-start;">
+            <a class="btn btn--primary" href={partnerSpotlight.url} target="_blank" rel="noopener"><Icon name="external" /> View on Modrinth</a>
+            {partnerSpotlight.links.map((l) => (
+              <a class="btn btn--ghost" href={l.url} target="_blank" rel="noopener">{l.label}</a>
+            ))}
+          </div>
+        </div>
+        <div class="glass" style="border-radius:var(--r-lg);padding:24px;display:grid;gap:14px;">
+          <h3 style="font-size:16px;">Why you'll like it</h3>
+          {partnerSpotlight.highlights.map((h) => (
+            <div class="feature">
+              <div class="feature__icon"><Icon name={h.icon} /></div>
+              <div>
+                <h4 style="font-size:14.5px;">{h.title}</h4>
+                <p style="font-size:13.5px;color:var(--text-muted);">{h.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
