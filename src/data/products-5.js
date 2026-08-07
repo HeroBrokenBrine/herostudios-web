@@ -121,5 +121,6 @@ export const products5 = [
     related: ["hero-launcher", "hero-client"],
     glyph: { color: "#38bdf8", glow: "rgba(56, 189, 248, 0.45)" },
     icon: "layers",
+    iconImg: true,
   },
 ];

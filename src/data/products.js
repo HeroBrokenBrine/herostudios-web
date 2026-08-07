@@ -47,9 +47,7 @@ const svgSlugs = new Set([
   "craftpilot",
   "j2b-mc",
   "hero-agent",
-  "hero-renderer",
   "hero-launcher",
-  "dpt-purple",
 ]);
 
 export function iconUrl(product) {
