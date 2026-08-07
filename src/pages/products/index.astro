@@ -58,13 +58,11 @@ const activeCat = Astro.url.searchParams.get("category") || "";
 </Base>
 
 <script>
-  const chips = Array.from(document.querySelectorAll(".cat-chip"));
-  const sections = Array.from(document.querySelectorAll(".cat-section"));
-  const empty = document.createElement("p");
-  empty.textContent = "No products in this category yet.";
-  empty.style.cssText = "color:var(--text-muted);padding:24px 0;";
-
   function setCat(cat, updateUrl) {
+    const chips = Array.from(document.querySelectorAll(".cat-chip"));
+    const sections = Array.from(document.querySelectorAll(".cat-section"));
+    const host = document.getElementById("product-groups");
+    if (!host) return;
     chips.forEach((c) => {
       const active = c.dataset.cat === cat;
       c.classList.toggle("is-active", active);
@@ -76,9 +74,16 @@ const activeCat = Astro.url.searchParams.get("category") || "";
       s.hidden = !show;
       if (show) any = true;
     });
-    const host = document.getElementById("product-groups");
-    if (!any && !host.contains(empty)) host.prepend(empty);
-    if (any && host.contains(empty)) empty.remove();
+    const empty = host.querySelector(".cat-empty");
+    if (!any && !empty) {
+      const e = document.createElement("p");
+      e.className = "cat-empty";
+      e.textContent = "No products in this category yet.";
+      e.style.cssText = "color:var(--text-muted);padding:24px 0;";
+      host.prepend(e);
+    } else if (any && empty) {
+      empty.remove();
+    }
     if (updateUrl) {
       const url = new URL(location.href);
       if (cat) url.searchParams.set("category", cat);
@@ -87,11 +92,11 @@ const activeCat = Astro.url.searchParams.get("category") || "";
     }
   }
 
+  // Re-binds after every navigation (View Transitions swaps the DOM).
   function initCats() {
-    const chipsEls = Array.from(document.querySelectorAll(".cat-chip"));
-    const sectionsEls = Array.from(document.querySelectorAll(".cat-section"));
-    if (!chipsEls.length || !sectionsEls.length) return;
-    chipsEls.forEach((c) => {
+    const chips = Array.from(document.querySelectorAll(".cat-chip"));
+    if (!chips.length) return;
+    chips.forEach((c) => {
       c.onclick = () => setCat(c.dataset.cat, true);
     });
     const initial = new URLSearchParams(location.search).get("category") || "";
