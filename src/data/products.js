@@ -50,15 +50,6 @@ const svgSlugs = new Set([
   "hero-renderer",
   "hero-launcher",
   "dpt-purple",
-  "dpt-cyan",
-  "dpt-gold",
-  "dpt-green",
-  "dpt-lime",
-  "dpt-magenta",
-  "dpt-orange",
-  "dpt-pink",
-  "dpt-red",
-  "dpt-yellow",
 ]);
 
 export function iconUrl(product) {
