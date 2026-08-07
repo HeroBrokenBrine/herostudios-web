@@ -187,28 +187,36 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
     </div>
     {product.downloads.available ? (
       <div class="hero__cta" style="justify-content:flex-start;margin-top:20px;">
-        <a class="btn btn--primary" href={`/downloads/${product.slug}`}><Icon name="download" /> {product.downloads.sources.join(" Â· ")}</a>
+        <a class="btn btn--primary" href={`/downloads/${product.slug}`}><Icon name="download" /> {product.downloads.sources.join(" · ")}</a>
       </div>
     ) : null}
   </section>
 
   {related.length > 0 && (
-    <section class="container sec-tight">
+    <section class="container sec-tight" id="ecosystem">
       <p class="eyebrow">Ecosystem</p>
-      <h2 style="font-size:22px;margin-bottom:24px;">Works with</h2>
+      <h2 style="font-size:24px;margin-bottom:10px;">Part of something bigger</h2>
+      <p class="sec-lead" style="margin-bottom:28px;">
+        Every Hero Studios product is engineered to work with the rest of the ecosystem — one design
+        language, one performance bar, one long-term vision. {product.name} belongs alongside these tools.
+      </p>
       <div class="grid grid--products">
         {related.map((r) => <ProductCard product={r} />)}
+      </div>
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+        <a class="btn btn--ghost" href="/products"><Icon name="layers" /> Explore all products</a>
+        <a class="btn btn--ghost" href="/roadmap"><Icon name="flag" /> See the ecosystem roadmap</a>
       </div>
     </section>
   )}
 
   <section class="container sec-tight">
     <div class="cta-banner">
-      <h2>{product.name} is part of something bigger.</h2>
-      <p>Every Hero Studios product is engineered to integrate into the ecosystem.</p>
+      <h2>{product.name} — ready when you are.</h2>
+      <p>Install it, read the docs, and explore how it fits into the wider ecosystem.</p>
       <div class="hero__cta">
+        <a class="btn btn--primary" href={`/downloads/${product.slug}`}><Icon name="download" /> Get {product.name}</a>
         <a class="btn btn--ghost" href="/products">Explore all products</a>
-        <a class="btn btn--ghost" href="/docs">Browse documentation</a>
         <a class="btn btn--ghost" href={site.donateUrl} target="_blank" rel="noopener"><Icon name="heart" /> Support the studio</a>
       </div>
     </div>

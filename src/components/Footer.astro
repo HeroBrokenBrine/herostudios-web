@@ -55,7 +55,10 @@ const latest = products.filter((p) => p.version !== "—" && p.downloads.availab
         <h4 style="margin-top:20px;">Latest releases</h4>
         <div class="footer__toplinks">
           {latest.map((p) => (
-            <span class="chip"><a href={`/releases#${p.slug}`}>{p.name} {p.version}</a></span>
+            <a href={`/releases#${p.slug}`} class="footer__release">
+              <span>{p.name}</span>
+              <span class="mono">{p.version}</span>
+            </a>
           ))}
         </div>
       </div>
@@ -79,9 +82,7 @@ const latest = products.filter((p) => p.version !== "—" && p.downloads.availab
         <h4>Community</h4>
         <ul>
           <li>
-            <a href={site.discordUrl} target="_blank" rel="noopener" style="display:inline-flex;gap:8px;align-items:center;">
-              <img src="/brand/discord.jpg" alt="" width="20" height="20" style="border-radius:5px;" /> Discord
-            </a>
+            <a href={site.discordUrl} target="_blank" rel="noopener">Discord</a>
           </li>
           <li><a href="/support">Get help</a></li>
           <li><a href="/contact">Contact</a></li>

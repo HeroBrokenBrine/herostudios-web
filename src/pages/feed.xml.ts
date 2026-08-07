@@ -15,6 +15,7 @@ const items = products
   .slice(0, 20);
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>
 <rss version="2.0">
   <channel>
     <title>Hero Studios — Releases</title>
