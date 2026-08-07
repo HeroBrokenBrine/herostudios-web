@@ -1,9 +1,10 @@
 ---
 import Base from "../../layouts/Base.astro";
 import ProductCard from "../../components/ProductCard.astro";
-import { productsByCategory, sortedProducts } from "../../data/products.js";
+import { productsByCategory, categories } from "../../data/products.js";
 
 const groups = productsByCategory();
+const activeCat = Astro.url.searchParams.get("category") || "";
 ---
 
 <Base active="/products" title="Products" description="Every product in the Hero Studios ecosystem, with honest lifecycle status.">
@@ -19,17 +20,31 @@ const groups = productsByCategory();
     </p>
   </section>
 
-  {groups.map((g) => (
-    <section class="container sec-sm">
-      <div style="margin-bottom:20px;">
-        <h2 style="font-size:20px;margin-bottom:4px;">{g.name}</h2>
-        <p style="font-size:14px;color:var(--text-muted);">{g.blurb}</p>
-      </div>
-      <div class="grid grid--products reveal">
-        {g.items.map((p) => <ProductCard product={p} />)}
-      </div>
-    </section>
-  ))}
+  <section class="container sec-sm">
+    <div class="rm-toolbar reveal" role="toolbar" aria-label="Filter products by category" style="margin-bottom:0;">
+      <span class="chip" style="color:var(--text-muted);font-family:var(--font-mono);">Filter:</span>
+      <button type="button" class="tab cat-chip is-active" data-cat="">All</button>
+      {categories.map((c) => (
+        <button type="button" class="tab cat-chip" data-cat={c.id} aria-pressed="false">
+          {c.name} <span class="cat-count" style="opacity:.7;font-family:var(--font-mono);font-size:11px;">{groups.find((g) => g.id === c.id)?.items.length ?? 0}</span>
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <div id="product-groups">
+    {groups.map((g) => (
+      <section class="container sec-sm cat-section" data-cat={g.id}>
+        <div style="margin-bottom:20px;">
+          <h2 style="font-size:20px;margin-bottom:4px;">{g.name}</h2>
+          <p style="font-size:14px;color:var(--text-muted);">{g.blurb}</p>
+        </div>
+        <div class="grid grid--products reveal">
+          {g.items.map((p) => <ProductCard product={p} />)}
+        </div>
+      </section>
+    ))}
+  </div>
 
   <section class="container sec-tight">
     <div class="cta-banner">
@@ -41,3 +56,47 @@ const groups = productsByCategory();
     </div>
   </section>
 </Base>
+
+<script>
+  const chips = Array.from(document.querySelectorAll(".cat-chip"));
+  const sections = Array.from(document.querySelectorAll(".cat-section"));
+  const empty = document.createElement("p");
+  empty.textContent = "No products in this category yet.";
+  empty.style.cssText = "color:var(--text-muted);padding:24px 0;";
+
+  function setCat(cat, updateUrl) {
+    chips.forEach((c) => {
+      const active = c.dataset.cat === cat;
+      c.classList.toggle("is-active", active);
+      c.setAttribute("aria-pressed", String(active));
+    });
+    let any = false;
+    sections.forEach((s) => {
+      const show = !cat || s.dataset.cat === cat;
+      s.hidden = !show;
+      if (show) any = true;
+    });
+    const host = document.getElementById("product-groups");
+    if (!any && !host.contains(empty)) host.prepend(empty);
+    if (any && host.contains(empty)) empty.remove();
+    if (updateUrl) {
+      const url = new URL(location.href);
+      if (cat) url.searchParams.set("category", cat);
+      else url.searchParams.delete("category");
+      history.replaceState(null, "", url.pathname + url.search);
+    }
+  }
+
+  function initCats() {
+    const chipsEls = Array.from(document.querySelectorAll(".cat-chip"));
+    const sectionsEls = Array.from(document.querySelectorAll(".cat-section"));
+    if (!chipsEls.length || !sectionsEls.length) return;
+    chipsEls.forEach((c) => {
+      c.onclick = () => setCat(c.dataset.cat, true);
+    });
+    const initial = new URLSearchParams(location.search).get("category") || "";
+    setCat(initial, false);
+  }
+  initCats();
+  document.addEventListener("astro:page-load", initCats);
+</script>

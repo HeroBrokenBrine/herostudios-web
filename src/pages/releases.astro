@@ -25,10 +25,11 @@ const withReleases = sortedProducts().filter((p) => p.changelog && p.changelog.l
           <span class="chip">{p.version === "—" ? "planned" : p.version}</span>
           <a class="chip" href={`/downloads/${p.slug}`} style="margin-left:auto;">Download →</a>
         </div>
-        {p.changelog.map((v) => (
+        {p.changelog.map((v, i) => (
           <div class="card" style="padding:20px 22px;">
             <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:10px;">
               <span class="mono" style="color:var(--purple-text);font-weight:600;">{v.version}</span>
+              {i === 0 && <span class="chip" style="color:var(--success);border-color:rgba(34,197,94,.4);">Latest</span>}
             </div>
             <ul style="margin:0 0 0 18px;color:var(--text-secondary);font-size:14px;">
               {v.notes.map((n) => <li style="margin-bottom:6px;">{n}</li>)}

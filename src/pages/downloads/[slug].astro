@@ -99,20 +99,24 @@ const available = product.downloads.available && files.length > 0;
   </section>
 
   <script>
-    document.querySelectorAll(".sha").forEach((el) => {
-      el.addEventListener("click", async () => {
-        const sha = el.dataset.sha;
-        try {
-          await navigator.clipboard.writeText(sha);
-          el.textContent = "Copied ✓";
-          setTimeout(() => (el.textContent = sha.slice(0, 12) + "…"), 1600);
-        } catch {
-          const toast = document.getElementById("toast");
-          toast?.classList.add("show");
-          setTimeout(() => toast?.classList.remove("show"), 2000);
-        }
+    function bindChecksums() {
+      document.querySelectorAll(".sha").forEach((el) => {
+        el.onclick = async () => {
+          const sha = el.dataset.sha;
+          try {
+            await navigator.clipboard.writeText(sha);
+            el.textContent = "Copied ✓";
+            setTimeout(() => (el.textContent = sha.slice(0, 12) + "…"), 1600);
+          } catch {
+            const toast = document.getElementById("toast");
+            toast?.classList.add("show");
+            setTimeout(() => toast?.classList.remove("show"), 2000);
+          }
+        };
       });
-    });
+    }
+    bindChecksums();
+    document.addEventListener("astro:page-load", bindChecksums);
   </script>
   <div class="toast" id="toast" role="status">Could not copy — select the hash manually.</div>
 </Base>

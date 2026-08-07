@@ -45,6 +45,15 @@ const known = [
 ---
 
 <Base active="/support" title="Support" description="Help, FAQs, and troubleshooting for every Hero Studios product.">
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqGroups.flatMap((g) => g.items).map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a.replace(/<[^>]+>/g, "") },
+    })),
+  })}></script>
   <section class="pagehead container">
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Support</span>
@@ -140,21 +149,23 @@ const known = [
 </Base>
 
 <script>
-  const faqSearch = document.getElementById("faq-search");
-  const faqItems = Array.from(document.querySelectorAll(".faq-item"));
-  const faqGroups = Array.from(document.querySelectorAll(".faq-group"));
-
   function filterFaq(term) {
     const t = term.toLowerCase().trim();
-    faqItems.forEach((el) => {
+    document.querySelectorAll(".faq-item").forEach((el) => {
       const ok = !t || el.dataset.text.includes(t);
       el.hidden = !ok;
       if (!ok && el.open) el.open = false;
     });
-    faqGroups.forEach((g) => {
+    document.querySelectorAll(".faq-group").forEach((g) => {
       const any = Array.from(g.querySelectorAll(".faq-item")).some((el) => !el.hidden);
       g.hidden = !any;
     });
   }
-  faqSearch && faqSearch.addEventListener("input", () => filterFaq(faqSearch.value));
+  function initFaq() {
+    const faqSearch = document.getElementById("faq-search");
+    if (!faqSearch) return;
+    faqSearch.oninput = () => filterFaq(faqSearch.value);
+  }
+  initFaq();
+  document.addEventListener("astro:page-load", initFaq);
 </script>

@@ -1053,6 +1053,8 @@ h3, h4 { letter-spacing: -0.018em; }
 .sec { padding-block: clamp(64px, 8vw, 112px); }
 .sec-tight { padding-block: clamp(40px, 5vw, 64px); }
 .sec-sm { padding-block: clamp(20px, 3vw, 40px); }
+/* Skip heavy rendering below the fold on the homepage; LCP/CLS safe with intrinsic size. */
+.section { content-visibility: auto; contain-intrinsic-size: 1px 600px; }
 
 .eyebrow { letter-spacing: 0.16em; margin-bottom: 14px; }
 .sec-title { letter-spacing: -0.028em; margin-bottom: 18px; }

@@ -1,0 +1,30 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site.js";
+---
+
+<Base active="" title="Terms of Service" description="Terms of use for herostudios.dev and Hero Studios software.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <a href="/about">About</a> <span class="sep">/</span> <span aria-current="page">Terms</span>
+    </nav>
+    <p class="eyebrow">Legal</p>
+    <h1>Terms of service</h1>
+    <p class="lead">Using this website and Hero Studios software means agreeing to these terms.</p>
+  </section>
+
+  <section class="container sec-tight">
+    <div class="card" style="max-width:760px;">
+      <h2 style="font-size:18px;margin-bottom:8px;">1. Software license</h2>
+      <p style="margin-bottom:16px;">Hero Studios software is distributed under the <a href={site.licenseUrl} target="_blank" rel="noopener">HBBML license</a>. Check each project's license for exact terms.</p>
+      <h2 style="font-size:18px;margin:20px 0 8px;">2. Fair use</h2>
+      <p style="margin-bottom:16px;">Do not use Hero Studios software to harm others, violate Minecraft's or any server's rules, or redistribute products without permission under the license terms.</p>
+      <h2 style="font-size:18px;margin:20px 0 8px;">3. Mods & servers</h2>
+      <p style="margin-bottom:16px;">Always check server rules before using client-side mods like HeroSync. Hero Studios is not responsible for bans or penalties resulting from your use of our software on third-party servers.</p>
+      <h2 style="font-size:18px;margin:20px 0 8px;">4. No warranty</h2>
+      <p style="margin-bottom:16px;">Software is provided "as is" without warranty of any kind. Back up your worlds before using experimental builds.</p>
+      <h2 style="font-size:18px;margin:20px 0 8px;">5. Contact</h2>
+      <p>For license or legal questions: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+  </section>
+</Base>

@@ -43,25 +43,40 @@ const links = [
 </header>
 
 <script>
-  const toggle = document.getElementById("nav-toggle");
-  const linksEl = document.getElementById("nav-links");
-  if (toggle && linksEl) {
+  // Re-bind on initial load and after every client-side navigation.
+  function bindNav() {
+    const toggle = document.getElementById("nav-toggle");
+    const linksEl = document.getElementById("nav-links");
+    if (!toggle || !linksEl) return;
     const closeMenu = () => {
       linksEl.classList.remove("open");
       toggle.setAttribute("aria-expanded", "false");
     };
-    toggle.addEventListener("click", () => {
+    // onclick (not addEventListener) so re-binding never stacks handlers.
+    toggle.onclick = () => {
       const open = linksEl.classList.toggle("open");
       toggle.setAttribute("aria-expanded", String(open));
-    });
-    linksEl.addEventListener("click", (e) => {
+    };
+    linksEl.onclick = (e) => {
       if (e.target.tagName === "A") closeMenu();
-    });
+    };
+  }
+
+  // Document-level Escape handling, bound once, reading the live nodes.
+  if (!window.__heroNavEscBound) {
+    window.__heroNavEscBound = true;
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && linksEl.classList.contains("open")) {
-        closeMenu();
-        toggle.focus();
+      if (e.key !== "Escape") return;
+      const toggle = document.getElementById("nav-toggle");
+      const linksEl = document.getElementById("nav-links");
+      if (linksEl && linksEl.classList.contains("open")) {
+        linksEl.classList.remove("open");
+        toggle && toggle.setAttribute("aria-expanded", "false");
+        toggle && toggle.focus();
       }
     });
   }
+
+  bindNav();
+  document.addEventListener("astro:page-load", bindNav);
 </script>

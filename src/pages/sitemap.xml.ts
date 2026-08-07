@@ -2,7 +2,7 @@
 
 const base = "https://herostudios.dev";
 
-const staticPages = ["/", "/products", "/downloads", "/docs", "/roadmap", "/developers", "/about", "/support", "/contact", "/search", "/releases", "/status", "/brand", "/support-portal.html"];
+const staticPages = ["/", "/products", "/downloads", "/docs", "/roadmap", "/developers", "/about", "/support", "/contact", "/search", "/releases", "/status", "/brand", "/support-portal.html", "/privacy", "/terms", "/supporters", "/tutorials"];
 
 const urls = [
   ...staticPages,

@@ -4,6 +4,7 @@ import Icon from "../../components/Icon.astro";
 import LifecycleBadge from "../../components/LifecycleBadge.astro";
 import ProductCard from "../../components/ProductCard.astro";
 import { products, getRelated, lifecycleMeta, iconUrl, categories } from "../../data/products.js";
+import { site } from "../../data/site.js";
 
 export function getStaticPaths() {
   return products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
@@ -58,6 +59,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
       )}
       <a class="btn btn--ghost" href={`/docs/${product.slug}`}><Icon name="book" /> Documentation</a>
       <a class="btn btn--ghost" href={`#roadmap`}><Icon name="flag" /> Roadmap</a>
+      <button class="btn btn--ghost" id="share-link" type="button"><Icon name="copy" /> <span>Copy link</span></button>
     </div>
   </section>
 
@@ -207,7 +209,34 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
       <div class="hero__cta">
         <a class="btn btn--ghost" href="/products">Explore all products</a>
         <a class="btn btn--ghost" href="/docs">Browse documentation</a>
+        <a class="btn btn--ghost" href={site.donateUrl} target="_blank" rel="noopener"><Icon name="heart" /> Support the studio</a>
       </div>
     </div>
   </section>
+
+  <script>
+    function bindShare() {
+      const btn = document.getElementById("share-link");
+      if (!btn) return;
+      btn.onclick = () => {
+        const url = location.href;
+        const label = btn.querySelector("span");
+        const done = () => {
+          if (label) { label.textContent = "Copied ✓"; setTimeout(() => (label.textContent = "Copy link"), 1600); }
+        };
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(done).catch(() => window.prompt("Copy this link:", url));
+        } else {
+          const ta = document.createElement("textarea");
+          ta.value = url;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); done(); } catch { window.prompt("Copy this link:", url); }
+          ta.remove();
+        }
+      };
+    }
+    bindShare();
+    document.addEventListener("astro:page-load", bindShare);
+  </script>
 </Base>

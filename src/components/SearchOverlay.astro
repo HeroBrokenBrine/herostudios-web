@@ -50,11 +50,14 @@ import Icon from "./Icon.astro";
   let activeIdx = -1;
   let activeType = "";
 
-  const backdrop = document.getElementById("search-backdrop");
-  const input = document.getElementById("search-input");
-  const results = document.getElementById("search-results");
-  const clearBtn = document.getElementById("search-clear");
-  const openBtn = document.getElementById("search-open");
+  let backdrop, input, results, clearBtn, openBtn;
+  function initRefs() {
+    backdrop = document.getElementById("search-backdrop");
+    input = document.getElementById("search-input");
+    results = document.getElementById("search-results");
+    clearBtn = document.getElementById("search-clear");
+    openBtn = document.getElementById("search-open");
+  }
 
   function loadRecent() {
     try { recent = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { recent = []; }
@@ -258,14 +261,14 @@ import Icon from "./Icon.astro";
     t._h = setTimeout(() => t.classList.remove("show"), 2000);
   }
 
-  input.addEventListener("input", () => {
+  function onInput() {
     const q = input.value.trim();
     clearBtn.style.display = q ? "block" : "none";
     if (!q) return initialView();
     render(search(q), q);
-  });
+  }
 
-  input.addEventListener("keydown", (e) => {
+  function onKeydown(e) {
     const links = Array.from(results.querySelectorAll(".search-result"));
     const k = e.key;
     if (k === "ArrowDown") { e.preventDefault(); setActive(Math.min(activeIdx + 1, links.length - 1)); }
@@ -276,10 +279,7 @@ import Icon from "./Icon.astro";
       const target = links[activeIdx] || links[0];
       if (!target) return;
       e.preventDefault();
-      if (target.hasAttribute("data-query")) {
-        applyQuery(target.getAttribute("data-query"));
-        return;
-      }
+      if (target.hasAttribute("data-query")) { applyQuery(target.getAttribute("data-query")); return; }
       const url = target.getAttribute("href");
       const t = target.querySelector(".t")?.textContent || "";
       if (t) pushRecent(t);
@@ -295,24 +295,37 @@ import Icon from "./Icon.astro";
       e.preventDefault();
       focusables[next].focus();
     }
-  });
+  }
 
-  clearBtn.addEventListener("click", () => {
+  function onClear() {
     input.value = "";
     clearBtn.style.display = "none";
     input.focus();
     initialView();
-  });
+  }
 
-  openBtn && openBtn.addEventListener("click", open);
-  backdrop.addEventListener("click", (e) => { if (e.target === backdrop) close(true); });
+  function bindSearch() {
+    initRefs();
+    if (!backdrop || !input) return;
+    input.oninput = onInput;
+    input.onkeydown = onKeydown;
+    clearBtn.onclick = onClear;
+    if (openBtn) openBtn.onclick = open;
+    backdrop.onclick = (e) => { if (e.target === backdrop) close(true); };
+  }
 
-  document.addEventListener("keydown", (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); open(); }
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "/" && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) { e.preventDefault(); open(); }
-  });
+  if (!window.__heroSearchKeysBound) {
+    window.__heroSearchKeysBound = true;
+    document.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); open(); }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "/" && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) { e.preventDefault(); open(); }
+    });
+  }
+
+  bindSearch();
+  document.addEventListener("astro:page-load", bindSearch);
 </script>
 
 <style>

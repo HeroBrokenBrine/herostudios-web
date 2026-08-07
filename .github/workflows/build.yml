@@ -31,6 +31,9 @@ jobs:
       - name: Build
         run: node node_modules/astro/astro.js build
 
+      - name: Verify build output
+        run: node -e "const fs=require('fs');for(const f of ['dist/index.html','dist/sitemap.xml','dist/robots.txt','dist/site.webmanifest','dist/products/index.html','dist/docs/index.html','dist/downloads/index.html']){if(!fs.existsSync(f)){console.error('Missing '+f);process.exit(1)}}const n=(fs.readdirSync('dist',{recursive:true}).filter(x=>x.endsWith('.html'))).length;console.log('Pages built: '+n);if(n<50)process.exit(1)"
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:

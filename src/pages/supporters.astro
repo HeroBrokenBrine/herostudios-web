@@ -1,0 +1,31 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site.js";
+---
+
+<Base active="" title="Supporters" description="Thank you to everyone who supports Hero Studios.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <span aria-current="page">Supporters</span>
+    </nav>
+    <p class="eyebrow">Community</p>
+    <h1>Support the studio.</h1>
+    <p class="lead">Every donation funds updates, new products, and the tools that keep the ecosystem growing. This page will thank supporters by name — you could be first.</p>
+  </section>
+
+  <section class="container sec-sm">
+    <div class="card" style="text-align:center;padding:48px 32px;" class:list={["reveal"]}>
+      <div class="product-card__glyph" style="margin-inline:auto;margin-bottom:20px;--glyph:#8b5cf6;--glyph-glow:rgba(139,92,246,.45);"><Icon name="heart" /></div>
+      <h2 style="font-size:22px;margin-bottom:10px;">Powered by you</h2>
+      <p style="color:var(--text-muted);margin-bottom:24px;">Hero Studios is an independent studio. Donations keep every product free and supported.</p>
+      <a class="btn btn--primary" href={site.donateUrl} target="_blank" rel="noopener"><Icon name="heart" /> Donate via DonationAlerts</a>
+    </div>
+  </section>
+
+  <section class="container sec-tight">
+    <p class="eyebrow">Hall of fame</p>
+    <h2 style="font-size:22px;margin-bottom:12px;">Recent supporters</h2>
+    <p style="color:var(--text-muted);">Supporters will be listed here with their permission.</p>
+  </section>
+</Base>

@@ -1,0 +1,45 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { products, sortedProducts, iconUrl } from "../data/products.js";
+---
+
+<Base active="" title="Tutorials" description="Quick-start guides and tutorials for every Hero Studios product.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <a href="/docs">Docs</a> <span class="sep">/</span> <span aria-current="page">Tutorials</span>
+    </nav>
+    <p class="eyebrow">Guides</p>
+    <h1>Learn the ecosystem.</h1>
+    <p class="lead">A quick-start guide for every product. Full details live in the documentation.</p>
+  </section>
+
+  <section class="container sec-tight">
+    <div class="grid grid--products">
+      {sortedProducts().filter((p) => p.docs && p.docs.quickstart).map((p) => (
+        <a class="card card--hover" href={`/docs/${p.slug}#quickstart`} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};text-decoration:none;display:block;`}>
+          <div class="product-card__head" style="margin-bottom:12px;">
+            <div class="product-card__glyph" style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};`}>
+              {iconUrl(p) ? <img src={iconUrl(p)} alt="" loading="lazy" decoding="async" /> : <Icon name={p.icon} />}
+            </div>
+            <Icon name="arrow" />
+          </div>
+          <h3 style="font-size:17px;margin-bottom:6px;">{p.name}</h3>
+          <p style="font-size:14px;color:var(--text-muted);">{p.docs.overview}</p>
+          <p style="margin-top:14px;display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--purple-text);">Quick start <Icon name="arrow" /></p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container sec-tight">
+    <div class="cta-banner reveal">
+      <h2>Need help?</h2>
+      <p>Join the Discord for community support, or open the support portal for a guided bug report.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="https://discord.gg/5N4pAKRrkk" target="_blank" rel="noopener"><Icon name="discord" /> Discord</a>
+        <a class="btn btn--ghost" href="/support-portal.html">Support portal</a>
+      </div>
+    </div>
+  </section>
+</Base>

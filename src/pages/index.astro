@@ -44,7 +44,7 @@ const activeCount = products.filter((p) => p.lifecycle !== "roadmap").length;
       {categories.map((c) => {
         const count = products.filter((p) => p.category === c.id).length;
         return (
-          <a class="card card--hover" href="/products" style="padding:22px;display:block;text-decoration:none;">
+          <a class="card card--hover" href={`/products?category=${c.id}`} style="padding:22px;display:block;text-decoration:none;">
             <h3 style="font-size:16px;margin-bottom:6px;">{c.name}</h3>
             <p style="font-size:13.5px;color:var(--text-muted);">{c.blurb}</p>
             <p style="margin-top:10px;font-family:var(--font-mono);font-size:12px;color:var(--purple-text);">{count} product{count !== 1 ? "s" : ""}</p>

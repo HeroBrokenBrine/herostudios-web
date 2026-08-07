@@ -12,12 +12,16 @@ const productLinks = [
 const platformLinks = [
   { href: "/developers", label: "Developer portal" },
   { href: "/releases", label: "Release notes" },
+  { href: "/tutorials", label: "Tutorials" },
   { href: "/status", label: "System status" },
   { href: "/brand", label: "Brand & press" },
+  { href: "/feed.xml", label: "RSS feed" },
 ];
 const companyLinks = [
   { href: "/about", label: "About Hero Studios" },
   { href: "/about#license", label: "License (HBBML)" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
   { href: site.issuesUrl, label: "Issue tracker", external: true },
   { href: site.donateUrl, label: "Support the studio", external: true },
 ];
@@ -89,9 +93,10 @@ const latest = products.filter((p) => p.version !== "—" && p.downloads.availab
     <div class="footer__bottom">
       <span>© {new Date().getFullYear()} Hero Studios. An independent software and technology studio — not affiliated with any other company using a similar name. Licensed under <a href={site.licenseUrl} target="_blank" rel="noopener">HBBML</a>.</span>
       <span style="display:inline-flex;align-items:center;gap:16px;">
-        <a href="/about#license">Privacy</a>
+        <a href="/privacy">Privacy</a>
         <a href="/about#non-affiliation">Non-affiliation</a>
         <a href="/sitemap.xml">Sitemap</a>
+        <a href="/feed.xml">RSS</a>
         <a href={site.email}>Email</a>
         <a href="#top">Back to top ↑</a>
       </span>

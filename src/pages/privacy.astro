@@ -1,0 +1,34 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site.js";
+---
+
+<Base active="" title="Privacy Policy" description="Hero Studios privacy policy — privacy-first, no tracking, no cookies for analytics.">
+  <section class="pagehead container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span class="sep">/</span> <a href="/about">About</a> <span class="sep">/</span> <span aria-current="page">Privacy</span>
+    </nav>
+    <p class="eyebrow">Legal</p>
+    <h1>Privacy policy</h1>
+    <p class="lead">Short version: this site is privacy-first. No cross-site tracking, no advertising cookies, no telemetry.</p>
+  </section>
+
+  <section class="container sec-tight">
+    <div class="card" style="max-width:760px;">
+      <p style="margin-bottom:16px;">Hero Studios is an independent software and technology studio — <a href="/about#non-affiliation">not affiliated with any other company using a similar name</a>.</p>
+      <p style="margin-bottom:16px;">This website is a static site. It does not run third-party analytics scripts, does not set tracking cookies, and does not store personal information about visitors.</p>
+      <h2 style="font-size:18px;margin:20px 0 8px;">What we store</h2>
+      <ul style="margin:0 0 16px 20px;color:var(--text-secondary);font-size:14.5px;">
+        <li><strong>Your local browser</strong> may store your recent searches (to power the command palette) and expanded-roadmap preferences. This never leaves your device.</li>
+        <li><strong>Downloads</strong> may be counted in aggregate for popularity — never tied to you.</li>
+      </ul>
+      <h2 style="font-size:18px;margin:20px 0 8px;">What we never do</h2>
+      <ul style="margin:0 0 16px 20px;color:var(--text-secondary);font-size:14.5px;">
+        <li>Sell or share personal data.</li>
+        <li>Track you across sites.</li>
+        <li>Run targeted advertising.</li>
+      </ul>
+      <p style="font-size:13.5px;color:var(--text-muted);">Questions? <a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+  </section>
+</Base>

@@ -47,3 +47,7 @@ ehthumbs.db
 .vercel/
 .netlify/
 wrangler.toml
+
+# Cloudflare deploy credentials (never commit these)
+.cf-token
+.cf-account

@@ -13,4 +13,6 @@ export const site = {
   // Required non-affiliation statement (shown on About, legal, and footer).
   nonAffiliation:
     "Hero Studios is an independent software and technology studio specializing in AI, developer tools, Minecraft software, desktop and mobile applications, open-source projects, and game development. It is not affiliated with, endorsed by, sponsored by, or connected to any other company using a similar name.",
+  // Privacy-first analytics (inert until enabled + a domain is set).
+  analytics: { enabled: false, domain: "" },
 };

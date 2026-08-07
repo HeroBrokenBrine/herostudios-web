@@ -1,0 +1,13 @@
+{
+  "name": "Hero Studios — Software & Technology Studio",
+  "short_name": "Hero Studios",
+  "description": "Everything Minecraft. Engineered. An independent software and technology studio building AI, developer tools, Minecraft software, open-source projects, and games.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050816",
+  "theme_color": "#050816",
+  "icons": [
+    { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -44,8 +44,11 @@ const docsProducts = products.filter((p) => p.docs && p.docs.overview);
   </section>
 
   <script>
-    document.getElementById("docs-search-btn")?.addEventListener("click", () => {
-      document.getElementById("search-open")?.click();
-    });
+    function bindDocsSearch() {
+      const btn = document.getElementById("docs-search-btn");
+      if (btn) btn.onclick = () => document.getElementById("search-open")?.click();
+    }
+    bindDocsSearch();
+    document.addEventListener("astro:page-load", bindDocsSearch);
   </script>
 </Base>

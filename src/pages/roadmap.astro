@@ -205,16 +205,22 @@ function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
 <script>
   const q = (s) => document.querySelector(s);
   const qa = (s) => Array.from(document.querySelectorAll(s));
+  const storeKey = "hero-rm-expanded";
 
-  const search = q("#rm-search");
-  const statusSel = q("#rm-status");
-  const productSel = q("#rm-product");
-  const board = q("#rm-board");
-  const timeline = q("#rm-timeline");
-  const btnTimeline = q("#view-timeline");
-  const btnBoard = q("#view-board");
+  function persist() {
+    try { localStorage.setItem(storeKey, JSON.stringify(qa("details[id^=prod-]").map((d) => d.id).filter((id) => document.getElementById(id)?.open))); } catch {}
+  }
+  function applyPersisted() {
+    try {
+      const open = JSON.parse(localStorage.getItem(storeKey) || "[]");
+      open.forEach((id) => { const d = document.getElementById(id); if (d) d.open = true; });
+    } catch {}
+  }
 
   function applyFilters() {
+    const search = q("#rm-search");
+    const statusSel = q("#rm-status");
+    const productSel = q("#rm-product");
     const term = (search?.value || "").toLowerCase().trim();
     const status = statusSel?.value || "all";
     const product = productSel?.value || "all";
@@ -225,7 +231,6 @@ function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
       const ok = (!term || text.includes(term)) && (status === "all" || lane === status) && (product === "all" || p === product || p === "");
       el.setAttribute("data-match", String(ok));
     });
-    // hide empty lanes/sections
     qa("[data-lane]").forEach((laneEl) => {
       const visible = qa(`[data-lane="${laneEl.getAttribute("data-lane")}"] [data-item]`).some((el) => el.getAttribute("data-match") !== "false");
       const host = laneEl.closest(".rm-lane-section, .rm-lane");
@@ -235,47 +240,23 @@ function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
     });
   }
 
-  search && search.addEventListener("input", applyFilters);
-  statusSel && statusSel.addEventListener("change", applyFilters);
-  productSel && productSel.addEventListener("change", applyFilters);
-
   function setView(view) {
+    const board = q("#rm-board");
+    const timeline = q("#rm-timeline");
+    const btnTimeline = q("#view-timeline");
+    const btnBoard = q("#view-board");
+    if (!board || !timeline) return;
     const boardMode = view === "board";
     board.hidden = !boardMode;
     timeline.hidden = boardMode;
     btnTimeline.classList.toggle("is-active", !boardMode);
     btnBoard.classList.toggle("is-active", boardMode);
   }
-  btnTimeline.addEventListener("click", () => setView("timeline"));
-  btnBoard.addEventListener("click", () => setView("board"));
 
-  // Expand / collapse all product roadmaps (persisted)
-  const storeKey = "hero-rm-expanded";
-  function persist() {
-    try { localStorage.setItem(storeKey, JSON.stringify(qa("details[id^=prod-]").map((d) => d.id).filter((id) => document.getElementById(id)?.open))); } catch {}
-  }
-  function applyPersisted() {
-    try {
-      const open = JSON.parse(localStorage.getItem(storeKey) || "[]");
-      open.forEach((id) => { const d = document.getElementById(id); if (d) d.open = true; });
-    } catch {}
-  }
-  qa("details[id^=prod-]").forEach((d) => d.addEventListener("toggle", persist));
-  q("#rm-expand").addEventListener("click", () => { qa("details[id^=prod-]").forEach((d) => (d.open = true)); persist(); });
-  q("#rm-collapse").addEventListener("click", () => { qa("details[id^=prod-]").forEach((d) => (d.open = false)); persist(); });
-
-  // Copy link
   function copyText(t) {
     if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => {});
   }
-  qa(".rm-copy, [data-copy]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-copy");
-      copyText(location.origin + "/roadmap#" + id);
-    });
-  });
 
-  // Deep link
   function handleHash() {
     if (!location.hash) return;
     const el = document.getElementById(location.hash.slice(1)) || q(`[data-item="${location.hash.slice(1)}"]`);
@@ -286,11 +267,33 @@ function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
       setTimeout(() => { el.style.outline = ""; }, 2200);
     }
   }
-  handleHash();
-  document.addEventListener("astro:page-load", () => {
-    applyFilters();
+
+  // Re-binds after every navigation (DOM is swapped by View Transitions).
+  function initRoadmap() {
+    const search = q("#rm-search");
+    const statusSel = q("#rm-status");
+    const productSel = q("#rm-product");
+    const btnTimeline = q("#view-timeline");
+    const btnBoard = q("#view-board");
+    const expand = q("#rm-expand");
+    const collapse = q("#rm-collapse");
+    if (!search) return;
+    search.oninput = applyFilters;
+    statusSel.onchange = applyFilters;
+    productSel.onchange = applyFilters;
+    btnTimeline.onclick = () => setView("timeline");
+    btnBoard.onclick = () => setView("board");
+    if (expand) expand.onclick = () => { qa("details[id^=prod-]").forEach((d) => (d.open = true)); persist(); };
+    if (collapse) collapse.onclick = () => { qa("details[id^=prod-]").forEach((d) => (d.open = false)); persist(); };
+    qa("details[id^=prod-]").forEach((d) => { d.ontoggle = persist; });
+    qa(".rm-copy, [data-copy]").forEach((btn) => {
+      btn.onclick = () => { copyText(location.origin + "/roadmap#" + btn.getAttribute("data-copy")); };
+    });
     applyPersisted();
+    applyFilters();
     handleHash();
-  });
-  applyPersisted();
+  }
+
+  initRoadmap();
+  document.addEventListener("astro:page-load", initRoadmap);
 </script>

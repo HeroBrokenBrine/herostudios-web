@@ -68,23 +68,32 @@ const channels = [
   <div class="toast" id="form-toast" role="status">Thanks — your message has been received.</div>
 
   <script>
-    const form = document.getElementById("contact-form");
-    const toast = document.getElementById("form-toast");
-    const status = document.createElement("div");
-    status.style.cssText = "margin-top:14px;font-size:14px;min-height:22px;text-align:center;";
-    form.after(status);
-    form?.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
-      if (!name) return (status.textContent = "Please enter your name.", status.style.color = "#f87171");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return (status.textContent = "Please enter a valid email address.", status.style.color = "#f87171");
-      if (message.length < 10) return (status.textContent = "Please write at least a short message.", status.style.color = "#f87171");
-      status.textContent = "";
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 3000);
-      form.reset();
-    });
+    function bindContact() {
+      const form = document.getElementById("contact-form");
+      if (!form) return;
+      const toast = document.getElementById("form-toast");
+      let status = document.getElementById("contact-status");
+      if (!status) {
+        status = document.createElement("div");
+        status.id = "contact-status";
+        status.style.cssText = "margin-top:14px;font-size:14px;min-height:22px;text-align:center;";
+        form.after(status);
+      }
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+        if (!name) return (status.textContent = "Please enter your name.", status.style.color = "#f87171");
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return (status.textContent = "Please enter a valid email address.", status.style.color = "#f87171");
+        if (message.length < 10) return (status.textContent = "Please write at least a short message.", status.style.color = "#f87171");
+        status.textContent = "";
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 3000);
+        form.reset();
+      };
+    }
+    bindContact();
+    document.addEventListener("astro:page-load", bindContact);
   </script>
 </Base>

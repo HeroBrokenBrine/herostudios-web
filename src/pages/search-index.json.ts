@@ -15,6 +15,10 @@ const pages = [
   { type: "Page", title: "Status", desc: "Ecosystem and service status", url: "/status" },
   { type: "Page", title: "Brand", desc: "Brand assets and press kit", url: "/brand" },
   { type: "Page", title: "Contact", desc: "Get in touch", url: "/contact" },
+  { type: "Page", title: "Privacy", desc: "Privacy policy", url: "/privacy" },
+  { type: "Page", title: "Terms", desc: "Terms of service", url: "/terms" },
+  { type: "Page", title: "Supporters", desc: "Thank you to our supporters", url: "/supporters" },
+  { type: "Page", title: "Tutorials", desc: "Quick-start guides for every product", url: "/tutorials" },
 ];
 
 const actions = [
