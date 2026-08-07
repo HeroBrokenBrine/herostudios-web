@@ -200,7 +200,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
         Every Hero Studios product is engineered to work with the rest of the ecosystem — one design
         language, one performance bar, one long-term vision. {product.name} belongs alongside these tools.
       </p>
-      <div class="grid grid--products">
+      <div class="grid grid--products reveal reveal-stagger">
         {related.map((r) => <ProductCard product={r} />)}
       </div>
       <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">

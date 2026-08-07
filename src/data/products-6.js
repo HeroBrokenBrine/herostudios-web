@@ -49,8 +49,8 @@ export function dptColor(slug, name, abbr, color, hex, category = "visual", rela
 
 export const products6 = [
   dptColor("dpt-purple", "Default Purple Theme", "DPT", "Purple", "#a855f7", "visual", ["hero-client", "pack-merger"]),
-  dptColor("dpt-cyan", "Default Cyan Theme", "DCT", "Cyan", "#22d3ee", "client", ["hero-client", "dpt-purple"]),
-  dptColor("dpt-gold", "Default Gold Theme", "DGT", "Gold", "#eab308", "performance", ["herosync", "shorts-veinminer", "dpt-red"]),
-  dptColor("dpt-green", "Default Green Theme", "DGN", "Green", "#22c55e", "mods", ["creeper-eater", "pack-merger"]),
-  dptColor("dpt-lime", "Default Lime Theme", "DLT", "Lime", "#84cc16", "creation", ["readmemod", "bucket-of-everything"]),
+  dptColor("dpt-cyan", "Default Cyan Theme", "DCT", "Cyan", "#22d3ee", "visual", ["hero-client", "dpt-purple"]),
+  dptColor("dpt-gold", "Default Gold Theme", "DGT", "Gold", "#eab308", "visual", ["herosync", "shorts-veinminer", "dpt-red"]),
+  dptColor("dpt-green", "Default Green Theme", "DGN", "Green", "#22c55e", "visual", ["creeper-eater", "pack-merger"]),
+  dptColor("dpt-lime", "Default Lime Theme", "DLT", "Lime", "#84cc16", "visual", ["readmemod", "bucket-of-everything"]),
 ];

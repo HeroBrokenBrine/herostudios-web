@@ -27,7 +27,7 @@ const docsProducts = products.filter((p) => p.docs && p.docs.overview);
   </section>
 
   <section class="container sec-tight">
-    <div class="grid grid--products reveal">
+    <div class="grid grid--products reveal reveal-stagger">
       {docsProducts.map((p) => (
         <a class="card card--hover" href={`/docs/${p.slug}`} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};display:block;text-decoration:none;`}>
           <div class="product-card__head" style="margin-bottom:14px;">

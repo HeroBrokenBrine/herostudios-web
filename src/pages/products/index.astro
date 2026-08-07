@@ -39,7 +39,7 @@ const activeCat = Astro.url.searchParams.get("category") || "";
           <h2 style="font-size:20px;margin-bottom:4px;">{g.name}</h2>
           <p style="font-size:14px;color:var(--text-muted);">{g.blurb}</p>
         </div>
-        <div class="grid grid--products reveal">
+        <div class="grid grid--products reveal reveal-stagger">
           {g.items.map((p) => <ProductCard product={p} />)}
         </div>
       </section>

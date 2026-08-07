@@ -1,7 +1,6 @@
----
+﻿---
 import Logo from "./Logo.astro";
 import { site } from "../data/site.js";
-import { products } from "../data/products.js";
 
 const productLinks = [
   { href: "/products", label: "All products" },
@@ -25,7 +24,6 @@ const companyLinks = [
   { href: site.issuesUrl, label: "Support portal" },
   { href: site.donateUrl, label: "Support the studio", external: true },
 ];
-const latest = products.filter((p) => p.version !== "—" && p.downloads.available).slice(0, 6);
 ---
 
 <footer class="footer">
@@ -37,14 +35,14 @@ const latest = products.filter((p) => p.version !== "—" && p.downloads.availab
           <span>Hero Studios</span>
         </div>
         <p class="footer__about">
-          {site.tagline}. Everything Minecraft. Engineered. AI, developer tools, open-source projects, and game development — engineered as one ecosystem.
+          {site.tagline}. Everything Minecraft. Engineered. AI, developer tools, open-source projects, and game development â€” engineered as one ecosystem.
         </p>
         <div class="footer__status">
           <span class="status-dot" aria-hidden="true"></span>
           <a href="/status" style="color:var(--text-muted);">All systems operational</a>
         </div>
         <p style="font-size:12.5px;color:var(--text-disabled);margin-top:10px;">
-          Press <kbd>/</kbd> anywhere to search · <kbd>⌘K</kbd> to open the command palette
+          Press <kbd>/</kbd> anywhere to search Â· <kbd>âŒ˜K</kbd> to open the command palette
         </p>
       </div>
       <div>
@@ -52,15 +50,6 @@ const latest = products.filter((p) => p.version !== "—" && p.downloads.availab
         <ul>
           {productLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
         </ul>
-        <h4 style="margin-top:20px;">Latest releases</h4>
-        <div class="footer__toplinks">
-          {latest.map((p) => (
-            <a href={`/releases#${p.slug}`} class="footer__release">
-              <span>{p.name}</span>
-              <span class="mono">{p.version}</span>
-            </a>
-          ))}
-        </div>
       </div>
       <div>
         <h4>Platform</h4>
@@ -92,14 +81,14 @@ const latest = products.filter((p) => p.version !== "—" && p.downloads.availab
     </div>
 
     <div class="footer__bottom">
-      <span>© {new Date().getFullYear()} Hero Studios. An independent software and technology studio — not affiliated with any other company using a similar name. Licensed under <a href={site.licenseUrl} target="_blank" rel="noopener">HBBML</a>.</span>
+      <span>Â© {new Date().getFullYear()} Hero Studios. An independent software and technology studio â€” not affiliated with any other company using a similar name. Licensed under <a href={site.licenseUrl} target="_blank" rel="noopener">HBBML</a>.</span>
       <span style="display:inline-flex;align-items:center;gap:16px;">
         <a href="/privacy">Privacy</a>
         <a href="/about#non-affiliation">Non-affiliation</a>
         <a href="/sitemap.xml">Sitemap</a>
         <a href="/feed.xml">RSS</a>
         <a href={`mailto:${site.email}`}>Email</a>
-        <a href="#top">Back to top ↑</a>
+        <a href="#top">Back to top â†‘</a>
       </span>
     </div>
   </div>

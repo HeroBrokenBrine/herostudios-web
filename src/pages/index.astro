@@ -92,7 +92,7 @@ const serverShuffled = shuffle([...products]);
       </div>
       <a class="link-arrow" href="/products">All products <Icon name="arrow" /></a>
     </div>
-    <div class="grid grid--products reveal" id="product-grid">
+    <div class="grid grid--products reveal reveal-stagger" id="product-grid">
       {serverShuffled.map((p) => <ProductCard product={p} />)}
     </div>
   </section>
@@ -212,7 +212,7 @@ const serverShuffled = shuffle([...products]);
       </div>
       <a class="link-arrow" href="/releases">All releases <Icon name="arrow" /></a>
     </div>
-    <div class="release-strip reveal">
+    <div class="release-strip reveal reveal-stagger">
       {sortedProducts().filter((p) => p.version !== "—" && p.downloads.available).slice(0, 6).map((p) => (
         <a class="card card--hover" href={`/releases#${p.slug}`} style="display:flex;align-items:center;gap:12px;text-decoration:none;padding:18px 20px;">
           <span class="ic">{iconUrl(p) ? <img src={iconUrl(p)} alt="" loading="lazy" /> : <Icon name={p.icon} />}</span>

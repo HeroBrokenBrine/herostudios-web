@@ -61,7 +61,7 @@ const dev = live.filter((p) => ["in-development", "experimental"].includes(p.lif
       <div class="card rm-stat"><div class="num" style="color:var(--sky);">{beta}</div><div class="lbl">Beta / Alpha</div></div>
       <div class="card rm-stat"><div class="num" style="color:var(--purple-text);">{dev}</div><div class="lbl">In development</div></div>
     </div>
-    <div class="grid grid--products">
+    <div class="grid grid--products reveal reveal-stagger">
       {products.map((p) => (
         <div class="card" style="display:flex;align-items:center;gap:12px;padding:16px 18px;">
           {iconUrl(p) ? <img src={iconUrl(p)} alt="" width="32" height="32" style="border-radius:8px;" /> : <Icon name={p.icon} size={22} />}
