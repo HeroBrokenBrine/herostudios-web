@@ -1,9 +1,19 @@
 ---
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
-import { products, sortedProducts, iconUrl } from "../data/products.js";
+import { products } from "../data/products.js";
 
-const top = sortedProducts().filter((p) => p.lifecycle !== "roadmap").slice(0, 6);
+const pool = products
+  .filter((p) => p.lifecycle !== "roadmap")
+  .map((p) => ({
+    slug: p.slug,
+    name: p.name,
+    tagline: p.tagline,
+    icon: p.icon,
+    iconImg: p.iconImg,
+    color: p.glyph.color,
+    glow: p.glyph.glow,
+  }));
 ---
 
 <Base title="Page not found" description="That page could not be found.">
@@ -27,18 +37,37 @@ const top = sortedProducts().filter((p) => p.lifecycle !== "roadmap").slice(0, 6
   <section class="container sec-tight" style="max-width:980px;">
     <p class="eyebrow">Popular destinations</p>
     <h2 style="font-size:22px;margin-bottom:24px;">Try one of these</h2>
-    <div class="grid grid--products">
-      {top.map((p) => (
-        <a class="card card--hover" href={`/products/${p.slug}`} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};display:flex;align-items:center;gap:12px;text-decoration:none;padding:18px 20px;`}>
-          <span class="product-card__glyph" style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};width:40px;height:40px;`}>
-            {iconUrl(p) ? <img src={iconUrl(p)} alt="" loading="lazy" /> : <Icon name={p.icon} />}
-          </span>
-          <span>
-            <span style="display:block;font-weight:600;color:var(--text-primary);">{p.name}</span>
-            <span style="font-size:13px;color:var(--text-muted);">{p.tagline}</span>
-          </span>
-        </a>
-      ))}
-    </div>
+    <div class="grid grid--products" id="popular-grid" aria-live="polite"></div>
   </section>
+
+  <script type="application/json" id="popular-data" set:html={JSON.stringify(pool)}></script>
+
+  <script>
+    function renderPopular() {
+      const grid = document.getElementById("popular-grid");
+      const data = document.getElementById("popular-data");
+      if (!grid || !data) return;
+      let items = [];
+      try { items = JSON.parse(data.textContent); } catch { return; }
+      // Fisher–Yates shuffle — truly random every visit.
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+      const pick = items.slice(0, 6);
+      grid.innerHTML = pick
+        .map((p) => {
+          const glyph = p.iconImg
+            ? `<img src="/product-icons/${p.slug}.${["hero-client", "craftpilot", "j2b-mc", "hero-agent", "hero-renderer", "hero-launcher", "dpt-purple", "dpt-cyan", "dpt-gold", "dpt-green", "dpt-lime", "dpt-magenta", "dpt-orange", "dpt-pink", "dpt-red", "dpt-yellow"].includes(p.slug) ? "svg" : "png"}?v=2" alt="" loading="lazy" decoding="async" />`
+            : "";
+          return `<a class="card card--hover" href="/products/${p.slug}" style="--glyph:${p.color};--glyph-glow:${p.glow};display:flex;align-items:center;gap:12px;text-decoration:none;padding:18px 20px;">
+            <span class="product-card__glyph" style="--glyph:${p.color};--glyph-glow:${p.glow};width:40px;height:40px;flex:none;">${glyph}</span>
+            <span><span style="display:block;font-weight:600;color:var(--text-primary);">${p.name}</span><span style="font-size:13px;color:var(--text-muted);">${p.tagline}</span></span>
+          </a>`;
+        })
+        .join("");
+    }
+    renderPopular();
+    document.addEventListener("astro:page-load", renderPopular);
+  </script>
 </Base>

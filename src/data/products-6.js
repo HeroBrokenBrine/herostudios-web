@@ -4,7 +4,7 @@
 export function dptColor(slug, name, abbr, color, hex, category = "visual", related = ["hero-client", "pack-merger"]) {
   return {
     slug,
-    name: abbr,
+    name,
     tagline: `Default ${color} Themed in Minecraft!`,
     category,
     lifecycle: "stable",
