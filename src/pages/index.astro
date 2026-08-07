@@ -2,13 +2,41 @@
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import ProductCard from "../components/ProductCard.astro";
-import { products, categories, sortedProducts, iconUrl } from "../data/products.js";
+import { products, categories, sortedProducts, iconUrl, lifecycleMeta } from "../data/products.js";
 import { roadmap, principles } from "../data/roadmap.js";
 
 const spotlight = products.find((p) => p.slug === "redstone-debugger");
 const nowItems = roadmap.now;
 const stableCount = products.filter((p) => ["stable", "released"].includes(p.lifecycle)).length;
 const activeCount = products.filter((p) => p.lifecycle !== "roadmap").length;
+
+// Randomised ecosystem grid — mixed every build (and every visit via JS).
+const svgSet = new Set([
+  "hero-client", "craftpilot", "j2b-mc", "hero-agent", "hero-renderer", "hero-launcher",
+  "dpt-purple", "dpt-cyan", "dpt-gold", "dpt-green", "dpt-lime",
+  "dpt-magenta", "dpt-orange", "dpt-pink", "dpt-red", "dpt-yellow",
+]);
+const pool = products.map((p) => ({
+  slug: p.slug,
+  name: p.name,
+  tagline: p.tagline,
+  version: p.version,
+  loader: p.loader,
+  lifecycle: p.lifecycle,
+  label: lifecycleMeta[p.lifecycle].label,
+  iconImg: p.iconImg,
+  color: p.glyph.color,
+  glow: p.glyph.glow,
+  ext: svgSet.has(p.slug) ? "svg" : "png",
+}));
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+const serverShuffled = shuffle([...products]);
 ---
 
 <Base active="/" title="The Minecraft Software Ecosystem">
@@ -64,10 +92,47 @@ const activeCount = products.filter((p) => p.lifecycle !== "roadmap").length;
       </div>
       <a class="link-arrow" href="/products">All products <Icon name="arrow" /></a>
     </div>
-    <div class="grid grid--products reveal">
-      {sortedProducts().map((p) => <ProductCard product={p} />)}
+    <div class="grid grid--products reveal" id="product-grid">
+      {serverShuffled.map((p) => <ProductCard product={p} />)}
     </div>
   </section>
+
+  <script type="application/json" id="dashboard-data" set:html={JSON.stringify(pool)}></script>
+
+  <script>
+    // Re-shuffle the ecosystem grid on every visit so no category dominates.
+    function shuffleCards() {
+      const grid = document.getElementById("product-grid");
+      const data = document.getElementById("dashboard-data");
+      if (!grid || !data) return;
+      let items = [];
+      try { items = JSON.parse(data.textContent); } catch { return; }
+      if (items.length < 2) return;
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+      grid.innerHTML = items
+        .map((p) => {
+          const glyph = p.iconImg
+            ? `<img src="/product-icons/${p.slug}.${p.ext}?v=2" alt="" loading="lazy" decoding="async">`
+            : "";
+          const meta = p.version !== "—" ? `<span class="chip">v${p.version}</span>` : "";
+          return `<a href="/products/${p.slug}" class="card card--hover product-card" style="--glyph:${p.color};--glyph-glow:${p.glow};--glow:${p.glow};">
+            <div class="product-card__head">
+              <div class="product-card__glyph" aria-hidden="true">${glyph}</div>
+              <span class="badge badge--${p.lifecycle}"><span class="dot" aria-hidden="true"></span>${p.label}</span>
+            </div>
+            <h3 class="product-card__title">${p.name}</h3>
+            <p class="product-card__tagline">${p.tagline}</p>
+            <div class="product-card__meta">${meta}<span class="chip">${p.loader}</span></div>
+          </a>`;
+        })
+        .join("");
+    }
+    shuffleCards();
+    document.addEventListener("astro:page-load", shuffleCards);
+  </script>
 
   <!-- How it works together -->
   <section class="section container">
