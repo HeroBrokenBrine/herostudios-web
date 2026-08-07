@@ -11,18 +11,26 @@ const outFile = join(root, "src", "data", "downloads.js");
 
 const labels = {
   "hero-client": "1.21 (Fabric)",
-  "dpt": "Java 1.8.9 · 1.20.3–26.2",
 };
 
+const dptRe = /^Hero Studios\s+(.+?)\s+(\d\S+)$/;
 const mcRe = /(1\.\d{1,2}(?:\.\d{1,2})?|26\.\d(?:\.\d{1,2})?)/;
 
 function deriveLabel(slug, file) {
   if (labels[slug]) return labels[slug];
   const base = file.replace(/\.(jar|zip|mcpack)$/i, "");
   const isSources = /sources/i.test(base);
+  if (slug === "dpt") {
+    const m = base.match(dptRe);
+    if (m) {
+      let label = `${m[1]} - ${m[2]}`;
+      if (isSources) label += " (sources)";
+      return label;
+    }
+  }
   const m = base.match(mcRe);
   let label = m ? m[1] : base;
-  if (isSources) label += " · sources";
+  if (isSources) label += " (sources)";
   return label;
 }
 
