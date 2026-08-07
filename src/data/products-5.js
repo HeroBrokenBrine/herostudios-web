@@ -37,6 +37,7 @@ export const products5 = [
     related: ["hero-client", "hero-launcher"],
     glyph: { color: "#38bdf8", glow: "rgba(56, 189, 248, 0.45)" },
     icon: "render",
+    iconImg: true,
   },
   {
     slug: "hero-launcher",
@@ -75,5 +76,6 @@ export const products5 = [
     related: ["hero-client", "hero-renderer"],
     glyph: { color: "#14b8a6", glow: "rgba(20, 184, 166, 0.45)" },
     icon: "rocket",
+    iconImg: true,
   },
 ];

@@ -85,6 +85,7 @@ export const products3 = [
     related: ["craftpilot", "redstone-debugger", "hero-client"],
     glyph: { color: "#8b5cf6", glow: "rgba(139, 92, 246, 0.45)" },
     icon: "agent",
+    iconImg: true,
   },
   {
     slug: "j2b-mc",
@@ -128,5 +129,6 @@ export const products3 = [
     related: ["hero-client", "herosync"],
     glyph: { color: "#14b8a6", glow: "rgba(20, 184, 166, 0.45)" },
     icon: "portal",
+    iconImg: true,
   },
 ];

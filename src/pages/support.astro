@@ -24,7 +24,7 @@ const faqGroups = [
     title: "Support & reporting",
     items: [
       { q: "How do I get support for a specific product?", a: "Start with /docs/<product>. If that doesn't help, join the Discord or use the contact form." },
-      { q: "How do I report a bug?", a: `Use the <a href="${site.issuesUrl}" target="_blank" rel="noopener">issues tracker</a> or the <a href="/support-portal.html">support portal</a> with your product, Minecraft version, and a crash log if you have one.` },
+      { q: "How do I report a bug?", a: `Use the <a href="/support-portal.html">support portal</a> with your product, Minecraft version, and a crash log if you have one.` },
       { q: "What license applies?", a: `Hero Studios projects are distributed under the HBBML license (<a href="${site.licenseUrl}" target="_blank" rel="noopener">hbbml.tiiny.site</a>).` },
     ],
   },
@@ -32,13 +32,13 @@ const faqGroups = [
 
 const wizards = [
   { icon: "flag", title: "Bug report", desc: "Guided form → pre-filled report", href: "/support-portal.html", tone: "sea" },
-  { icon: "spark", title: "Feature request", desc: "Share an idea for a product", href: site.issuesUrl, tone: "purple" },
+  { icon: "spark", title: "Feature request", desc: "Request a feature via the portal", href: "/support-portal.html", tone: "purple" },
   { icon: "compass", title: "Troubleshooting", desc: "Start with the docs", href: "/docs", tone: "sky" },
 ];
 
 const known = [
   { status: "stable", label: "Operational", name: "Website & downloads", note: "All pages and downloads available" },
-  { status: "stable", label: "Operational", name: "Issue tracker", note: "herobrokenbrine.github.io/issues" },
+  { status: "stable", label: "Operational", name: "Support portal", note: "/support-portal" },
   { status: "stable", label: "Operational", name: "Discord community", note: "discord.gg/5N4pAKRrkk" },
   { status: "beta", label: "In development", name: "Hero Client 1.9.5", note: "Active iteration across 1.21" },
 ];
@@ -139,7 +139,7 @@ const known = [
         <h3 style="font-size:17px;margin-bottom:10px;">Community & official channels</h3>
         <ul style="list-style:none;display:grid;gap:10px;font-size:14px;">
           <li><a href={site.discordUrl} target="_blank" rel="noopener">Discord — fastest support</a></li>
-          <li><a href={site.issuesUrl} target="_blank" rel="noopener">Issue tracker</a></li>
+          <li><a href={site.issuesUrl}>Support portal</a></li>
           <li><a href="/support-portal.html">Support portal — guided bug report</a></li>
           <li><a href={`mailto:${site.email}`}>Email</a></li>
         </ul>
