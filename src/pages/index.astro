@@ -12,7 +12,7 @@ const activeCount = products.filter((p) => p.lifecycle !== "roadmap").length;
 
 // Randomised ecosystem grid — mixed every build (and every visit via JS).
 const svgSet = new Set([
-  "hero-client", "craftpilot",
+  "hero-client",
 ]);
 const pool = products.map((p) => ({
   slug: p.slug,

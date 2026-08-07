@@ -58,7 +58,7 @@ const pool = products
       grid.innerHTML = pick
         .map((p) => {
           const glyph = p.iconImg
-            ? `<img src="/product-icons/${p.slug}.${["hero-client", "craftpilot"].includes(p.slug) ? "svg" : "png"}?v=2" alt="" loading="lazy" decoding="async" />`
+            ? `<img src="/product-icons/${p.slug}.${["hero-client"].includes(p.slug) ? "svg" : "png"}?v=2" alt="" loading="lazy" decoding="async" />`
             : "";
           return `<a class="card card--hover" href="/products/${p.slug}" style="--glyph:${p.color};--glyph-glow:${p.glow};display:flex;align-items:center;gap:12px;text-decoration:none;padding:18px 20px;">
             <span class="product-card__glyph" style="--glyph:${p.color};--glyph-glow:${p.glow};width:40px;height:40px;flex:none;">${glyph}</span>
