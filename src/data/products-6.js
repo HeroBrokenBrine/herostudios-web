@@ -1,11 +1,12 @@
 // HERO STUDIOS — DPT colour theme resource packs (part 1 of 2)
-// Each colour is its own resource pack. DPT = Default Purple Theme; D<T>T = Default <T> Theme.
-export function dptColor(slug, name, abbr, color, hex) {
+// Each colour is its own resource pack, spread across the ecosystem categories.
+// DPT = Default Purple Theme; D<T>T = Default <T> Theme.
+export function dptColor(slug, name, abbr, color, hex, category = "visual", related = ["hero-client", "pack-merger"]) {
   return {
     slug,
     name: abbr,
     tagline: `Default ${color} Themed in Minecraft!`,
-    category: "visual",
+    category,
     lifecycle: "stable",
     statusNote: `Part of the DPT family of 10 colour themes — ${name} (${abbr}). Java 1.8.9 and 1.20.3–26.2.`,
     version: "1.0.0",
@@ -39,7 +40,7 @@ export function dptColor(slug, name, abbr, color, hex) {
       { status: "next", title: "Extended assets", desc: "Shaders, particles, and sound polish." },
       { status: "later", title: "Ecosystem theming", desc: "Consistent identity across Hero Client and mods." },
     ],
-    related: ["hero-client", "pack-merger", "dpt"],
+    related,
     glyph: { color: hex, glow: `${hex}66` },
     icon: "palette",
     iconImg: true,
@@ -47,9 +48,9 @@ export function dptColor(slug, name, abbr, color, hex) {
 }
 
 export const products6 = [
-  dptColor("dpt-purple", "Default Purple Theme", "DPT", "Purple", "#a855f7"),
-  dptColor("dpt-cyan", "Default Cyan Theme", "DCT", "Cyan", "#22d3ee"),
-  dptColor("dpt-gold", "Default Gold Theme", "DGT", "Gold", "#eab308"),
-  dptColor("dpt-green", "Default Green Theme", "DGN", "Green", "#22c55e"),
-  dptColor("dpt-lime", "Default Lime Theme", "DLT", "Lime", "#84cc16"),
+  dptColor("dpt-purple", "Default Purple Theme", "DPT", "Purple", "#a855f7", "visual", ["hero-client", "pack-merger"]),
+  dptColor("dpt-cyan", "Default Cyan Theme", "DCT", "Cyan", "#22d3ee", "client", ["hero-client", "dpt-purple"]),
+  dptColor("dpt-gold", "Default Gold Theme", "DGT", "Gold", "#eab308", "performance", ["herosync", "shorts-veinminer", "dpt-red"]),
+  dptColor("dpt-green", "Default Green Theme", "DGN", "Green", "#22c55e", "mods", ["creeper-eater", "pack-merger"]),
+  dptColor("dpt-lime", "Default Lime Theme", "DLT", "Lime", "#84cc16", "creation", ["readmemod", "bucket-of-everything"]),
 ];
