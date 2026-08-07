@@ -45,9 +45,6 @@ export function lifecycleClass(lifecycle) {
 const svgSlugs = new Set([
   "hero-client",
   "craftpilot",
-  "j2b-mc",
-  "hero-agent",
-  "hero-launcher",
 ]);
 
 export function iconUrl(product) {
