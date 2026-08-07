@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6c5ce7"/>
+      <stop offset="50%" stop-color="#a29bfe"/>
+      <stop offset="100%" stop-color="#5a4bd1"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#6c5ce7" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <!-- Shield/Hexagon -->
+  <path d="M100 10 L175 45 L175 110 Q175 155 100 190 Q25 155 25 110 L25 45 Z" fill="url(#bg)" filter="url(#shadow)"/>
+  <path d="M100 10 L175 45 L175 110 Q175 155 100 190 Q25 155 25 110 L25 45 Z" fill="url(#shine)"/>
+  <!-- Inner hexagon -->
+  <path d="M100 30 L155 55 L155 100 Q155 135 100 165 Q45 135 45 100 L45 55 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <!-- H letter -->
+  <text x="100" y="125" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="90" font-weight="800" fill="white" text-anchor="middle" filter="url(#shadow)">H</text>
+  <!-- Accent dots -->
+  <circle cx="45" cy="45" r="4" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="155" cy="45" r="4" fill="rgba(255,255,255,0.4)"/>
+</svg>

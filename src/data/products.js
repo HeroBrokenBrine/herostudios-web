@@ -40,7 +40,7 @@ export function lifecycleClass(lifecycle) {
   return `badge--${lifecycle}`;
 }
 
-const svgSlugs = new Set(["craftpilot", "j2b-mc", "hero-agent", "hero-renderer", "hero-launcher"]);
+const svgSlugs = new Set(["hero-client", "craftpilot", "j2b-mc", "hero-agent", "hero-renderer", "hero-launcher"]);
 
 export function iconUrl(product) {
   if (!product.iconImg) return null;
