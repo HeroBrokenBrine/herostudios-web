@@ -45,5 +45,5 @@ const svgSlugs = new Set(["hero-client", "craftpilot", "j2b-mc", "hero-agent", "
 export function iconUrl(product) {
   if (!product.iconImg) return null;
   const ext = svgSlugs.has(product.slug) ? "svg" : "png";
-  return `/product-icons/${product.slug}.${ext}`;
+  return `/product-icons/${product.slug}.${ext}?v=2`;
 }
