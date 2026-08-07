@@ -188,7 +188,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
       </p>
       <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr));">
         {product.variants.map((v) => (
-          <a class="card card--hover" href={`/downloads/${product.slug}`} style="display:flex;align-items:center;gap:12px;text-decoration:none;padding:16px 18px;">
+          <a class="card card--hover" href={`/products/dpt-${v.color.toLowerCase()}`} style="display:flex;align-items:center;gap:12px;text-decoration:none;padding:16px 18px;">
             <span style={`width:36px;height:36px;flex:none;border-radius:10px;background:${v.hex};box-shadow:0 0 18px ${v.hex}66;`} aria-hidden="true"></span>
             <span>
               <span style="display:block;font-weight:600;color:var(--text-primary);font-size:14px;">{v.name}</span>

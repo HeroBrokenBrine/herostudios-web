@@ -1,0 +1,55 @@
+// HERO STUDIOS — DPT colour theme resource packs (part 1 of 2)
+// Each colour is its own resource pack. DPT = Default Purple Theme; D<T>T = Default <T> Theme.
+export function dptColor(slug, name, abbr, color, hex) {
+  return {
+    slug,
+    name: abbr,
+    tagline: `Default ${color} Themed in Minecraft!`,
+    category: "visual",
+    lifecycle: "stable",
+    statusNote: `Part of the DPT family of 10 colour themes — ${name} (${abbr}). Java 1.8.9 and 1.20.3–26.2.`,
+    version: "1.0.0",
+    loader: "Resource Pack",
+    mcVersions: ["1.8.9", "1.20.3 – 26.2 (Java)"],
+    why: `The Hero Studios visual identity, in ${color.toLowerCase()}. ${name} (${abbr}) is a premium GUI overhaul for Minecraft that makes the game feel like part of the Hero Studios ecosystem — in the colour you love.`,
+    who: "Anyone who wants their game to look premium, Hero Studios fans, and players who want the theme in their favourite colour.",
+    capabilities: [
+      { title: `Default ${color} Themed`, desc: `A premium ${color.toLowerCase()} GUI overhaul for Minecraft.` },
+      { title: "Full GUI re-theme", desc: "HUD, containers, widgets, title screen, and panorama." },
+      { title: "Broad version support", desc: "Java 1.8.9 and 1.20.3 through 26.2." },
+    ],
+    compatibility: { loader: "Resource Pack", mcVersions: ["1.8.9", "1.20.3 – 26.2"], note: "Java builds for both version ranges." },
+    downloads: { available: true, sources: ["ZIP"], note: "Pick your Minecraft version range." },
+    docs: {
+      overview: `${name} (${abbr}) — ${color.toLowerCase()} themed in Minecraft. A premium GUI overhaul from the Hero Studios DPT family.`,
+      quickstart: [
+        `Download the ${color} DPT build for your Minecraft version.`,
+        "Add the pack via the Resource Packs screen.",
+        "Enable it and relaunch to see the theme.",
+      ],
+      faq: [
+        { q: `What is ${abbr}?`, a: `${name} — a ${color.toLowerCase()} themed resource pack in the DPT family.` },
+        { q: "Which versions?", a: "Java 1.8.9 and 1.20.3 through 26.2." },
+        { q: "Does it change gameplay?", a: "No — purely visual." },
+      ],
+    },
+    changelog: [{ version: "1.0.0", notes: [`${color} themed GUI theme`, "OptiFine shader support"] }],
+    roadmap: [
+      { status: "done", title: `${color} core theme`, desc: `GUI, HUD, and title screen in ${color.toLowerCase()}.` },
+      { status: "next", title: "Extended assets", desc: "Shaders, particles, and sound polish." },
+      { status: "later", title: "Ecosystem theming", desc: "Consistent identity across Hero Client and mods." },
+    ],
+    related: ["hero-client", "pack-merger", "dpt"],
+    glyph: { color: hex, glow: `${hex}66` },
+    icon: "palette",
+    iconImg: true,
+  };
+}
+
+export const products6 = [
+  dptColor("dpt-purple", "Default Purple Theme", "DPT", "Purple", "#a855f7"),
+  dptColor("dpt-cyan", "Default Cyan Theme", "DCT", "Cyan", "#22d3ee"),
+  dptColor("dpt-gold", "Default Gold Theme", "DGT", "Gold", "#eab308"),
+  dptColor("dpt-green", "Default Green Theme", "DGN", "Green", "#22c55e"),
+  dptColor("dpt-lime", "Default Lime Theme", "DLT", "Lime", "#84cc16"),
+];

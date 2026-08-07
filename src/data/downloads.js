@@ -297,7 +297,7 @@ export const downloads = {
       }
     ]
   },
-  "dpt": {
+  "dpt-cyan": {
     "files": [
       {
         "file": "Hero Studios Cyan 1.20.3-26.2.zip",
@@ -310,7 +310,11 @@ export const downloads = {
         "label": "Cyan - 1.8.9",
         "size": 34422,
         "sha256": "9eab21c875bc4b7cb0d428a6411c481afcbd7cee01ac35aac9b65445557b1d95"
-      },
+      }
+    ]
+  },
+  "dpt-gold": {
+    "files": [
       {
         "file": "Hero Studios Gold 1.20.3-26.2.zip",
         "label": "Gold - 1.20.3-26.2",
@@ -322,7 +326,11 @@ export const downloads = {
         "label": "Gold - 1.8.9",
         "size": 34656,
         "sha256": "464affe981be7189cabf569591c24896cd493e647aeaada2fb3ab7dbb18d01cd"
-      },
+      }
+    ]
+  },
+  "dpt-green": {
+    "files": [
       {
         "file": "Hero Studios Green 1.20.3-26.2.zip",
         "label": "Green - 1.20.3-26.2",
@@ -334,7 +342,11 @@ export const downloads = {
         "label": "Green - 1.8.9",
         "size": 34766,
         "sha256": "88281aa66cb0366fd04225c6a5aaac82184e7a1336c853d68d0042391e80cad3"
-      },
+      }
+    ]
+  },
+  "dpt-lime": {
+    "files": [
       {
         "file": "Hero Studios Lime 1.20.3-26.2.zip",
         "label": "Lime - 1.20.3-26.2",
@@ -346,7 +358,11 @@ export const downloads = {
         "label": "Lime - 1.8.9",
         "size": 34815,
         "sha256": "4e48e14de6b72dd8dfdfb1217ba4218e7364044f1de6d4963cdea13bd6294221"
-      },
+      }
+    ]
+  },
+  "dpt-magenta": {
+    "files": [
       {
         "file": "Hero Studios Magenta 1.20.3-26.2.zip",
         "label": "Magenta - 1.20.3-26.2",
@@ -358,7 +374,11 @@ export const downloads = {
         "label": "Magenta - 1.8.9",
         "size": 34312,
         "sha256": "500bb28063e8f96bcab4157e3cb01be613f1a3074cc3d2f844a9f19691f10067"
-      },
+      }
+    ]
+  },
+  "dpt-orange": {
+    "files": [
       {
         "file": "Hero Studios Orange 1.20.3-26.2.zip",
         "label": "Orange - 1.20.3-26.2",
@@ -370,7 +390,11 @@ export const downloads = {
         "label": "Orange - 1.8.9",
         "size": 34694,
         "sha256": "afbf7cd7513a7267928c9a2360b46eb495ec8533ebadd6d616f0d8fc257d515b"
-      },
+      }
+    ]
+  },
+  "dpt-pink": {
+    "files": [
       {
         "file": "Hero Studios Pink 1.20.3-26.2.zip",
         "label": "Pink - 1.20.3-26.2",
@@ -382,7 +406,11 @@ export const downloads = {
         "label": "Pink - 1.8.9",
         "size": 34346,
         "sha256": "d40166fde5084b692eccc5174eb17be9a4293108687573952470d0ab43ad0a3d"
-      },
+      }
+    ]
+  },
+  "dpt-purple": {
+    "files": [
       {
         "file": "Hero Studios Purple 1.20.3-26.2.zip",
         "label": "Purple - 1.20.3-26.2",
@@ -394,7 +422,11 @@ export const downloads = {
         "label": "Purple - 1.8.9",
         "size": 34461,
         "sha256": "682f12491faa3c2d86803f5dc722b0cba1dabdb5cb0262c900282251b97417a1"
-      },
+      }
+    ]
+  },
+  "dpt-red": {
+    "files": [
       {
         "file": "Hero Studios Red 1.20.3-26.2.zip",
         "label": "Red - 1.20.3-26.2",
@@ -406,7 +438,11 @@ export const downloads = {
         "label": "Red - 1.8.9",
         "size": 34552,
         "sha256": "c9f6581871239b86f8303703dc8e955ba730b56c91f6e8611a5164260ccda5b4"
-      },
+      }
+    ]
+  },
+  "dpt-yellow": {
+    "files": [
       {
         "file": "Hero Studios Yellow 1.20.3-26.2.zip",
         "label": "Yellow - 1.20.3-26.2",

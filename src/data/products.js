@@ -7,8 +7,10 @@ import { products2 } from "./products-2.js";
 import { products3 } from "./products-3.js";
 import { products4 } from "./products-4.js";
 import { products5 } from "./products-5.js";
+import { products6 } from "./products-6.js";
+import { products7 } from "./products-7.js";
 
-export const products = [...products1, ...products2, ...products3, ...products4, ...products5];
+export const products = [...products1, ...products2, ...products3, ...products4, ...products5, ...products6, ...products7];
 
 export function getProduct(slug) {
   return products.find((p) => p.slug === slug);
@@ -40,7 +42,24 @@ export function lifecycleClass(lifecycle) {
   return `badge--${lifecycle}`;
 }
 
-const svgSlugs = new Set(["hero-client", "craftpilot", "j2b-mc", "hero-agent", "hero-renderer", "hero-launcher"]);
+const svgSlugs = new Set([
+  "hero-client",
+  "craftpilot",
+  "j2b-mc",
+  "hero-agent",
+  "hero-renderer",
+  "hero-launcher",
+  "dpt-purple",
+  "dpt-cyan",
+  "dpt-gold",
+  "dpt-green",
+  "dpt-lime",
+  "dpt-magenta",
+  "dpt-orange",
+  "dpt-pink",
+  "dpt-red",
+  "dpt-yellow",
+]);
 
 export function iconUrl(product) {
   if (!product.iconImg) return null;

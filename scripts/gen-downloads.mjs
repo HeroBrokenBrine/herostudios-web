@@ -20,7 +20,7 @@ function deriveLabel(slug, file) {
   if (labels[slug]) return labels[slug];
   const base = file.replace(/\.(jar|zip|mcpack)$/i, "");
   const isSources = /sources/i.test(base);
-  if (slug === "dpt") {
+  if (slug.startsWith("dpt")) {
     const m = base.match(dptRe);
     if (m) {
       let label = `${m[1]} - ${m[2]}`;

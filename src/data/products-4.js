@@ -107,8 +107,8 @@ export const products4 = [
       { title: "Full GUI re-theme", desc: "HUD, containers, widgets, title screen, and panorama." },
       { title: "Broad version support", desc: "Java 1.8.9 and 1.20.3 through 26.2." },
     ],
-    compatibility: { loader: "Resource Pack", mcVersions: ["1.8.9", "1.20.3 – 26.2"], note: "Separate builds per colour and version range." },
-    downloads: { available: true, sources: ["ZIP"], note: "Pick your colour and version range." },
+    compatibility: { loader: "Resource Pack", mcVersions: ["1.8.9", "1.20.3 – 26.2"], note: "Each colour is a separate resource pack." },
+    downloads: { available: false, note: "Each colour is its own resource pack — choose your colour above." },
     docs: {
       overview: "DPT (Default Purple Theme) is the official Hero Studios resource pack and visual identity — a premium purple GUI theme for Minecraft, now with 10 colour variants.",
       quickstart: [
