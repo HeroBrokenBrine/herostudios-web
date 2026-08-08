@@ -1186,6 +1186,45 @@ html.js .reveal.in { opacity: 1; transform: none; }
   html.js .reveal { opacity: 1; transform: none; transition: none; }
 }
 
+/* ---- Page header entrance (fade-up, transform/opacity only — lag-free) ---- */
+html.js .pagehead .breadcrumbs,
+html.js .pagehead .eyebrow,
+html.js .pagehead h1,
+html.js .pagehead .lead,
+html.js .prod-hero .breadcrumbs,
+html.js .prod-hero__glyph,
+html.js .prod-hero .eyebrow,
+html.js .prod-hero h1,
+html.js .prod-hero .lead,
+html.js .prod-hero__badges {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: pageFade 0.6s var(--ease) forwards;
+}
+html.js .pagehead .eyebrow, html.js .prod-hero .eyebrow { animation-delay: 0.06s; }
+html.js .pagehead h1, html.js .prod-hero h1 { animation-delay: 0.12s; }
+html.js .pagehead .lead, html.js .prod-hero .lead { animation-delay: 0.2s; }
+html.js .prod-hero__badges { animation-delay: 0.28s; }
+@keyframes pageFade {
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .pagehead .breadcrumbs,
+  html.js .pagehead .eyebrow,
+  html.js .pagehead h1,
+  html.js .pagehead .lead,
+  html.js .prod-hero .breadcrumbs,
+  html.js .prod-hero__glyph,
+  html.js .prod-hero .eyebrow,
+  html.js .prod-hero h1,
+  html.js .prod-hero .lead,
+  html.js .prod-hero__badges {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
 /* ==========================================================================
    FLAGSHIP — premium production layer
    ========================================================================== */
@@ -1388,9 +1427,8 @@ html.js .reveal-stagger > *:nth-child(11) { transition-delay: 0.44s; }
 html.js .reveal-stagger > *:nth-child(12) { transition-delay: 0.48s; }
 html.js .reveal-stagger > *:nth-child(n+13) { transition-delay: 0.52s; }
 
-/* Smooth card lift + glow intensification */
-.product-card { will-change: transform; }
-.card--hover { will-change: transform; }
+/* Smooth card lift + glow intensification (will-change only on hover to save memory) */
+.product-card:hover, .card--hover:hover { will-change: transform; }
 
 @media (prefers-reduced-motion: reduce) {
   html.js .hero .eyebrow,

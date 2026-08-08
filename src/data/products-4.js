@@ -20,17 +20,21 @@ export const products4 = [
     compatibility: { loader: "Fabric", mcVersions: ["1.21 → 1.21.11"], note: "Stable across the 1.21.x series." },
     downloads: { available: true, sources: ["Fabric mod JAR"], note: "1.1.0 for 1.21.x." },
     docs: {
-      overview: "Shorts Veinminer adds configurable, unlimited vein mining for virtually every block.",
+      overview:
+        "Shorts Veinminer adds configurable, unlimited vein mining for virtually every block. Breaking one connected block breaks them all with a flood-fill miner that respects chunks, tools, and durability — no more breaking the same ore a hundred times.",
       quickstart: [
         "Install the mod for your Minecraft version.",
         "Break a block that is part of a connected vein.",
         "All connected same-type blocks break together.",
         "Adjust behaviour from config as needed.",
+        "Watch durability — vein mining respects your tools.",
       ],
       faq: [
         { q: "Does it work on every block?", a: "Virtually every block, respecting chunk and tool rules." },
         { q: "Is it a server mod?", a: "It works client-side; a server plugin variant is planned." },
         { q: "Which versions?", a: "1.21 through 1.21.11." },
+        { q: "Can I disable it for certain blocks?", a: "Config will allow per-block and per-tool rules as it matures." },
+        { q: "Does it affect survival balance?", a: "It behaves like vanilla breaking — drops, durability, and requirements are handled per break." },
       ],
     },
     changelog: [{ version: "1.1.0", notes: ["Flood-fill engine", "12-version matrix"] }],
@@ -65,17 +69,21 @@ export const products4 = [
     compatibility: { loader: "Fabric", mcVersions: ["1.21 → 1.21.11"], note: "Stable across the 1.21.x series." },
     downloads: { available: true, sources: ["Fabric mod JAR"], note: "r1.2 for 1.21.x." },
     docs: {
-      overview: "README.md is a complete overhaul of Minecraft's book system, turning books into powerful interactive documentation tools.",
+      overview:
+        "README.md is a complete overhaul of Minecraft's book system, turning written books into powerful interactive documentation tools. Markdown rendering, theming, libraries, search, and export make it the most complete documentation product in the ecosystem.",
       quickstart: [
         "Install the mod for your Minecraft version.",
         "Write Markdown into a book using the editor.",
-        "Preview rendered output and organise into a library.",
-        "Export or sync books as needed.",
+        "Preview the rendered output live.",
+        "Organise works into a library and search them.",
+        "Export to Markdown, text, JSON, or HTML, or sync with other players.",
       ],
       faq: [
         { q: "Can I read normal books?", a: "Yes — existing books remain readable and upgradeable." },
         { q: "Is it client or server side?", a: "Multiplayer sync makes it valuable on both." },
         { q: "Which versions?", a: "1.21 through 1.21.11." },
+        { q: "Can I theme my books?", a: "Yes — custom themes are supported for the rendered output." },
+        { q: "What can I export?", a: "Markdown, text, JSON, and HTML." },
       ],
     },
     changelog: [{ version: "r1.2", notes: ["Markdown engine", "Libraries and export"] }],

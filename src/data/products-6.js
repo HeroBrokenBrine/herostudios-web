@@ -23,16 +23,19 @@ export function dptColor(slug, name, abbr, color, hex, category = "visual", rela
     compatibility: { loader: "Resource Pack", mcVersions: ["1.8.9", "1.20.3 – 26.2"], note: "Java builds for both version ranges." },
     downloads: { available: true, sources: ["ZIP"], note: "Pick your Minecraft version range." },
     docs: {
-      overview: `${name} (${abbr}) — ${color.toLowerCase()} themed in Minecraft. A premium GUI overhaul from the Hero Studios DPT family.`,
+      overview: `${name} (${abbr}) is a premium ${color.toLowerCase()} GUI overhaul from the Hero Studios DPT family. Every screen gets the Hero Studios design language — HUD, containers, widgets, title screen, and panorama — in the colour you love.`,
       quickstart: [
         `Download the ${color} DPT build for your Minecraft version.`,
         "Add the pack via the Resource Packs screen.",
         "Enable it and relaunch to see the theme.",
+        "Pair it with other packs using Pack Merger if you combine looks.",
       ],
       faq: [
         { q: `What is ${abbr}?`, a: `${name} — a ${color.toLowerCase()} themed resource pack in the DPT family.` },
         { q: "Which versions?", a: "Java 1.8.9 and 1.20.3 through 26.2." },
         { q: "Does it change gameplay?", a: "No — purely visual." },
+        { q: "Does it work with shaders?", a: "Yes — the pack includes OptiFine shader support." },
+        { q: "Can I combine DPT colours?", a: "Yes, using Pack Merger to combine packs and resolve conflicts." },
       ],
     },
     changelog: [{ version: "1.1.0", notes: [`${color} themed GUI theme`, "Expanded colour family", "OptiFine shader support"] }],

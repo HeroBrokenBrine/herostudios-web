@@ -57,13 +57,13 @@ const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length
     <span class="hero-orb hero-orb--purple" aria-hidden="true"></span>
     <span class="hero-orb hero-orb--sea" aria-hidden="true"></span>
     <span class="hero-orb hero-orb--sky" aria-hidden="true"></span>
-    <p class="eyebrow" style="justify-content:center;display:flex;">Hero Studios · Software &amp; Technology</p>
+    <p class="eyebrow" style="justify-content:center;display:flex;">Hero Studios · Independent Software &amp; Technology Studio</p>
     <h1>
       Everything Minecraft. <span class="grad-text">Engineered.</span>
     </h1>
     <p class="lead">
-      Performance-first software engineered to work together. Every product becomes part of one
-      ecosystem — never a collection of mods.
+      Independent software &amp; technology studio — every product engineered to work as one
+      ecosystem, never a loose collection of mods.
     </p>
     <div class="hero__cta">
       <a class="btn btn--primary" href="/downloads">
@@ -92,6 +92,37 @@ const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length
           </a>
         );
       })}
+    </div>
+  </section>
+
+  <!-- Featured spotlight -->
+  <section class="section container">
+    <div class="card reveal" id="featured-panel" style="padding:clamp(28px,5vw,56px);background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(17,24,39,.9) 45%);">
+      <div class="grid grid--2" style="align-items:center;">
+        <div>
+          <p class="eyebrow">Featured</p>
+          <h2 class="sec-title" style="margin-bottom:12px;">{featuredPick.name}</h2>
+          <p style="margin-bottom:20px;font-size:16.5px;">{featuredPick.tagline}</p>
+          <p style="color:var(--text-secondary);margin-bottom:24px;">{featuredPick.why}</p>
+          <div class="hero__cta" style="justify-content:flex-start;">
+            <a class="btn btn--primary" href={`/products/${featuredPick.slug}`}>Learn more</a>
+            <a class="btn btn--ghost" href={`/docs/${featuredPick.slug}`}>Documentation</a>
+          </div>
+        </div>
+        <div class="glass" style="border-radius:var(--r-lg);padding:28px;display:grid;gap:14px;">
+          {featuredPick.capabilities.map((c) => (
+            <div class="feature">
+              <div class:list={["feature__icon", { tile: featuredPick.tile }]}>
+                {iconUrl(featuredPick) ? <img src={iconUrl(featuredPick)} alt="" loading="lazy" /> : <Icon name={featuredPick.icon} />}
+              </div>
+              <div>
+                <h3 style="font-size:15px;">{c.title}</h3>
+                <p style="font-size:13.5px;color:var(--text-muted);">{c.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
@@ -164,37 +195,6 @@ const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length
           <p style="font-size:14px;color:var(--text-muted);">{p.desc}</p>
         </div>
       ))}
-    </div>
-  </section>
-
-  <!-- Featured spotlight -->
-  <section class="section container">
-    <div class="card reveal" id="featured-panel" style="padding:clamp(28px,5vw,56px);background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(17,24,39,.9) 45%);">
-      <div class="grid grid--2" style="align-items:center;">
-        <div>
-          <p class="eyebrow">Featured</p>
-          <h2 class="sec-title" style="margin-bottom:12px;">{featuredPick.name}</h2>
-          <p style="margin-bottom:20px;font-size:16.5px;">{featuredPick.tagline}</p>
-          <p style="color:var(--text-secondary);margin-bottom:24px;">{featuredPick.why}</p>
-          <div class="hero__cta" style="justify-content:flex-start;">
-            <a class="btn btn--primary" href={`/products/${featuredPick.slug}`}>Learn more</a>
-            <a class="btn btn--ghost" href={`/docs/${featuredPick.slug}`}>Documentation</a>
-          </div>
-        </div>
-        <div class="glass" style="border-radius:var(--r-lg);padding:28px;display:grid;gap:14px;">
-          {featuredPick.capabilities.map((c) => (
-            <div class="feature">
-              <div class:list={["feature__icon", { tile: featuredPick.tile }]}>
-                {iconUrl(featuredPick) ? <img src={iconUrl(featuredPick)} alt="" loading="lazy" /> : <Icon name={featuredPick.icon} />}
-              </div>
-              <div>
-                <h3 style="font-size:15px;">{c.title}</h3>
-                <p style="font-size:13.5px;color:var(--text-muted);">{c.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   </section>
 

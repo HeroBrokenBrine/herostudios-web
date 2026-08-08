@@ -20,12 +20,18 @@ export const products5 = [
     compatibility: { loader: "Planned", mcVersions: ["TBD"], note: "Design phase only." },
     downloads: { available: false, note: "Not available. Follow the roadmap for progress." },
     docs: {
-      overview: "Hero Renderer is a planned next-generation Minecraft rendering framework. Nothing is implemented yet; this page records the vision and architecture direction.",
-      quickstart: ["There is nothing to install yet.", "Track the roadmap for design milestones.", "Join the community to shape the direction."],
+      overview:
+        "Hero Renderer is a planned next-generation Minecraft rendering framework focused on advanced graphics, rendering extensibility, and maximum performance. Nothing is implemented yet; this page records the vision and architecture direction so progress is easy to follow.",
+      quickstart: [
+        "There is nothing to install yet.",
+        "Track the roadmap for design milestones.",
+        "Join the community to shape the direction.",
+      ],
       faq: [
         { q: "Is Hero Renderer released?", a: "No — it is a roadmap product in the design phase." },
         { q: "When will it ship?", a: "No date is committed; design precedes implementation." },
         { q: "How does it relate to Hero Client?", a: "It is planned as the rendering foundation for Hero Client and future products." },
+        { q: "Can I use it today?", a: "Not yet. Follow the roadmap for the first prototypes." },
       ],
     },
     changelog: [],
@@ -59,12 +65,18 @@ export const products5 = [
     compatibility: { loader: "Planned", mcVersions: ["All"], note: "Design phase only." },
     downloads: { available: false, note: "Not available. Follow the roadmap for progress." },
     docs: {
-      overview: "Hero Launcher is a planned universal Minecraft launcher. Nothing is implemented yet; this page records the vision and architecture direction.",
-      quickstart: ["There is nothing to install yet.", "Track the roadmap for design milestones.", "Share your requirements with the team."],
+      overview:
+        "Hero Launcher is a planned universal Minecraft launcher supporting every version and loader, with intelligent instance management and seamless integration with Hero Studios products — the natural front door to the ecosystem. Nothing is implemented yet; this page records the vision.",
+      quickstart: [
+        "There is nothing to install yet.",
+        "Track the roadmap for design milestones.",
+        "Share your requirements with the team.",
+      ],
       faq: [
         { q: "Is Hero Launcher released?", a: "No — it is a roadmap product in the design phase." },
         { q: "Will it be free?", a: "Planned as part of the free Hero Studios ecosystem." },
         { q: "How does it relate to Hero Client?", a: "The launcher is planned as the front door; Hero Client is the in-game surface." },
+        { q: "What versions will it support?", a: "Planned for every Minecraft version and loader." },
       ],
     },
     changelog: [],
@@ -93,25 +105,25 @@ export const products5 = [
     capabilities: [
       { title: "Own everything", desc: "Own kernel, drivers, GUI, shell, filesystem, and package manager." },
       { title: "Rust, no_std", desc: "A memory-safe kernel in Rust with minimal x86-64 assembly." },
-      { title: "Bootable today", desc: "Boots to a framebuffer banner in QEMU; real hardware is a v1.0 goal." },
+      { title: "Bootable today", desc: "Boots to a boot banner and kernel logs; real hardware is a v1.0 goal." },
     ],
     compatibility: { loader: "Standalone OS (x86_64)", mcVersions: ["N/A — not a Minecraft mod"], note: "HeroOS is a standalone operating system, separate from the Minecraft software line." },
     downloads: { available: false, note: "In development. Phase 1 kernel only — no public builds yet." },
     docs: {
       overview: "HeroOS is a custom operating system built from scratch as a genuine alternative to Windows — own kernel, drivers, GUI, shell, filesystem, and apps.",
       quickstart: [
-        "Track development in PLAN.md.",
-        "Build with the Rust nightly toolchain targeting x86_64-unknown-none.",
-        "Run in QEMU to see the boot banner and kernel logs.",
-        "Follow Phase 2 progress for keyboard, mouse, and user mode.",
+        "HeroOS is in development — there is no public build to install yet.",
+        "Follow the roadmap to track keyboard, mouse, and user-mode progress.",
+        "Join the community to get early milestones as they open up.",
       ],
       faq: [
         { q: "Is HeroOS a Minecraft mod?", a: "No — it is a standalone operating system written in Rust." },
-        { q: "Can I run it on my PC?", a: "Not yet. It boots in QEMU today; real-hardware support is a v1.0 goal." },
+        { q: "Can I run it on my PC?", a: "Not yet. It runs in an emulator today; real-hardware support is a v1.0 goal." },
         { q: "Will it really replace Windows?", a: "That is the long-term vision — an honest, milestone-by-milestone path." },
+        { q: "Can I download a build?", a: "Not yet. There are no public builds until later milestones are reached." },
       ],
     },
-    changelog: [{ version: "Phase 1", notes: ["Kernel core: paging, heap, GDT/TSS, IDT, PIC/PIT", "10 self-tests passing", "Boots to a framebuffer banner in QEMU"] }],
+    changelog: [{ version: "Phase 1", notes: ["Kernel core: paging, heap, GDT/TSS, IDT, PIC/PIT", "10 self-tests passing", "Boots to a framebuffer boot banner"] }],
     roadmap: [
       { status: "done", title: "Kernel core", desc: "Paging, heap, GDT/TSS, IDT, PIC/PIT with self-tests." },
       { status: "now", title: "Phase 2 — input & timers", desc: "Keyboard, mouse, RTC, and user mode." },

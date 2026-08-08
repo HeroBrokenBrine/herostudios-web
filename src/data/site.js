@@ -9,6 +9,9 @@ export const site = {
   issuesUrl: "/support-portal.html", // Bug reports + feature requests go through the support portal (deduped)
   donateUrl: "https://www.donationalerts.com/r/xhbb_",
   tagline: "Independent Software & Technology Studio",
+  motto: "Everything Minecraft. Engineered.",
+  description:
+    "Hero Studios is an independent software and technology studio engineering Minecraft software — AI, developer tools, resource packs, mods, and platforms — as one performance-first ecosystem.",
   industry: "Software Development",
   keywords: "Hero Studios, software company, technology studio, AI, developer tools, Minecraft mods, Minecraft development, open source, desktop applications, mobile applications, game development, research",
   // Required non-affiliation statement (shown on About, legal, and footer).

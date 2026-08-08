@@ -21,17 +21,21 @@ export const products2 = [
     compatibility: { loader: "Fabric", mcVersions: ["1.21 → 1.21.11", "26.x"], note: "26.x builds use bundled mappings and are experimental." },
     downloads: { available: true, sources: ["Fabric mod JAR"], note: "1.9.1 is the current release." },
     docs: {
-      overview: "Pack Merger merges multiple resource packs into a single optimised pack and resolves conflicts automatically.",
+      overview:
+        "Pack Merger combines multiple resource packs into a single optimised pack and resolves conflicts automatically. Instead of juggling load order and invisible clashes, you review exactly which pack wins per asset and export one clean, version-correct pack.",
       quickstart: [
         "Install the Pack Merger mod on the Minecraft version you target.",
         "Open the Pack Merger screen from the main menu.",
         "Add resource packs in your preferred priority order.",
-        "Review conflicts, then export the merged pack.",
+        "Review the detected conflicts in the GUI.",
+        "Export the merged pack and apply it from the Resource Packs screen.",
       ],
       faq: [
         { q: "Does it modify my original packs?", a: "No — originals are untouched; a new merged pack is exported." },
         { q: "Can I control conflict resolution?", a: "Yes, resolution is configurable and reviewed in the GUI." },
         { q: "What versions are supported?", a: "1.21 through 1.21.11, with experimental 26.x builds." },
+        { q: "Does it work with any resource pack?", a: "It merges standard Java resource packs and detects conflicts between them." },
+        { q: "Can I undo an export?", a: "Your source packs are never changed, so you can re-merge any time." },
       ],
     },
     changelog: [{ version: "1.9.1", notes: ["GUI and export refinements", "Expanded version matrix"] }],
@@ -65,17 +69,21 @@ export const products2 = [
     compatibility: { loader: "Fabric", mcVersions: ["1.21 → 1.21.11", "26.1 → 26.2"], note: "Built for 1.21.x; 26.x builds are experimental." },
     downloads: { available: true, sources: ["Fabric mod JAR"], note: "Early alpha — backup worlds before use." },
     docs: {
-      overview: "Bucket of Everything lets you capture nearly every entity or object in a bucket and release it later with all data preserved.",
+      overview:
+        "Bucket of Everything lets you capture nearly every entity or object in a bucket and release it later with all important data preserved. Mob collection, transport, and release become as simple as right-clicking with a bucket.",
       quickstart: [
         "Install the mod on a supported 1.21.x version.",
         "Craft or obtain a bucket.",
         "Right-click an entity with the bucket to capture it.",
         "Right-click the ground to release the entity.",
+        "Back up your world before heavy use — this is an early alpha.",
       ],
       faq: [
         { q: "Can I bucket a player?", a: "Yes, including yourself, with a short spectator-like state on release." },
         { q: "Is it safe for survival worlds?", a: "It is an alpha; back up worlds before extensive use." },
         { q: "When will more versions be supported?", a: "26.x requires upstream mappings; tracked on the roadmap." },
+        { q: "What data is preserved?", a: "All important entity data is retained through capture and release." },
+        { q: "Which entities can I capture?", a: "Nearly every entity or object — including the player." },
       ],
     },
     changelog: [{ version: "1.0", notes: ["Entity capture and release across 1.21.x"] }],
@@ -95,7 +103,7 @@ export const products2 = [
     tagline: "A survival challenge where creepers hunt and consume the player.",
     category: "mods",
     lifecycle: "stable",
-    statusNote: "Released with Normal and Ultra Hard modes. Includes the Low-End-PC Mode performance add-on.",
+    statusNote: "Released with Normal and Ultra Hard modes.",
     version: "2.1",
     loader: "Fabric",
     mcVersions: ["1.20.1", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.10", "1.21.11", "26.1", "26.1.1", "26.1.2", "26.2"],
@@ -107,19 +115,23 @@ export const products2 = [
       { title: "Configurable", desc: "JSON5 configuration for tuning the challenge." },
     ],
     compatibility: { loader: "Fabric", mcVersions: ["1.20.1", "1.21.1 → 1.21.11", "26.1 → 26.2"], note: "26.x builds ship as v1.1; the mainline is v2.1. Ultra Hard (uhceu) is built separately." },
-    downloads: { available: true, sources: ["Fabric mod JAR"], note: "Separate builds for Normal, Ultra Hard, and Low-End-PC Mode." },
+    downloads: { available: true, sources: ["Fabric mod JAR"], note: "Separate builds for Normal and Ultra Hard modes." },
     docs: {
-      overview: "Creeper Eater replaces creeper explosions with instant devour attacks, creating a survival challenge in Normal and Ultra Hard modes.",
+      overview:
+        "Creeper Eater replaces creeper explosions with instant devour attacks, turning Minecraft into a genuine survival challenge. Creepers no longer explode — they hunt you down and consume you, with Normal and Ultra Hard modes for how cruel you want the world to be.",
       quickstart: [
         "Install the mod for your Minecraft version.",
-        "Configure the difficulty mode in config/creepers-eat-you.json5.",
+        "Choose your difficulty build (Normal or Ultra Hard).",
+        "Configure difficulty in config/creepers-eat-you.json5 if you want to tune it.",
         "Start a world — and stay out of the darkness.",
         "Survive, or be devoured.",
       ],
       faq: [
-        { q: "Are there different modes?", a: "Yes — Normal and Ultra Hard, plus a Low-End-PC Mode performance add-on." },
+        { q: "Are there different modes?", a: "Yes — Normal and Ultra Hard, each tuned for a different challenge." },
         { q: "Can I tune difficulty?", a: "Yes, through JSON5 config." },
         { q: "Does it replace normal creepers entirely?", a: "It changes their behaviour from exploding to hunting and devouring." },
+        { q: "Does it work on servers?", a: "It is designed as a survival challenge mod; confirm compatibility with your server setup." },
+        { q: "Which versions are supported?", a: "1.20.1, 1.21.1 through 1.21.11, and experimental 26.x builds." },
       ],
     },
     changelog: [{ version: "2.1", notes: ["Ultra Hard mode improvements", "Multi-version builds"] }],

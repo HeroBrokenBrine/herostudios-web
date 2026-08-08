@@ -21,16 +21,20 @@ export const products3 = [
     compatibility: { loader: "Web / API", mcVersions: ["Version-agnostic"], note: "Companion tools operate on knowledge and planning, not live game state." },
     downloads: { available: false, note: "In private development. Access will open through the developer portal." },
     docs: {
-      overview: "CraftPilot is the Hero Studios Minecraft companion: knowledge, planning, and analysis tools for players, builders, and creators.",
+      overview:
+        "CraftPilot is the Hero Studios Minecraft companion: knowledge, planning, and analysis tools for players, builders, and creators. It centralises the scattered Minecraft wiki-knowledge into one place — seed exploration, build planning, recipes, and world analysis.",
       quickstart: [
         "Follow CraftPilot through the developer portal as it opens.",
-        "Explore seed, build-planning, and knowledge tools.",
-        "Use recipes and mechanics references while you play.",
+        "Explore the seed explorer to find the world you want.",
+        "Use the build planner to sketch projects before placing blocks.",
+        "Reference recipes and mechanics while you play.",
       ],
       faq: [
         { q: "What does CraftPilot do?", a: "It centralises Minecraft knowledge and planning tools — seeds, builds, recipes, mechanics, and world analysis." },
         { q: "Does CraftPilot have AI chat?", a: "No. AI chat support is being discontinued; the planning and knowledge features continue in development." },
         { q: "Is it connected to a live game?", a: "Not yet; it is a knowledge and planning layer today." },
+        { q: "Is it free?", a: "CraftPilot is planned as part of the free Hero Studios ecosystem." },
+        { q: "When can I use it?", a: "Access opens through the developer portal as the tools reach a usable state." },
       ],
     },
     changelog: [{ version: "beta", notes: ["Knowledge and planning tools in development", "Route framework for 30+ features"] }],
@@ -64,16 +68,20 @@ export const products3 = [
     compatibility: { loader: "Platform / API", mcVersions: ["Version-agnostic"], note: "Requires user-provided keys (BYOK) for live model access." },
     downloads: { available: false, note: "Internal backbone. Public access arrives with the developer portal." },
     docs: {
-      overview: "Hero Agent is the Hero Studios AI backbone — a shared layer of routing, agents, memory, and orchestration.",
+      overview:
+        "Hero Agent is the Hero Studios AI backbone — a shared layer of model routing, specialist agents, memory, and orchestration. It is the single place every Hero Studios product gets its intelligence, with bring-your-own-key access to the model providers you already use.",
       quickstart: [
-        "Configure your model provider keys.",
+        "Set up your model provider keys (BYOK).",
         "Interact via the agent CLI or API.",
+        "Route requests across providers with the model router.",
         "Wire it into Hero Studios products as integrations ship.",
       ],
       faq: [
         { q: "Do I need my own API keys?", a: "Yes — it is bring-your-own-key (BYOK) by design." },
         { q: "What can the agents do?", a: "Plan, write, review, and test — plus Minecraft-aware reasoning as integrations land." },
         { q: "Is it connected to other products?", a: "Not yet. Ecosystem wiring is on the roadmap." },
+        { q: "Which providers are supported?", a: "OpenAI, Anthropic, Gemini, Groq, OpenRouter, and local Ollama." },
+        { q: "Can I run it locally?", a: "Yes — Ollama is supported for fully local inference." },
       ],
     },
     changelog: [{ version: "alpha", notes: ["Model router online", "Specialist agent suite"] }],
@@ -101,28 +109,31 @@ export const products3 = [
     who: "Players curious about Bedrock mechanics without switching editions, and technical players exploring cross-edition connectivity.",
     capabilities: [
       { title: "Bedrock gameplay mode", desc: "Bedrock-style combat, movement, and parity mechanics in Java." },
-      { title: "RakNet protocol client", desc: "A native Bedrock protocol stack: handshake, encryption, and packets." },
+      { title: "Join Bedrock servers", desc: "Connect directly to Bedrock servers from Java Edition." },
       { title: "World import", desc: "Import .mcworld files into Java worlds." },
     ],
     compatibility: { loader: "Fabric", mcVersions: ["1.21 → 1.21.11"], note: "26.x builds are blocked upstream (no mappings)." },
     downloads: { available: true, sources: ["Fabric mod JAR"], note: "3.2.1 for 1.21.x." },
     docs: {
-      overview: "J2B MC brings Bedrock functionality into Java Edition, including Bedrock gameplay mode and direct Bedrock server connectivity.",
+      overview:
+        "J2B MC brings Bedrock functionality into Java Edition, including Bedrock-style gameplay and the ability to join Bedrock servers directly from Java. Two editions, one set of capabilities — without leaving your Java client behind.",
       quickstart: [
         "Install the J2B MC mod for your 1.21.x version.",
         "Toggle Bedrock gameplay mode from the in-game menu.",
         "Explore the /j2b command suite.",
-        "Test Bedrock server connectivity as it matures.",
+        "Try joining a Bedrock server as connectivity matures.",
       ],
       faq: [
-        { q: "Can I join Bedrock servers?", a: "The RakNet client and login flow exist; online auth and real-server verification are still on the roadmap." },
+        { q: "Can I join Bedrock servers?", a: "The core connectivity is in place and hardening; online auth and full real-server verification are still on the roadmap." },
         { q: "Does Bedrock gameplay change PvP?", a: "Yes — combat and movement are reworked toward Bedrock behaviour." },
         { q: "Which versions are supported?", a: "1.21 through 1.21.11." },
+        { q: "Can I import Bedrock worlds?", a: "Yes — .mcworld files can be imported into Java worlds." },
+        { q: "Do I need a Bedrock account?", a: "Full server auth is planned; no account is required to use the gameplay and import features." },
       ],
     },
     changelog: [{ version: "3.2.1", notes: ["Gameplay parity refinements", "Protocol stack hardening"] }],
     roadmap: [
-      { status: "done", title: "Protocol scaffold", desc: "RakNet handshake, packets, and crypto." },
+      { status: "done", title: "Connectivity foundation", desc: "Bedrock connection layer, handshake, and encryption." },
       { status: "next", title: "Real-server connectivity", desc: "Xbox Live auth and verified real-server joins." },
       { status: "later", title: "Full gameplay parity", desc: "Broaden Bedrock behaviour coverage." },
     ],
