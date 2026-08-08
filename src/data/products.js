@@ -42,9 +42,7 @@ export function lifecycleClass(lifecycle) {
   return `badge--${lifecycle}`;
 }
 
-const svgSlugs = new Set([
-  "hero-client",
-]);
+const svgSlugs = new Set([]);
 
 export function iconUrl(product) {
   if (!product.iconImg) return null;

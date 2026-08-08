@@ -12,9 +12,7 @@ const stableCount = products.filter((p) => ["stable", "released"].includes(p.lif
 const activeCount = products.filter((p) => p.lifecycle !== "roadmap").length;
 
 // Randomised ecosystem grid — mixed every build (and every visit via JS).
-const svgSet = new Set([
-  "hero-client",
-]);
+const svgSet = new Set([]);
 const pool = products.map((p) => ({
   slug: p.slug,
   name: p.name,
@@ -36,6 +34,21 @@ function shuffle(arr) {
   return arr;
 }
 const serverShuffled = shuffle([...products]);
+
+// Randomised Featured spotlight — changes every build and every visit.
+const featuredPool = products
+  .filter((p) => p.capabilities && p.capabilities.length && p.lifecycle !== "roadmap")
+  .map((p) => ({
+    slug: p.slug,
+    name: p.name,
+    tagline: p.tagline,
+    why: p.why,
+    capabilities: p.capabilities,
+    iconImg: p.iconImg,
+    color: p.glyph.color,
+    glow: p.glyph.glow,
+  }));
+const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length)] || spotlight;
 ---
 
 <Base active="/" title="The Minecraft Software Ecosystem">
@@ -190,23 +203,23 @@ const serverShuffled = shuffle([...products]);
 
   <!-- Spotlight -->
   <section class="section container">
-    <div class="card reveal" style="padding:clamp(28px,5vw,56px);background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(17,24,39,.9) 45%);">
+    <div class="card reveal" id="featured-panel" style="padding:clamp(28px,5vw,56px);background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(17,24,39,.9) 45%);">
       <div class="grid grid--2" style="align-items:center;">
         <div>
           <p class="eyebrow">Featured</p>
-          <h2 class="sec-title" style="margin-bottom:12px;">{spotlight.name}</h2>
-          <p style="margin-bottom:20px;font-size:16.5px;">{spotlight.tagline}</p>
-          <p style="color:var(--text-secondary);margin-bottom:24px;">{spotlight.why}</p>
+          <h2 class="sec-title" style="margin-bottom:12px;">{featuredPick.name}</h2>
+          <p style="margin-bottom:20px;font-size:16.5px;">{featuredPick.tagline}</p>
+          <p style="color:var(--text-secondary);margin-bottom:24px;">{featuredPick.why}</p>
           <div class="hero__cta" style="justify-content:flex-start;">
-            <a class="btn btn--primary" href={`/products/${spotlight.slug}`}>Learn more</a>
-            <a class="btn btn--ghost" href={`/docs/${spotlight.slug}`}>Documentation</a>
+            <a class="btn btn--primary" href={`/products/${featuredPick.slug}`}>Learn more</a>
+            <a class="btn btn--ghost" href={`/docs/${featuredPick.slug}`}>Documentation</a>
           </div>
         </div>
         <div class="glass" style="border-radius:var(--r-lg);padding:28px;display:grid;gap:14px;">
-          {spotlight.capabilities.map((c) => (
+          {featuredPick.capabilities.map((c) => (
             <div class="feature">
               <div class="feature__icon">
-                {iconUrl(spotlight) ? <img src={iconUrl(spotlight)} alt="" loading="lazy" /> : <Icon name={spotlight.icon} />}
+                {iconUrl(featuredPick) ? <img src={iconUrl(featuredPick)} alt="" loading="lazy" /> : <Icon name={featuredPick.icon} />}
               </div>
               <div>
                 <h3 style="font-size:15px;">{c.title}</h3>
@@ -218,6 +231,41 @@ const serverShuffled = shuffle([...products]);
       </div>
     </div>
   </section>
+
+  <script type="application/json" id="featured-data" set:html={JSON.stringify(featuredPool)}></script>
+
+  <script>
+    // Randomise the Featured spotlight on every visit.
+    function renderFeatured() {
+      const panel = document.getElementById("featured-panel");
+      const data = document.getElementById("featured-data");
+      if (!panel || !data) return;
+      let items = [];
+      try { items = JSON.parse(data.textContent); } catch { return; }
+      if (!items.length) return;
+      const pick = items[Math.floor(Math.random() * items.length)];
+      const img = pick.iconImg ? `<img src="/product-icons/${pick.slug}.png?v=2" alt="" loading="lazy">` : "";
+      const caps = pick.capabilities
+        .map((c) => `<div class="feature"><div class="feature__icon">${img}</div><div><h3 style="font-size:15px;">${c.title}</h3><p style="font-size:13.5px;color:var(--text-muted);">${c.desc}</p></div></div>`)
+        .join("");
+      panel.innerHTML = `
+        <div class="grid grid--2" style="align-items:center;">
+          <div>
+            <p class="eyebrow">Featured</p>
+            <h2 class="sec-title" style="margin-bottom:12px;">${pick.name}</h2>
+            <p style="margin-bottom:20px;font-size:16.5px;">${pick.tagline}</p>
+            <p style="color:var(--text-secondary);margin-bottom:24px;">${pick.why}</p>
+            <div class="hero__cta" style="justify-content:flex-start;">
+              <a class="btn btn--primary" href="/products/${pick.slug}">Learn more</a>
+              <a class="btn btn--ghost" href="/docs/${pick.slug}">Documentation</a>
+            </div>
+          </div>
+          <div class="glass" style="border-radius:var(--r-lg);padding:28px;display:grid;gap:14px;">${caps}</div>
+        </div>`;
+    }
+    renderFeatured();
+    document.addEventListener("astro:page-load", renderFeatured);
+  </script>
 
   <!-- Downloads + Docs teaser -->
   <section class="section container">
