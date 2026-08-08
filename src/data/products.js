@@ -47,5 +47,5 @@ const svgSlugs = new Set([]);
 export function iconUrl(product) {
   if (!product.iconImg) return null;
   const ext = svgSlugs.has(product.slug) ? "svg" : "png";
-  return `/product-icons/${product.slug}.${ext}?v=4`;
+  return `/product-icons/${product.slug}.${ext}?v=5`;
 }
