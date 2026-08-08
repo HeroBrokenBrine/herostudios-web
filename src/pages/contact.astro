@@ -24,7 +24,7 @@ const channels = [
   <section class="container sec-sm">
     <div class="grid grid--2">
       {channels.map((c) => (
-        <a class="card card--hover" href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel={c.href.startsWith("http") ? "noopener" : undefined} style="text-decoration:none;display:block;">
+        <a class="card card--hover" href={c.href} target={(c.href.startsWith("http") || c.href.startsWith("mailto")) ? "_blank" : undefined} rel={(c.href.startsWith("http") || c.href.startsWith("mailto")) ? "noopener" : undefined} style="text-decoration:none;display:block;">
           <div class="feature__icon" style="margin-bottom:16px;"><Icon name={c.icon} /></div>
           <h3 style="font-size:18px;margin-bottom:6px;">{c.title}</h3>
           <p style="font-size:14px;color:var(--text-muted);margin-bottom:14px;">{c.desc}</p>

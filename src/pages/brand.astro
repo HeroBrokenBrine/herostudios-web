@@ -42,7 +42,7 @@ const rules = [
       <div class="card" style="display:grid;gap:14px;align-content:start;">
         <div class="feature"><div class="feature__icon"><Icon name="download" /></div><div><h4 style="font-size:14.5px;">Assets</h4><p style="font-size:13px;color:var(--text-muted);">Icon (PNG, JPG) and favicon are served from the site's <span class="mono">/brand/</span> folder. The official source assets live in the <span class="mono">HeroStudios icons</span> repository folder.</p></div></div>
         <div class="feature"><div class="feature__icon"><Icon name="shield" /></div><div><h4 style="font-size:14.5px;">Usage rules</h4><ul style="margin:4px 0 0 18px;color:var(--text-secondary);font-size:13px;">{rules.map((r) => <li style="margin-bottom:6px;">{r}</li>)}</ul></div></div>
-        <div class="feature"><div class="feature__icon"><Icon name="mail" /></div><div><h4 style="font-size:14.5px;">Press contact</h4><p style="font-size:13px;color:var(--text-muted);"><a href={`mailto:${site.email}`}>{site.email}</a></p></div></div>
+        <div class="feature"><div class="feature__icon"><Icon name="mail" /></div><div><h4 style="font-size:14.5px;">Press contact</h4><p style="font-size:13px;color:var(--text-muted);"><a href={`mailto:${site.email}`} target="_blank" rel="noopener">{site.email}</a></p></div></div>
       </div>
     </div>
   </section>
@@ -53,7 +53,7 @@ const rules = [
     <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));">
       {palette.map((c) => (
         <div class="card" style="padding:18px;">
-          <div style={`height:64px;border-radius:var(--r-md);background:${c.hex};border:1px solid rgba(148,163,184,.2);margin-bottom:14px;`}></div>
+          <div style={`height:64px;border-radius:var(--r-md);background:${c.hex};border:1px solid rgba(148,163,184,.25);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);margin-bottom:14px;`}></div>
           <strong style="font-size:14.5px;color:var(--text-primary);">{c.name}</strong>
           <div class="mono" style="font-size:12px;color:var(--text-muted);">{c.hex}</div>
           <p style="font-size:12.5px;color:var(--text-muted);margin-top:6px;">{c.use}</p>
@@ -85,7 +85,7 @@ const rules = [
       <h2>Building with Hero Studios?</h2>
       <p>For press kits, interviews, or partnership assets, reach the team directly.</p>
       <div class="hero__cta">
-        <a class="btn btn--primary" href={`mailto:${site.email}`}><Icon name="mail" /> Contact press</a>
+        <a class="btn btn--primary" href={`mailto:${site.email}`} target="_blank" rel="noopener"><Icon name="mail" /> Contact press</a>
         <a class="btn btn--ghost" href="/about">About the studio</a>
       </div>
     </div>
