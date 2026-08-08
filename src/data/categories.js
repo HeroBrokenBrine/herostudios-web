@@ -6,7 +6,8 @@ export const categories = [
   { id: "developer", name: "Developer Tools & AI", blurb: "Engineer and automate Minecraft." },
   { id: "platform", name: "Platform", blurb: "New ways to play and connect." },
   { id: "visual", name: "Resource Packs", blurb: "The Hero Studios visual identity." },
-  { id: "mods", name: "Mods", blurb: "New ways to play." },
+  { id: "rendering", name: "Rendering & Graphics", blurb: "Next-generation graphics engines." },
+  { id: "mods", name: "Mods & Challenges", blurb: "New ways to survive." },
 ];
 
 export const lifecycleMeta = {

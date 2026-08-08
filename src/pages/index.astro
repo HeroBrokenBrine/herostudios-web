@@ -127,7 +127,7 @@ const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length
       grid.innerHTML = items
         .map((p) => {
           const glyph = p.iconImg
-            ? `<img src="/product-icons/${p.slug}.${p.ext}?v=2" alt="" loading="lazy" decoding="async">`
+            ? `<img src="/product-icons/${p.slug}.${p.ext}?v=4" alt="" loading="lazy" decoding="async">`
             : "";
           const meta = p.version !== "—" ? `<span class="chip">v${p.version}</span>` : "";
           return `<a href="/products/${p.slug}" class="card card--hover product-card" style="--glyph:${p.color};--glyph-glow:${p.glow};--glow:${p.glow};">
@@ -244,7 +244,7 @@ const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length
       try { items = JSON.parse(data.textContent); } catch { return; }
       if (!items.length) return;
       const pick = items[Math.floor(Math.random() * items.length)];
-      const img = pick.iconImg ? `<img src="/product-icons/${pick.slug}.png?v=2" alt="" loading="lazy">` : "";
+      const img = pick.iconImg ? `<img src="/product-icons/${pick.slug}.png?v=4" alt="" loading="lazy">` : "";
       const caps = pick.capabilities
         .map((c) => `<div class="feature"><div class="feature__icon">${img}</div><div><h3 style="font-size:15px;">${c.title}</h3><p style="font-size:13.5px;color:var(--text-muted);">${c.desc}</p></div></div>`)
         .join("");

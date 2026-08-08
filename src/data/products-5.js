@@ -4,7 +4,7 @@ export const products5 = [
     slug: "hero-renderer",
     name: "Hero Renderer",
     tagline: "A next-generation Minecraft rendering framework for advanced graphics.",
-    category: "mods",
+    category: "rendering",
     lifecycle: "roadmap",
     statusNote: "In design. No implementation ships yet — this page documents the vision, not shipped functionality.",
     version: "—",
