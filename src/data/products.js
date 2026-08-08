@@ -9,9 +9,8 @@ import { products4 } from "./products-4.js";
 import { products5 } from "./products-5.js";
 import { products6 } from "./products-6.js";
 import { products7 } from "./products-7.js";
-import { products8 } from "./products-8.js";
 
-export const products = [...products1, ...products2, ...products3, ...products4, ...products5, ...products6, ...products7, ...products8];
+export const products = [...products1, ...products2, ...products3, ...products4, ...products5, ...products6, ...products7];
 
 // Secondary category memberships (products that also fit in another category).
 const extraCategories = {
