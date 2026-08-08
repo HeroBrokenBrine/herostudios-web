@@ -3,9 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Report a bug or get support for Hero Studios products â€” mods, clients, and the Hero Studios ecosystem.">
-<title>Hero Studios â€” Support Portal</title>
-<link rel="icon" type="image/png" href="/brand/favicon-32.png">
+<meta name="description" content="Report a bug or get support for Hero Studios products — software and technology studio — mods, clients, and the Hero Studios ecosystem.">
+<title>Hero Studios — Support Portal</title>
+<link rel="icon" href="/brand/favicon-32.png?v=6">
+<link rel="shortcut icon" href="/brand/favicon-32.png?v=6">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png?v=6">
+<link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png?v=6">
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -162,7 +166,7 @@
       <div>
         <label for="project">Project <span class="req">*</span></label>
         <select id="project" name="project" required>
-          <option value="">Selectâ€¦</option>
+          <option value="">Select…</option>
           <option>Creepers Eat You</option>
           <option>Creepers Eat You Ultra Hard</option>
           <option>HeroSync</option>
@@ -189,7 +193,7 @@
       <div>
         <label for="type">Issue Type <span class="req">*</span></label>
         <select id="type" name="type" required>
-          <option value="">Selectâ€¦</option>
+          <option value="">Select…</option>
           <option>Bug</option>
           <option>Crash</option>
           <option>Performance Issue</option>
@@ -255,7 +259,7 @@
         <li>Explain expected and actual behavior.</li>
         <li>Attach screenshots if available.</li>
         <li><b>Please attach <code>latest.log</code> or a crash report if applicable.</b></li>
-        <li>Security issue? Prefer the Discord <b>#security</b> channel or email â€” don't post exploit details publicly.</li>
+        <li>Security issue? Prefer the Discord <b>#security</b> channel or email — don't post exploit details publicly.</li>
       </ul>
     </div>
 
@@ -266,7 +270,7 @@
     <div class="discord">
       <b>Prefer Discord or the tracker?</b><br>
       <span class="meta-links">
-        <a href="https://discord.gg/5N4pAKRrkk" target="_blank" rel="noopener">Discord â€” discord.gg/5N4pAKRrkk</a>
+        <a href="https://discord.gg/5N4pAKRrkk" target="_blank" rel="noopener">Discord — discord.gg/5N4pAKRrkk</a>
         <a href="mailto:support@herostudios.dev" target="_blank" rel="noopener">Email</a>
         <a href="https://www.donationalerts.com/r/xhbb_" target="_blank" rel="noopener">Donate</a>
       </span>
@@ -347,7 +351,7 @@
       var mailto = "mailto:support@herostudios.dev?subject=" +
         encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
       window.location.href = mailto;
-      status.textContent = "Popup blocked â€” opened your email app instead.";
+      status.textContent = "Popup blocked — opened your email app instead.";
     } else {
       status.textContent = "Opening Gmail with your report ready to send. Thanks for the detail!";
     }
