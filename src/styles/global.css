@@ -373,6 +373,14 @@ code, pre, kbd {
   border-radius: inherit;
   display: block;
 }
+/* Full-bleed / tile icon images: drop the gradient+glow backdrop so their
+   corners blend cleanly into the card instead of showing a bright rim. */
+.product-card__glyph:has(img),
+.prod-hero__glyph:has(img),
+.feature__icon:has(img) {
+  background: transparent !important;
+  box-shadow: none !important;
+}
 .product-card__title { font-size: 18px; font-weight: 600; }
 .product-card__tagline { color: var(--text-muted); font-size: 14px; line-height: 1.5; flex: 1; }
 .product-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
