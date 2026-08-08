@@ -4,7 +4,7 @@ export const products3 = [
     slug: "craftpilot",
     name: "CraftPilot",
     tagline: "Your Minecraft companion for builds, redstone, seeds, recipes, and planning.",
-    category: "creation",
+    category: "developer",
     lifecycle: "in-development",
     statusNote: "Platform in active development. AI chat support is being discontinued; the knowledge, planning, and build tools continue to be worked on.",
     version: "—",

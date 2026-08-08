@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
-import { products, categories, lifecycleMeta, iconUrl } from "../data/products.js";
+import { products, categories, lifecycleMeta, iconUrl, categoryIds } from "../data/products.js";
 
 const q = Astro.url.searchParams.get("q")?.trim().toLowerCase() || "";
 
@@ -47,7 +47,7 @@ const pageHits = [
               {productHits.map((p) => (
                 <a class="card card--hover" href={`/products/${p.slug}`} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};text-decoration:none;display:block;`}>
                   <div class="product-card__head" style="margin-bottom:12px;">
-                    <div class="product-card__glyph" style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};`}>
+                    <div class:list={["product-card__glyph", { tile: p.tile }]} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};`}>
                       {iconUrl(p) ? <img src={iconUrl(p)} alt="" loading="lazy" /> : <Icon name={p.icon} />}
                     </div>
                     <span class={`badge badge--${p.lifecycle}`}><span class="dot"></span>{lifecycleMeta[p.lifecycle].label}</span>
@@ -76,7 +76,7 @@ const pageHits = [
     ) : (
       <div class="grid grid--products">
         {categories.map((c) => {
-          const items = products.filter((p) => p.category === c.id);
+          const items = products.filter((p) => categoryIds(p).includes(c.id));
           return (
             <div class="card">
               <h3 style="font-size:16px;margin-bottom:12px;">{c.name}</h3>

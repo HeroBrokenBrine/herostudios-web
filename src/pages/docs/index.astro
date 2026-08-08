@@ -31,7 +31,7 @@ const docsProducts = products.filter((p) => p.docs && p.docs.overview);
       {docsProducts.map((p) => (
         <a class="card card--hover" href={`/docs/${p.slug}`} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};display:block;text-decoration:none;`}>
           <div class="product-card__head" style="margin-bottom:14px;">
-            <div class="product-card__glyph" style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};`}>
+            <div class:list={["product-card__glyph", { tile: p.tile }]} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};`}>
               {iconUrl(p) ? <img src={iconUrl(p)} alt="" loading="lazy" /> : <Icon name={p.icon} />}
             </div>
           </div>

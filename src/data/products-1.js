@@ -94,7 +94,7 @@ export const products1 = [
     slug: "redstone-debugger",
     name: "Redstone Debugger",
     tagline: "Record, visualize, and analyze redstone circuits with professional tooling.",
-    category: "developer",
+    category: "mods",
     lifecycle: "beta",
     statusNote: "Feature-rich and actively developed. Cross-version coverage is best on 1.21.x; some subsystems remain on the roadmap.",
     version: "1.0.0",

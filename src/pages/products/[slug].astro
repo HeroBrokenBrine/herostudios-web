@@ -41,7 +41,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
       <a href="/products">Products</a> <span class="sep">/</span>
       <span aria-current="page">{product.name}</span>
     </nav>
-    <div class="prod-hero__glyph" aria-hidden="true">
+    <div class:list={["prod-hero__glyph", { tile: product.tile }]} aria-hidden="true">
       {img ? <img src={img} alt="" loading="eager" /> : <Icon name={product.icon} size={36} />}
     </div>
     <div class="prod-hero__badges">
@@ -86,7 +86,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
         <h3 style="font-size:16px;">Key capabilities</h3>
         {product.capabilities.map((c) => (
           <div class="feature">
-            <div class="feature__icon">
+            <div class:list={["feature__icon", { tile: product.tile }]}>
               {img ? <img src={img} alt="" loading="lazy" /> : <Icon name={product.icon} />}
             </div>
             <div>

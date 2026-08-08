@@ -19,7 +19,7 @@ import { products, sortedProducts, iconUrl } from "../data/products.js";
       {sortedProducts().filter((p) => p.docs && p.docs.quickstart).map((p) => (
         <a class="card card--hover" href={`/docs/${p.slug}#quickstart`} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};text-decoration:none;display:block;`}>
           <div class="product-card__head" style="margin-bottom:12px;">
-            <div class="product-card__glyph" style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};`}>
+            <div class:list={["product-card__glyph", { tile: p.tile }]} style={`--glyph:${p.glyph.color};--glyph-glow:${p.glyph.glow};`}>
               {iconUrl(p) ? <img src={iconUrl(p)} alt="" loading="lazy" decoding="async" /> : <Icon name={p.icon} />}
             </div>
             <Icon name="arrow" />

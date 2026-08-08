@@ -49,7 +49,7 @@ export const products2 = [
     slug: "bucket-of-everything",
     name: "Bucket of Everything",
     tagline: "Capture nearly any entity — even the player — in a bucket, fully intact.",
-    category: "creation",
+    category: "mods",
     lifecycle: "alpha",
     statusNote: "Working builds for 1.21.x. Early-stage; expect rough edges. 26.x builds are not yet buildable.",
     version: "1.0",

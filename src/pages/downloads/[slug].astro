@@ -39,7 +39,7 @@ const available = product.downloads.available && files.length > 0;
     {available ? (
       <div class="card">
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;">
-          <div class="product-card__glyph" style={`--glyph:${g.color};--glyph-glow:${g.glow};`}>
+          <div class:list={["product-card__glyph", { tile: product.tile }]} style={`--glyph:${g.color};--glyph-glow:${g.glow};`}>
             {img ? <img src={img} alt="" loading="eager" /> : <Icon name={product.icon} />}
           </div>
           <div>
@@ -78,7 +78,7 @@ const available = product.downloads.available && files.length > 0;
       </div>
     ) : (
       <div class="card" style="max-width:640px;text-align:center;padding:48px 32px;">
-        <div class="product-card__glyph" style={`--glyph:${g.color};--glyph-glow:${g.glow};margin-inline:auto;margin-bottom:20px;`}>
+        <div class:list={["product-card__glyph", { tile: product.tile }]} style={`--glyph:${g.color};--glyph-glow:${g.glow};margin-inline:auto;margin-bottom:20px;`}>
           {img ? <img src={img} alt="" loading="eager" /> : <Icon name={product.icon} />}
         </div>
         <h2 style="font-size:20px;margin-bottom:10px;">Not yet available</h2>

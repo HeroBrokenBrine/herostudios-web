@@ -373,11 +373,11 @@ code, pre, kbd {
   border-radius: inherit;
   display: block;
 }
-/* Full-bleed / tile icon images: drop the gradient+glow backdrop so their
-   corners blend cleanly into the card instead of showing a bright rim. */
-.product-card__glyph:has(img),
-.prod-hero__glyph:has(img),
-.feature__icon:has(img) {
+/* Only full-bleed tile icons (the DPT resource-pack family) drop the
+   gradient+glow backdrop so their corners blend into the card. */
+.product-card__glyph.tile:has(img),
+.prod-hero__glyph.tile:has(img),
+.feature__icon.tile:has(img) {
   background: transparent !important;
   box-shadow: none !important;
 }

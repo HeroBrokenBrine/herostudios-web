@@ -2,7 +2,7 @@
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import ProductCard from "../components/ProductCard.astro";
-import { products, categories, sortedProducts, iconUrl, lifecycleMeta } from "../data/products.js";
+import { products, categories, sortedProducts, iconUrl, lifecycleMeta, categoryIds } from "../data/products.js";
 import { roadmap, principles } from "../data/roadmap.js";
 import { spotlight as partnerSpotlight } from "../data/spotlight.js";
 
@@ -24,6 +24,7 @@ const pool = products.map((p) => ({
   iconImg: p.iconImg,
   color: p.glyph.color,
   glow: p.glyph.glow,
+  tile: p.tile,
   ext: svgSet.has(p.slug) ? "svg" : "png",
 }));
 function shuffle(arr) {
@@ -47,6 +48,7 @@ const featuredPool = products
     iconImg: p.iconImg,
     color: p.glyph.color,
     glow: p.glyph.glow,
+    tile: p.tile,
   }));
 const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length)] || spotlight;
 ---
@@ -82,7 +84,7 @@ const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length
   <section class="section--tight container">
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
       {categories.map((c) => {
-        const count = products.filter((p) => p.category === c.id).length;
+        const count = products.filter((p) => categoryIds(p).includes(c.id)).length;
         return (
           <a class="card card--hover" href={`/products?category=${c.id}`} style="padding:22px;display:block;text-decoration:none;">
             <h3 style="font-size:16px;margin-bottom:6px;">{c.name}</h3>
@@ -132,7 +134,7 @@ const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length
           const meta = p.version !== "—" ? `<span class="chip">v${p.version}</span>` : "";
           return `<a href="/products/${p.slug}" class="card card--hover product-card" style="--glyph:${p.color};--glyph-glow:${p.glow};--glow:${p.glow};">
             <div class="product-card__head">
-              <div class="product-card__glyph" aria-hidden="true">${glyph}</div>
+              <div class="product-card__glyph${p.tile ? " tile" : ""}" aria-hidden="true">${glyph}</div>
               <span class="badge badge--${p.lifecycle}"><span class="dot" aria-hidden="true"></span>${p.label}</span>
             </div>
             <h3 class="product-card__title">${p.name}</h3>
@@ -218,7 +220,7 @@ const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length
         <div class="glass" style="border-radius:var(--r-lg);padding:28px;display:grid;gap:14px;">
           {featuredPick.capabilities.map((c) => (
             <div class="feature">
-              <div class="feature__icon">
+              <div class:list={["feature__icon", { tile: featuredPick.tile }]}>
                 {iconUrl(featuredPick) ? <img src={iconUrl(featuredPick)} alt="" loading="lazy" /> : <Icon name={featuredPick.icon} />}
               </div>
               <div>
@@ -246,7 +248,7 @@ const featuredPick = featuredPool[Math.floor(Math.random() * featuredPool.length
       const pick = items[Math.floor(Math.random() * items.length)];
       const img = pick.iconImg ? `<img src="/product-icons/${pick.slug}.png?v=5" alt="" loading="lazy">` : "";
       const caps = pick.capabilities
-        .map((c) => `<div class="feature"><div class="feature__icon">${img}</div><div><h3 style="font-size:15px;">${c.title}</h3><p style="font-size:13.5px;color:var(--text-muted);">${c.desc}</p></div></div>`)
+        .map((c) => `<div class="feature"><div class="feature__icon${pick.tile ? " tile" : ""}">${img}</div><div><h3 style="font-size:15px;">${c.title}</h3><p style="font-size:13.5px;color:var(--text-muted);">${c.desc}</p></div></div>`)
         .join("");
       panel.innerHTML = `
         <div class="grid grid--2" style="align-items:center;">

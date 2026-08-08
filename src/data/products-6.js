@@ -7,6 +7,7 @@ export function dptColor(slug, name, abbr, color, hex, category = "visual", rela
     name,
     tagline: `Default ${color} Themed in Minecraft!`,
     category,
+    tile: true,
     lifecycle: "stable",
     statusNote: `Part of the DPT family of 10 colour themes — ${name} (${abbr}). Java 1.8.9 and 1.20.3–26.2.`,
     version: "1.1.0",

@@ -10,7 +10,7 @@ const img = iconUrl(product);
 
 <a href={`/products/${product.slug}`} class="card card--hover product-card" style={`--glyph:${g.color};--glyph-glow:${g.glow};--glow:${g.glow};`}>
   <div class="product-card__head">
-    <div class="product-card__glyph" aria-hidden="true">
+    <div class:list={["product-card__glyph", { tile: product.tile }]} aria-hidden="true">
       {img ? <img src={img} alt="" loading="lazy" decoding="async" /> : <Icon name={product.icon} />}
     </div>
     <LifecycleBadge lifecycle={product.lifecycle} />

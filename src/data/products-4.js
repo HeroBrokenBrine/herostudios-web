@@ -4,7 +4,7 @@ export const products4 = [
     slug: "shorts-veinminer",
     name: "Shorts Veinminer",
     tagline: "Configurable, unlimited vein mining for virtually every block.",
-    category: "performance",
+    category: "mods",
     lifecycle: "stable",
     statusNote: "Released and maintained across 1.21–1.21.11.",
     version: "1.1.0",

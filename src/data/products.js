@@ -9,8 +9,22 @@ import { products4 } from "./products-4.js";
 import { products5 } from "./products-5.js";
 import { products6 } from "./products-6.js";
 import { products7 } from "./products-7.js";
+import { products8 } from "./products-8.js";
 
-export const products = [...products1, ...products2, ...products3, ...products4, ...products5, ...products6, ...products7];
+export const products = [...products1, ...products2, ...products3, ...products4, ...products5, ...products6, ...products7, ...products8];
+
+// Secondary category memberships (products that also fit in another category).
+const extraCategories = {
+  "dpt-purple": ["creation"],       // Default Purple Theme is a tool/project too
+  "hero-renderer": ["creation"],    // rendering engine is also a creation tool
+  "herosync": ["mods"],
+  "creeper-eater": ["performance"],
+  "j2b-mc": ["mods"],
+};
+
+export function categoryIds(product) {
+  return [product.category, ...(extraCategories[product.slug] || [])];
+}
 
 export function getProduct(slug) {
   return products.find((p) => p.slug === slug);
@@ -23,7 +37,7 @@ export function getRelated(product) {
 export function productsByCategory() {
   return categories.map((cat) => ({
     ...cat,
-    items: products.filter((p) => p.category === cat.id),
+    items: products.filter((p) => categoryIds(p).includes(cat.id)),
   }));
 }
 

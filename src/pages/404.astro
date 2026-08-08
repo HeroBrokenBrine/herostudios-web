@@ -13,6 +13,7 @@ const pool = products
     iconImg: p.iconImg,
     color: p.glyph.color,
     glow: p.glyph.glow,
+    tile: p.tile,
   }));
 ---
 
@@ -61,7 +62,7 @@ const pool = products
             ? `<img src="/product-icons/${p.slug}.png?v=5" alt="" loading="lazy" decoding="async" />`
             : "";
           return `<a class="card card--hover" href="/products/${p.slug}" style="--glyph:${p.color};--glyph-glow:${p.glow};display:flex;align-items:center;gap:12px;text-decoration:none;padding:18px 20px;">
-            <span class="product-card__glyph" style="--glyph:${p.color};--glyph-glow:${p.glow};width:40px;height:40px;flex:none;">${glyph}</span>
+            <span class="product-card__glyph${p.tile ? " tile" : ""}" style="--glyph:${p.color};--glyph-glow:${p.glow};width:40px;height:40px;flex:none;">${glyph}</span>
             <span><span style="display:block;font-weight:600;color:var(--text-primary);">${p.name}</span><span style="font-size:13px;color:var(--text-muted);">${p.tagline}</span></span>
           </a>`;
         })

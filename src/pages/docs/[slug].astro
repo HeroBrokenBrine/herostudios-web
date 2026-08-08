@@ -38,7 +38,7 @@ const sections = [
       <span aria-current="page">{product.name}</span>
     </nav>
     <div style="display:flex;align-items:center;gap:14px;">
-      <div class="product-card__glyph" style={`--glyph:${g.color};--glyph-glow:${g.glow};`}>
+      <div class:list={["product-card__glyph", { tile: product.tile }]} style={`--glyph:${g.color};--glyph-glow:${g.glow};`}>
         {iconUrl(product) ? <img src={iconUrl(product)} alt="" loading="eager" /> : <Icon name={product.icon} />}
       </div>
       <div>
