@@ -4,7 +4,7 @@ export const site = {
   licenseUrl: "https://hbbml.tiiny.site",
   discordUrl: "https://discord.gg/5N4pAKRrkk",
   discordHandle: "herobrokenbrine",
-  email: "ahyaanthepro@gmail.com",
+  email: "support@herostudios.dev",
   issuesUrl: "/support-portal.html", // Bug reports + feature requests go through the support portal (deduped)
   donateUrl: "https://www.donationalerts.com/r/xhbb_",
   tagline: "Independent Software & Technology Studio",

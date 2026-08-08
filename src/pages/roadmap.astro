@@ -151,7 +151,7 @@ function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
       {lanes.map((lane) => (
         <div class="rm-lane" data-status={lane.key}>
           <div class="rm-lane__head">
-            <span class="dot" style="width:8px;height:8px;border-radius:50%;background:{lane.color};"></span>
+            <span class="dot" style={`width:8px;height:8px;border-radius:50%;background:${lane.color};`}></span>
             <h3>{lane.title}</h3>
             <span class="rm-lane__count" data-count-for={lane.key}>{roadmap[lane.key].length}</span>
           </div>

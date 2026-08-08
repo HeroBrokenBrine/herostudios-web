@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Report a bug or get support for Hero Studios products — mods, clients, and the Hero Studios ecosystem.">
-<title>Hero Studios — Support Portal</title>
+<meta name="description" content="Report a bug or get support for Hero Studios products â€” mods, clients, and the Hero Studios ecosystem.">
+<title>Hero Studios â€” Support Portal</title>
 <link rel="icon" type="image/png" href="/brand/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,7 +162,7 @@
       <div>
         <label for="project">Project <span class="req">*</span></label>
         <select id="project" name="project" required>
-          <option value="">Select…</option>
+          <option value="">Selectâ€¦</option>
           <option>Creepers Eat You</option>
           <option>Creepers Eat You Ultra Hard</option>
           <option>HeroSync</option>
@@ -189,7 +189,7 @@
       <div>
         <label for="type">Issue Type <span class="req">*</span></label>
         <select id="type" name="type" required>
-          <option value="">Select…</option>
+          <option value="">Selectâ€¦</option>
           <option>Bug</option>
           <option>Crash</option>
           <option>Performance Issue</option>
@@ -255,19 +255,19 @@
         <li>Explain expected and actual behavior.</li>
         <li>Attach screenshots if available.</li>
         <li><b>Please attach <code>latest.log</code> or a crash report if applicable.</b></li>
-        <li>Security issue? Prefer the Discord <b>#security</b> channel or email — don't post exploit details publicly.</li>
+        <li>Security issue? Prefer the Discord <b>#security</b> channel or email â€” don't post exploit details publicly.</li>
       </ul>
     </div>
 
     <button class="btn" type="submit" id="submitBtn">Open Gmail &amp; Send Report</button>
-    <div class="note">Opens a pre-filled email to ahyaanthepro@gmail.com in Gmail.</div>
+    <div class="note">Opens a pre-filled email to support@herostudios.dev in Gmail.</div>
     <div class="status" id="status" role="status" aria-live="polite"></div>
 
     <div class="discord">
       <b>Prefer Discord or the tracker?</b><br>
       <span class="meta-links">
-        <a href="https://discord.gg/5N4pAKRrkk" target="_blank" rel="noopener">Discord — discord.gg/5N4pAKRrkk</a>
-        <a href="mailto:ahyaanthepro@gmail.com">Email</a>
+        <a href="https://discord.gg/5N4pAKRrkk" target="_blank" rel="noopener">Discord â€” discord.gg/5N4pAKRrkk</a>
+        <a href="mailto:support@herostudios.dev">Email</a>
         <a href="https://www.donationalerts.com/r/xhbb_" target="_blank" rel="noopener">Donate</a>
       </span>
     </div>
@@ -337,17 +337,17 @@
 
     var subject = "[" + projectName + "] " + issue;
     var gmail = "https://mail.google.com/mail/?view=cm&fs=1&to=" +
-      encodeURIComponent("ahyaanthepro@gmail.com") +
+      encodeURIComponent("support@herostudios.dev") +
       "&su=" + encodeURIComponent(subject) +
       "&body=" + encodeURIComponent(body);
 
     var win = window.open(gmail, "_blank");
     if (!win) {
-      // Popup blocked → offer a mailto fallback.
-      var mailto = "mailto:ahyaanthepro@gmail.com?subject=" +
+      // Popup blocked â†’ offer a mailto fallback.
+      var mailto = "mailto:support@herostudios.dev?subject=" +
         encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
       window.location.href = mailto;
-      status.textContent = "Popup blocked — opened your email app instead.";
+      status.textContent = "Popup blocked â€” opened your email app instead.";
     } else {
       status.textContent = "Opening Gmail with your report ready to send. Thanks for the detail!";
     }
