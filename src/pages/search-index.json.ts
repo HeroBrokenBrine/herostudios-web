@@ -26,7 +26,7 @@ const actions = [
   { type: "Action", title: "Browse documentation", desc: "Open the docs portal", url: "/docs", keywords: "docs guides help api" },
   { type: "Action", title: "View the roadmap", desc: "What's shipping next", url: "/roadmap", keywords: "roadmap plan upcoming" },
   { type: "Action", title: "Report a bug", desc: "Open the support portal", url: "/support-portal.html", keywords: "bug report crash issue" },
-  { type: "Action", title: "Join the Discord", desc: "discord.gg/5N4pAKRrkk", url: "https://discord.gg/5N4pAKRrkk", keywords: "community chat support" },
+  { type: "Action", title: "Join the Discord", desc: "Community chat and support", url: "https://discord.gg/5N4pAKRrkk", keywords: "community chat support discord" },
   { type: "Action", title: "Support the studio", desc: "Donate — donationalerts.com/r/xhbb_", url: "https://www.donationalerts.com/r/xhbb_", keywords: "donate support ko-fi patreon" },
   { type: "Action", title: "View system status", desc: "Check service health", url: "/status", keywords: "status uptime health" },
 ];

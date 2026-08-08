@@ -67,7 +67,7 @@ const statusTone = product.lifecycle === "roadmap" ? "info" : product.lifecycle 
     <div class={`alert alert--${statusTone}`}>
       <Icon name={statusTone === "warn" ? "warn" : "info"} />
       <div>
-        <strong>{lifecycleMeta[product.lifecycle].label} Â· </strong>
+        <strong>{lifecycleMeta[product.lifecycle].label} · </strong>
         {product.statusNote}
       </div>
     </div>
