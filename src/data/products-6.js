@@ -9,7 +9,7 @@ export function dptColor(slug, name, abbr, color, hex, category = "visual", rela
     category,
     lifecycle: "stable",
     statusNote: `Part of the DPT family of 10 colour themes — ${name} (${abbr}). Java 1.8.9 and 1.20.3–26.2.`,
-    version: "1.0.0",
+    version: "1.1.0",
     loader: "Resource Pack",
     mcVersions: ["1.8.9", "1.20.3 – 26.2 (Java)"],
     why: `The Hero Studios visual identity, in ${color.toLowerCase()}. ${name} (${abbr}) is a premium GUI overhaul for Minecraft that makes the game feel like part of the Hero Studios ecosystem — in the colour you love.`,
@@ -34,7 +34,7 @@ export function dptColor(slug, name, abbr, color, hex, category = "visual", rela
         { q: "Does it change gameplay?", a: "No — purely visual." },
       ],
     },
-    changelog: [{ version: "1.0.0", notes: [`${color} themed GUI theme`, "OptiFine shader support"] }],
+    changelog: [{ version: "1.1.0", notes: [`${color} themed GUI theme`, "Expanded colour family", "OptiFine shader support"] }],
     roadmap: [
       { status: "done", title: `${color} core theme`, desc: `GUI, HUD, and title screen in ${color.toLowerCase()}.` },
       { status: "next", title: "Extended assets", desc: "Shaders, particles, and sound polish." },
