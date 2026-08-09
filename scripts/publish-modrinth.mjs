@@ -39,9 +39,16 @@ async function api(method, url, { json, form } = {}) {
 
 const projectTypeOf = (p) => (p.loader === "Resource Pack" ? "resourcepack" : "mod");
 
-// Products published on Modrinth without automatic file uploads (standalone clients,
-// or excluded products like Creeper Eater per the user's request).
-const noUploadSlugs = new Set(["hero-client", "creeper-eater"]);
+// Products published on Modrinth without automatic file uploads (standalone clients, etc.).
+const noUploadSlugs = new Set(["hero-client"]);
+
+// Products to skip entirely (excluded per the user's request).
+const skipSlugs = new Set(["creeper-eater"]);
+
+// Projects whose short description must never be overwritten by automation.
+const keepDescriptionSlugs = new Set(["redstone-debugger"]);
+
+const DONATIONS = [{ id: "other", platform: "Other", url: "https://www.donationalerts.com/r/xhbb_" }];
 
 const catBySlug = {
   "hero-client": ["utility"],
@@ -166,6 +173,10 @@ function iconFormField(slug, form) {
 
 async function publish(p, allVersions) {
   const slug = p.slug;
+  if (skipSlugs.has(slug)) {
+    console.log(`  (skipped entirely: ${slug})`);
+    return;
+  }
   const files = downloads[slug]?.files || [];
   if (!files.length) return;
   const isPack = projectTypeOf(p) === "resourcepack";
@@ -204,6 +215,7 @@ async function publish(p, allVersions) {
         issues_url: "https://herostudios.dev/support-portal.html",
         wiki_url: `https://herostudios.dev/docs/${slug}`,
         discord_url: "https://discord.gg/5N4pAKRrkk",
+        donation_urls: DONATIONS,
         license_id: "NOASSERTION",
         license_url: "https://hbbml.tiiny.site",
         initial_versions: [iv],
@@ -235,11 +247,16 @@ async function publish(p, allVersions) {
     if (listOnly) return;
     const patch = {
       description: p.tagline.slice(0, 120),
-      body: bodyMd(p),
       categories: isPack ? ["themed"] : catBySlug[slug] || ["utility"],
       client_side: isPack ? "required" : sideBySlug[slug]?.[0] || "required",
       server_side: isPack ? "unsupported" : sideBySlug[slug]?.[1] || "optional",
+      body: bodyMd(p),
+      issues_url: "https://herostudios.dev/support-portal.html",
+      wiki_url: `https://herostudios.dev/docs/${slug}`,
+      discord_url: "https://discord.gg/5N4pAKRrkk",
+      donation_urls: DONATIONS,
     };
+    if (keepDescriptionSlugs.has(slug)) delete patch.description;
     await api("PATCH", `/project/${slug}`, { json: patch });
     console.log(`updated project ${slug}`);
   }
