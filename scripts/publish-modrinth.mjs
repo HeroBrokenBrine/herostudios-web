@@ -39,8 +39,9 @@ async function api(method, url, { json, form } = {}) {
 
 const projectTypeOf = (p) => (p.loader === "Resource Pack" ? "resourcepack" : "mod");
 
-// Products published on Modrinth without automatic file uploads (standalone clients, etc.).
-const skipUploads = new Set(["hero-client"]);
+// Products published on Modrinth without automatic file uploads (standalone clients,
+// or excluded products like Creeper Eater per the user's request).
+const noUploadSlugs = new Set(["hero-client", "creeper-eater"]);
 
 const catBySlug = {
   "hero-client": ["utility"],
@@ -220,6 +221,10 @@ async function publish(p, allVersions) {
           console.warn(`  ${first.file} already on Modrinth — trying next as initial version`);
           continue;
         }
+        if (isPack && /environment.*does not exist/.test(e.message)) {
+          console.warn(`  resourcepack projects cannot be created via the API (server-side limitation) — add ${slug} via the Modrinth web UI.`);
+          return;
+        }
         throw e;
       }
     }
@@ -239,7 +244,7 @@ async function publish(p, allVersions) {
     console.log(`updated project ${slug}`);
   }
   if (listOnly) return;
-  if (skipUploads.has(slug)) {
+  if (noUploadSlugs.has(slug)) {
     console.log(`  (file uploads skipped for ${slug})`);
     return;
   }

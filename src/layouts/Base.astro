@@ -10,7 +10,7 @@ import { site } from "../data/site.js";
 const { title, description, active = "", ogType = "website", noindex = false } = Astro.props;
 const siteTitle = "Hero Studios — Software & Technology Studio";
 const pageTitle = title ? `${title} | Hero Studios` : siteTitle;
-const pageDesc = description || "Hero Studios is an independent software and technology studio — AI, developer tools, Minecraft software, open-source projects, and game development. Everything Minecraft. Engineered.";
+const pageDesc = description || "Hero Studios is an independent software and technology studio — AI, developer tools, Minecraft software, open-source projects, and game development. Everything Minecraft. And More. Engineered.";
 const currentPath = Astro.url.pathname;
 ---
 
@@ -53,7 +53,7 @@ const currentPath = Astro.url.pathname;
       logo: "https://herostudios.dev/brand/logo.png",
       description: "An independent software and technology studio building AI, developer tools, Minecraft software, open-source projects, and games. Not affiliated with any other company using a similar name.",
       industry: "Software Development",
-      slogan: "Everything Minecraft. Engineered.",
+      slogan: "Everything Minecraft. And More. Engineered.",
       additionalType: "https://en.wikipedia.org/wiki/Software_company",
       knowsAbout: [
         "Artificial Intelligence",
