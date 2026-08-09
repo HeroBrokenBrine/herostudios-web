@@ -9,8 +9,7 @@ import { site } from "../data/site.js";
 
 const { title, description, active = "", ogType = "website", noindex = false } = Astro.props;
 const siteTitle = "Hero Studios — Software & Technology Studio";
-const pageTitle = title ? `${title} | Hero Studios` : siteTitle;
-const pageDesc = description || "Hero Studios is an independent software and technology studio — AI, developer tools, Minecraft software, open-source projects, and game development. Everything Minecraft. And More. Engineered.";
+const pageTitle = title ? `${title} | Hero Studios` : siteTitle;const pageDesc = description || "Hero Studios is an independent software and technology studio — AI, developer tools, Minecraft software, open-source projects, and game development. Everything Minecraft. And More. Engineered.";
 const currentPath = Astro.url.pathname;
 ---
 
@@ -22,6 +21,8 @@ const currentPath = Astro.url.pathname;
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="application-name" content="Hero Studios" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/brand/favicon-32.png?v=6" />
     <link rel="shortcut icon" href="/brand/favicon-32.png?v=6" />
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png?v=6" />
